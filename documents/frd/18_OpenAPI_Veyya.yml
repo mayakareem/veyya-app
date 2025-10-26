@@ -1,0 +1,366 @@
+openapi: 3.0.3
+info:
+  title: Veyya API
+  version: 1.0.0
+  description: >
+    Core endpoints for booking, escrow payments, provider acceptance, completion,
+    reviews, and weekly payouts. Money values in **minor units** (e.g., satang).
+servers:
+  - url: https://api.vevya.example.com/api/v1
+security:
+  - bearerAuth: []
+paths:
+  /bookings/intents:
+    post:
+      summary: Create booking intent (slot & price validation)
+      operationId: createBookingIntent
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingIntentRequest'
+      responses:
+        '200':
+          description: Booking intent created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingIntentResponse'
+        '409':
+          description: Slot conflict or invalid provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /payments/intents:
+    post:
+      summary: Create payment intent (escrow authorization)
+      operationId: createPaymentIntent
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentIntentRequest'
+      responses:
+        '200':
+          description: Payment intent created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentIntentResponse'
+  /payments/webhook:
+    post:
+      summary: Payment gateway webhook
+      operationId: paymentWebhook
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentWebhookEvent'
+      responses:
+        '200':
+          description: Acknowledged
+  /bookings/{id}:
+    get:
+      summary: Get booking by id
+      operationId: getBooking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Booking
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+  /bookings/{id}/accept:
+    post:
+      summary: Provider accepts booking
+      operationId: acceptBooking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcceptNote'
+      responses:
+        '200':
+          description: Booking confirmed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+  /bookings/{id}/reject:
+    post:
+      summary: Provider rejects booking
+      operationId: rejectBooking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RejectPayload'
+      responses:
+        '200':
+          description: Booking rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+  /bookings/{id}/complete:
+    post:
+      summary: Provider marks booking complete
+      operationId: completeBooking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompletionPayload'
+      responses:
+        '200':
+          description: Booking completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+  /reviews:
+    post:
+      summary: Submit a review for a completed booking
+      operationId: createReview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewCreate'
+      responses:
+        '200':
+          description: Review stored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+  /payouts/batch/run:
+    post:
+      summary: Run weekly payout batch (admin/finance only)
+      operationId: runPayoutBatch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PayoutBatchRequest'
+      responses:
+        '200':
+          description: Payout batch created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutBatchResponse'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Money:
+      type: integer
+      description: Amount in minor units (e.g., THB satang)
+      example: 127200
+    Coordinates:
+      type: object
+      properties:
+        lat: { type: number, format: double }
+        lng: { type: number, format: double }
+    Address:
+      type: object
+      properties:
+        address_line: { type: string }
+        lat: { type: number, format: double }
+        lng: { type: number, format: double }
+    BookingIntentRequest:
+      type: object
+      required: [service_id, provider_id, start_at, end_at, location]
+      properties:
+        service_id: { type: string }
+        provider_id: { type: string }
+        start_at: { type: string, format: date-time }
+        end_at: { type: string, format: date-time }
+        location: { $ref: '#/components/schemas/Address' }
+    BookingIntentResponse:
+      type: object
+      properties:
+        booking_intent_id: { type: string }
+        provider_snapshot:
+          type: object
+          properties:
+            id: { type: string }
+            display_name: { type: string }
+            rating: { type: number, format: float }
+        pricing:
+          type: object
+          properties:
+            currency: { type: string }
+            amount_gross: { $ref: '#/components/schemas/Money' }
+            tax_amount: { $ref: '#/components/schemas/Money' }
+            fees_amount: { $ref: '#/components/schemas/Money' }
+            amount_authorize: { $ref: '#/components/schemas/Money' }
+        expires_at: { type: string, format: date-time }
+    PaymentIntentRequest:
+      type: object
+      required: [booking_intent_id, payment_method]
+      properties:
+        booking_intent_id: { type: string }
+        payment_method: { type: string, enum: [card, wallet] }
+        return_url: { type: string }
+    PaymentIntentResponse:
+      type: object
+      properties:
+        payment_intent_id: { type: string }
+        client_secret: { type: string }
+        amount: { $ref: '#/components/schemas/Money' }
+        currency: { type: string }
+        status: { type: string }
+        next_action:
+          type: object
+          nullable: true
+          properties:
+            type: { type: string }
+            url: { type: string }
+    PaymentWebhookEvent:
+      type: object
+      properties:
+        type: { type: string }
+        data:
+          type: object
+          additionalProperties: true
+        signature: { type: string }
+    AcceptNote:
+      type: object
+      properties:
+        note: { type: string }
+    RejectPayload:
+      type: object
+      required: [reason_code]
+      properties:
+        reason_code:
+          type: string
+          enum: [SLOT_CONFLICT, OUT_OF_RADIUS, PERSONAL, OTHER]
+        message: { type: string }
+    CompletionPayload:
+      type: object
+      properties:
+        completion_proof:
+          type: object
+          properties:
+            photo_urls:
+              type: array
+              items: { type: string, format: uri }
+            note: { type: string }
+    ReviewCreate:
+      type: object
+      required: [booking_id, rating]
+      properties:
+        booking_id: { type: string }
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        comment: { type: string, maxLength: 500 }
+        photos:
+          type: array
+          items: { type: string, format: uri }
+    Review:
+      type: object
+      properties:
+        id: { type: string }
+        provider_id: { type: string }
+        booking_id: { type: string }
+        rating: { type: number, format: float }
+        comment: { type: string }
+        created_at: { type: string, format: date-time }
+    Booking:
+      type: object
+      properties:
+        id: { type: string }
+        client_id: { type: string }
+        provider_id: { type: string }
+        service_id: { type: string }
+        start_at: { type: string, format: date-time }
+        end_at: { type: string, format: date-time }
+        status:
+          type: string
+          enum:
+            - PENDING_PROVIDER
+            - CONFIRMED
+            - COMPLETED
+            - READY_FOR_PAYOUT
+            - PAID
+            - REJECTED
+            - PROVIDER_TIMEOUT
+            - CANCELLED_CLIENT
+            - CANCELLED_ADMIN
+            - DISPUTED
+        transaction:
+          type: object
+          properties:
+            id: { type: string }
+            status:
+              type: string
+              enum: [HELD, READY, RELEASED, REFUNDED, FAILED]
+            amount_gross: { $ref: '#/components/schemas/Money' }
+    PayoutBatchRequest:
+      type: object
+      required: [period_start, period_end]
+      properties:
+        period_start: { type: string, format: date-time }
+        period_end: { type: string, format: date-time }
+    PayoutBatchResponse:
+      type: object
+      properties:
+        payout_batch_id: { type: string }
+        items: { type: integer }
+        providers: { type: integer }
+        total_net_amount: { $ref: '#/components/schemas/Money' }
+        status: { type: string, enum: [PROCESSING, RELEASED, FAILED] }
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code: { type: string }
+            message: { type: string }
+            trace_id: { type: string }
