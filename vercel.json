@@ -1,6 +1,0 @@
-{
-  "buildCommand": "cd app-prototype && pnpm build",
-  "devCommand": "cd app-prototype && pnpm dev",
-  "installCommand": "cd app-prototype && pnpm install",
-  "outputDirectory": "app-prototype/.next"
-}

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "documents/personas/00-personas.md",
+                "file": "app-prototype/DEPLOYMENT_GUIDE.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "00-personas"
+              "title": "DEPLOYMENT_GUIDE"
             }
           }
         ]
@@ -194,6 +194,10 @@
   },
   "active": "5fd80e986b05f56d",
   "lastOpenFiles": [
+    "vercel.json",
+    "documents/personas/00-personas.md",
+    "app-prototype/PUSH_TO_GITHUB.md",
+    "app-prototype/DEPLOYMENT_GUIDE.md",
     "app-prototype/src/app/provider/onboarding/verification/page.tsx",
     "app-prototype/src/app/provider/onboarding/verification",
     "app-prototype/src/app/provider/onboarding/form/page.tsx",
@@ -205,7 +209,6 @@
     "app-prototype/src/app/confirmation/page.tsx",
     "app-prototype/src/app/confirmation",
     "app-prototype/src/app/checkout/page.tsx",
-    "app-prototype/src/app/checkout",
     "app-prototype/SETUP_SUMMARY.md",
     "app-prototype/SESSION-SUMMARY.md",
     "app-prototype/documents/README.md",
@@ -221,15 +224,12 @@
     "documents/frd/00-frd.md",
     "documents/data-model/00-data-model.md",
     "documents/design/00-wireframes.md",
-    "documents/personas/00-personas.md",
     "documents/requirements/01_PRD_Veyya.md",
     "documents/personas/05_Personas.md",
     "app-prototype/README.md",
     "documents/frd/02_FRD_Modules.md",
     "documents/frd/04_Booking_API.md",
     "app-prototype/sanity-cms/SCHEMAS_READY.md",
-    "app-prototype/SANITY_CMS_COMPARISON.md",
-    "app-prototype/sanity-cms/SANITY_SETUP.md",
     "app-prototype/sanity-cms/node_modules/@sanity/util/node_modules/date-fns/docs/logotype.svg",
     "app-prototype/sanity-cms/node_modules/@sanity/util/node_modules/date-fns/docs/logo.svg",
     "app-prototype/sanity-cms/node_modules/date-fns/docs/logotype.svg",
