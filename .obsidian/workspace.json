@@ -35,12 +35,24 @@
             "id": "f6fbe874082c8be3",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.10.3"
+                "file": "documents/data-model/00-data-model.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.10.3"
+              "icon": "lucide-file",
+              "title": "00-data-model"
             }
           }
         ],
@@ -207,6 +219,11 @@
   },
   "active": "f6fbe874082c8be3",
   "lastOpenFiles": [
+    "app-prototype/src/app/services/[id]/page.tsx",
+    "app-prototype/src/app/services/[id]",
+    "app-prototype/src/app/category/[name]/[subcategory]/page.tsx",
+    "app-prototype/src/app/category/[name]/[subcategory]",
+    "app-prototype/src/lib/constants/services.ts",
     "vercel.json",
     "documents/personas/00-personas.md",
     "app-prototype/PUSH_TO_GITHUB.md",
@@ -216,12 +233,7 @@
     "app-prototype/src/app/provider/onboarding/form/page.tsx",
     "app-prototype/src/app/provider/onboarding/form",
     "app-prototype/src/components/ui/progress.tsx",
-    "app-prototype/src/app/provider/onboarding/service-pact/page.tsx",
-    "app-prototype/src/app/provider/onboarding/service-pact",
     "app-prototype/documents/VEYYA_SERVICE_PACT.md",
-    "app-prototype/src/app/confirmation/page.tsx",
-    "app-prototype/src/app/confirmation",
-    "app-prototype/src/app/checkout/page.tsx",
     "app-prototype/SETUP_SUMMARY.md",
     "app-prototype/SESSION-SUMMARY.md",
     "app-prototype/documents/README.md",

@@ -324,38 +324,39 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
                   };
                   const quantity = getItemQuantity(service.id);
                   const imageUrl = getServiceImage(service.name, categoryName);
-                  const isExpanded = expandedService === service.id;
 
                   return (
                     <div
                       key={service.id}
                       className="bg-white border rounded-lg overflow-hidden hover:shadow-lg transition-all group"
                     >
-                      {/* Service Image - Smaller */}
-                      <div className="relative h-32 sm:h-36 w-full overflow-hidden bg-muted cursor-pointer"
-                        onClick={() => toggleExpand(service.id)}
-                      >
-                        <Image
-                          src={imageUrl}
-                          alt={service.name}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <div className="absolute top-2 left-2">
-                          <span className="text-[10px] text-white bg-black/60 px-1.5 py-0.5 rounded-full">
-                            {service.subcategoryName}
-                          </span>
-                        </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          <div className="text-white text-xs font-medium">
-                            {isExpanded ? "Hide Details" : "Quick View"}
+                      {/* Service Image - Clickable to Detail Page */}
+                      <Link href={`/services/${encodeURIComponent(service.id)}`}>
+                        <div className="relative h-32 sm:h-36 w-full overflow-hidden bg-muted cursor-pointer">
+                          <Image
+                            src={imageUrl}
+                            alt={service.name}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          <div className="absolute top-2 left-2">
+                            <span className="text-[10px] text-white bg-black/60 px-1.5 py-0.5 rounded-full">
+                              {service.subcategoryName}
+                            </span>
+                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <div className="text-white text-xs font-medium">
+                              View Details
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </Link>
 
                       {/* Service Details - Compact */}
                       <div className="p-2 sm:p-3">
-                        <h3 className="font-semibold text-xs sm:text-sm mb-1 line-clamp-2 min-h-[2.5rem]">{service.name}</h3>
+                        <Link href={`/services/${encodeURIComponent(service.id)}`}>
+                          <h3 className="font-semibold text-xs sm:text-sm mb-1 line-clamp-2 min-h-[2.5rem] hover:text-primary cursor-pointer transition-colors">{service.name}</h3>
+                        </Link>
 
                         <div className="space-y-1 mb-2">
                           <div className="flex items-center justify-between text-[10px] sm:text-xs">
@@ -413,23 +414,6 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
                           </div>
                         )}
                       </div>
-
-                      {/* Expanded Quick Summary */}
-                      {isExpanded && (
-                        <div className="border-t bg-muted/30 p-2 sm:p-3">
-                          <p className="text-[10px] sm:text-xs text-muted-foreground mb-2">
-                            Professional {service.subcategoryName.toLowerCase()} service by verified providers.
-                          </p>
-                          <Link
-                            href={`/services/${encodeURIComponent(service.id)}`}
-                          >
-                            <Button variant="outline" size="sm" className="w-full gap-1 h-7 text-xs">
-                              <Info className="w-3 h-3" />
-                              View Details
-                            </Button>
-                          </Link>
-                        </div>
-                      )}
                     </div>
                   );
                 })}
