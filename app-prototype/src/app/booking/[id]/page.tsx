@@ -3,6 +3,12 @@ import BookingForm from "@/components/BookingForm";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+
+// Prevent static generation at build time
+export async function generateStaticParams() {
+  return [];
+}
 
 type Props = {
   params: Promise<{ id: string }>;

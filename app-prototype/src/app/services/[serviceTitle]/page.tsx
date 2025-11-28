@@ -4,6 +4,12 @@ import ServiceDetailCard from "@/components/services/ServiceDetailCard";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+
+// Prevent static generation at build time
+export async function generateStaticParams() {
+  return [];
+}
 
 interface PageProps {
   params: Promise<{

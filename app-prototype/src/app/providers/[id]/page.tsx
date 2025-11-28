@@ -5,6 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
 export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+
+// Prevent static generation at build time
+export async function generateStaticParams() {
+  return [];
+}
 
 interface Props {
   params: { id: string };
