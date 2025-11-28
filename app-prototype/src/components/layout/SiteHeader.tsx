@@ -1,38 +1,245 @@
 // src/components/layout/SiteHeader.tsx
 "use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ShoppingCart, MapPin, Gift, ChevronDown, Calendar } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
+
+const BANGKOK_AREAS = [
+  "Sukhumvit",
+  "Silom",
+  "Sathorn",
+  "Thonglor",
+  "Ekkamai",
+  "Ari",
+  "Phrom Phong",
+  "Asoke",
+  "Rama 9",
+  "Ratchada",
+];
 
 export default function SiteHeader() {
   const { getTotalItems } = useCart();
   const totalItems = getTotalItems();
+  const [selectedLocation, setSelectedLocation] = useState<string>("Sukhumvit");
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  // Auto-detect location on mount (simplified for demo)
+  useEffect(() => {
+    // In production, use geolocation API or IP-based detection
+    const defaultLocation = BANGKOK_AREAS[0];
+    setSelectedLocation(defaultLocation);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
-      <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="font-semibold tracking-tight">Veyya</Link>
-        <nav className="hidden md:flex items-center gap-6 text-sm">
-          <Link href="/search" className="hover:underline">Explore</Link>
-          <Link href="/providers" className="hover:underline">For Providers</Link>
-        </nav>
-        <div className="flex items-center gap-2">
-          <Link href="/cart">
-            <Button size="sm" variant="ghost" className="relative gap-2">
-              <ShoppingCart className="w-4 h-4" />
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center font-semibold">
-                  {totalItems}
-                </span>
-              )}
-              <span className="hidden sm:inline">Cart</span>
-            </Button>
+    <>
+      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+          {/* Logo - Larger & Clickable */}
+          <Link href="/" className="text-2xl font-bold tracking-tight text-primary hover:text-primary/80 transition-colors">
+            Veyya
           </Link>
-          <Link href="/providers"><Button size="sm" variant="outline">Become a provider</Button></Link>
-          <Link href="/provider/dashboard"><Button size="sm">Provider dashboard</Button></Link>
+
+          {/* Center Navigation */}
+          <nav className="hidden lg:flex items-center gap-6">
+            {/* Location Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <MapPin className="w-4 h-4" />
+                  <span className="text-sm">{selectedLocation}</span>
+                  <ChevronDown className="w-3 h-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-48">
+                {BANGKOK_AREAS.map((area) => (
+                  <DropdownMenuItem
+                    key={area}
+                    onClick={() => setSelectedLocation(area)}
+                    className={selectedLocation === area ? "bg-muted" : ""}
+                  >
+                    <MapPin className="w-4 h-4 mr-2" />
+                    {area}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Events Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <Calendar className="w-4 h-4" />
+                  <span className="text-sm">Events</span>
+                  <ChevronDown className="w-3 h-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56">
+                <DropdownMenuItem asChild>
+                  <Link href="/events/weddings" className="w-full">
+                    <span className="mr-2">💍</span>
+                    Wedding Services
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/events/parties" className="w-full">
+                    <span className="mr-2">🎉</span>
+                    Party Planning
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/events/corporate" className="w-full">
+                    <span className="mr-2">💼</span>
+                    Corporate Events
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/events/photoshoots" className="w-full">
+                    <span className="mr-2">📸</span>
+                    Photoshoots
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/events/wellness" className="w-full">
+                    <span className="mr-2">🧘</span>
+                    Wellness Retreats
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Link href="/search" className="text-sm hover:text-primary transition-colors">
+              Explore
+            </Link>
+          </nav>
+
+          {/* Right Actions */}
+          <div className="flex items-center gap-2">
+            {/* Referrals */}
+            <Link href="/referrals">
+              <Button variant="ghost" size="sm" className="gap-2">
+                <Gift className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm">Refer & Earn</span>
+              </Button>
+            </Link>
+
+            {/* Cart Icon Only */}
+            <Link href="/cart">
+              <Button variant="ghost" size="sm" className="relative">
+                <ShoppingCart className="w-4 h-4" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center font-semibold">
+                    {totalItems}
+                  </span>
+                )}
+              </Button>
+            </Link>
+
+            {/* Auth Buttons */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowAuthModal(true)}
+              className="hidden sm:inline-flex"
+            >
+              Log In
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => setShowAuthModal(true)}
+              className="bg-primary hover:bg-primary/90"
+            >
+              Sign Up
+            </Button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Auth Modal */}
+      {showAuthModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-background rounded-xl shadow-2xl max-w-md w-full mx-4 p-8 space-y-6">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold mb-2">Welcome to Veyya</h2>
+              <p className="text-sm text-muted-foreground">Sign in or create an account</p>
+            </div>
+
+            {/* SSO Buttons */}
+            <div className="space-y-3">
+              <button className="w-full flex items-center justify-center gap-3 border rounded-lg px-4 py-3 hover:bg-muted transition-colors">
+                <svg className="w-5 h-5" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                  />
+                </svg>
+                <span className="font-medium">Continue with Google</span>
+              </button>
+
+              <button className="w-full flex items-center justify-center gap-3 border rounded-lg px-4 py-3 hover:bg-muted transition-colors">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <span className="font-medium">Continue with Facebook</span>
+              </button>
+
+              <button className="w-full flex items-center justify-center gap-3 border rounded-lg px-4 py-3 hover:bg-muted transition-colors">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10zm1-16h-2v6H7v2h4v6h2v-6h4v-2h-4V6z"/>
+                </svg>
+                <span className="font-medium">Continue with Apple</span>
+              </button>
+
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t"></div>
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-2 text-muted-foreground">Or</span>
+                </div>
+              </div>
+
+              <button className="w-full flex items-center justify-center gap-3 border rounded-lg px-4 py-3 hover:bg-muted transition-colors">
+                <span className="font-medium">Continue with Email</span>
+              </button>
+            </div>
+
+            <div className="text-center">
+              <button
+                onClick={() => setShowAuthModal(false)}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                Close
+              </button>
+            </div>
+
+            <p className="text-xs text-center text-muted-foreground">
+              By continuing, you agree to Veyya's{" "}
+              <Link href="/terms" className="underline">Terms of Service</Link> and{" "}
+              <Link href="/privacy" className="underline">Privacy Policy</Link>
+            </p>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
