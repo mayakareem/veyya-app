@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Container from "@/components/layout/Container";
+import ProviderHeader from "@/components/layout/ProviderHeader";
 import BusinessTypeStep from "@/components/onboarding/BusinessTypeStep";
 import PersonalInfoStep from "@/components/onboarding/PersonalInfoStep";
 import BusinessInfoStep from "@/components/onboarding/BusinessInfoStep";
@@ -141,8 +142,10 @@ export default function ProviderOnboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      <Container className="py-8">
+    <>
+      <ProviderHeader />
+      <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+        <Container className="py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
@@ -269,5 +272,6 @@ export default function ProviderOnboarding() {
         </div>
       </Container>
     </div>
+    </>
   );
 }

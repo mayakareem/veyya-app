@@ -556,6 +556,77 @@ In the provider application, provide a list down of all the sub categories in th
 
 ---
 
+**Timestamp:** 2025-11-28 (Current)
+
+**Prompt 7:**
+```
+When you get to the provider landing page https://veyya-app.vercel.app/providers, change the header. Keep the location header to show default location of where the provider is, remove the Explore, add a 'certifications' tab and list out all the services with online certification modules when clicked on, keep events tab but let it be specific to events for providers. Keep the gift icon but provide a reference page for service providers to invite other service providers.
+```
+
+**Actions Taken:**
+- Created ProviderHeader component (`src/components/layout/ProviderHeader.tsx`) specifically for provider pages:
+  - **Location dropdown**: Shows provider's service area (defaults to Sukhumvit) with "Your Service Area" label
+  - **Removed Explore tab**: Not relevant for provider interface
+  - **Added Certifications dropdown** with links to:
+    - View All Certifications
+    - Beauty Services certifications
+    - Wellness & Massage certifications
+    - Fitness Training certifications
+    - Pet Care certifications
+  - **Updated Events dropdown** for provider-specific events:
+    - All Provider Events
+    - Training Workshops
+    - Networking Events
+    - Skill Competitions
+    - Industry Expos
+  - **Updated Gift icon** to Provider Referrals with:
+    - "Refer Other Providers" description
+    - Earning structure (฿500 onboarding + ฿1,000 first booking + bonuses)
+    - Link to `/providers/referrals`
+
+- Created Certifications main page (`/providers/certifications/page.tsx`):
+  - Lists all 8 service categories with certification modules
+  - 32+ total certification modules covering:
+    - Beauty (Facial, Waxing, Threading, Lash Extensions)
+    - Nails (Manicure, Gel, Art, Extensions)
+    - Hair (Cutting, Coloring, Balayage, Treatments)
+    - Makeup (Bridal, Event, Airbrush, Photography)
+    - Wellness (Thai, Deep Tissue, Swedish, Hot Stone, Aromatherapy)
+    - Fitness (Personal Training, Yoga, Pilates, Nutrition)
+    - Pet Care (Dog/Cat Grooming, First Aid, Breed-Specific)
+    - Cleaning (Professional Standards, Deep Clean, Eco-Friendly, Commercial)
+  - Each module shows duration and skill level (Beginner/Intermediate/Advanced)
+  - Highlights 35% earning increase for certified providers
+
+- Created Provider Referrals page (`/providers/referrals/page.tsx`):
+  - Comprehensive referral program details
+  - Earning structure:
+    - ฿500 when referral completes onboarding
+    - ฿1,000 after first booking completed
+    - ฿5,000+ monthly bonuses for top referrers
+    - ฿500 welcome bonus for the referred provider
+  - Unique referral link with copy/share functionality
+  - Referral dashboard showing stats (total, active, earned, pending)
+  - FAQ section
+  - How it works: Share → They Sign Up → Earn Rewards
+
+- Updated provider landing page (`/providers/page.tsx`) to use ProviderHeader
+- Updated provider onboarding page (`/providers/onboarding/page.tsx`) to use ProviderHeader
+- Mobile responsive with collapsible menu for all new features
+
+**Files Created:**
+- `app-prototype/src/components/layout/ProviderHeader.tsx`
+- `app-prototype/src/app/providers/certifications/page.tsx`
+- `app-prototype/src/app/providers/referrals/page.tsx`
+
+**Files Modified:**
+- `app-prototype/src/app/providers/page.tsx`
+- `app-prototype/src/app/providers/onboarding/page.tsx`
+
+**Status:** Completed
+
+---
+
 ## Instructions for Future Updates
 
 When new commands are given:

@@ -1,4 +1,5 @@
 import Container from "@/components/layout/Container";
+import ProviderHeader from "@/components/layout/ProviderHeader";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
@@ -150,7 +151,9 @@ export default function ProvidersLandingPage() {
   ];
 
   return (
-    <main>
+    <>
+      <ProviderHeader />
+      <main>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-primary/5 via-primary/3 to-background">
         <Container className="py-12 md:py-20">
@@ -459,5 +462,6 @@ export default function ProvidersLandingPage() {
         </Container>
       </section>
     </main>
+    </>
   );
 }
