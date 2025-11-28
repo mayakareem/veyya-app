@@ -127,109 +127,109 @@ export default function MarketingHome() {
         </Container>
       </section>
 
-      {/* Product Collaborations */}
+      {/* Product Collaborations - Beauty, Healthcare & Wellness Brands */}
       <section className="bg-muted/20">
         <Container className="py-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-semibold mb-3">Product Collaborations</h2>
-            <p className="text-muted-foreground">Partnering with leading brands to bring you the best</p>
+            <h2 className="text-3xl font-semibold mb-3">Brand Collaborations</h2>
+            <p className="text-muted-foreground">Premium beauty, healthcare & wellness partners</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            {/* Collaboration 1 */}
+            {/* Collaboration 1 - L'Oréal */}
             <Link
-              href="#"
+              href="/collaborations/loreal"
               className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">G</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">L</span>
               </div>
-              <h3 className="font-semibold text-sm text-center">Google Calendar</h3>
-              <p className="text-xs text-muted-foreground text-center mt-1">Sync bookings</p>
+              <h3 className="font-semibold text-sm text-center">L'Oréal Professional</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Premium hair care</p>
             </Link>
 
-            {/* Collaboration 2 */}
+            {/* Collaboration 2 - OPI */}
             <Link
-              href="#"
+              href="/collaborations/opi"
               className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">S</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">O</span>
               </div>
-              <h3 className="font-semibold text-sm text-center">Stripe</h3>
-              <p className="text-xs text-muted-foreground text-center mt-1">Secure payments</p>
+              <h3 className="font-semibold text-sm text-center">OPI</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Luxury nail products</p>
             </Link>
 
-            {/* Collaboration 3 */}
+            {/* Collaboration 3 - Aveda */}
             <Link
-              href="#"
+              href="/collaborations/aveda"
               className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">M</span>
-              </div>
-              <h3 className="font-semibold text-sm text-center">Mapbox</h3>
-              <p className="text-xs text-muted-foreground text-center mt-1">Location services</p>
-            </Link>
-
-            {/* Collaboration 4 */}
-            <Link
-              href="#"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
-            >
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">T</span>
-              </div>
-              <h3 className="font-semibold text-sm text-center">Twilio</h3>
-              <p className="text-xs text-muted-foreground text-center mt-1">SMS notifications</p>
-            </Link>
-
-            {/* Collaboration 5 */}
-            <Link
-              href="#"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
-            >
-              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                 <span className="text-2xl font-bold text-white">A</span>
               </div>
-              <h3 className="font-semibold text-sm text-center">AWS</h3>
-              <p className="text-xs text-muted-foreground text-center mt-1">Cloud hosting</p>
+              <h3 className="font-semibold text-sm text-center">Aveda</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Plant-based wellness</p>
             </Link>
 
-            {/* Collaboration 6 */}
+            {/* Collaboration 4 - Dermalogica */}
             <Link
-              href="#"
+              href="/collaborations/dermalogica"
               className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">F</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">D</span>
               </div>
-              <h3 className="font-semibold text-sm text-center">Firebase</h3>
-              <p className="text-xs text-muted-foreground text-center mt-1">Real-time updates</p>
+              <h3 className="font-semibold text-sm text-center">Dermalogica</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Professional skincare</p>
             </Link>
 
-            {/* Collaboration 7 */}
+            {/* Collaboration 5 - Aromatherapy Associates */}
             <Link
-              href="#"
+              href="/collaborations/aromatherapy"
               className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">S</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">AA</span>
               </div>
-              <h3 className="font-semibold text-sm text-center">Sanity</h3>
-              <p className="text-xs text-muted-foreground text-center mt-1">Content management</p>
+              <h3 className="font-semibold text-sm text-center">Aromatherapy</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Wellness massage oils</p>
             </Link>
 
-            {/* Collaboration 8 */}
+            {/* Collaboration 6 - ghd */}
             <Link
-              href="#"
+              href="/collaborations/ghd"
               className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">V</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-slate-400 to-slate-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">ghd</span>
               </div>
-              <h3 className="font-semibold text-sm text-center">Vercel</h3>
-              <p className="text-xs text-muted-foreground text-center mt-1">Fast deployment</p>
+              <h3 className="font-semibold text-sm text-center">ghd</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Professional styling</p>
+            </Link>
+
+            {/* Collaboration 7 - Kérastase */}
+            <Link
+              href="/collaborations/kerastase"
+              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">K</span>
+              </div>
+              <h3 className="font-semibold text-sm text-center">Kérastase</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Luxury hair treatments</p>
+            </Link>
+
+            {/* Collaboration 8 - Clarins */}
+            <Link
+              href="/collaborations/clarins"
+              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">C</span>
+              </div>
+              <h3 className="font-semibold text-sm text-center">Clarins</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Spa-quality treatments</p>
             </Link>
           </div>
         </Container>
@@ -237,7 +237,7 @@ export default function MarketingHome() {
 
       {/* Customer Testimonials */}
       <section>
-        <Container className="py-16">
+        <Container className="pt-16 pb-0">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-semibold mb-3">What Our Customers Say</h2>
             <p className="text-muted-foreground">Join thousands of satisfied customers</p>
@@ -346,7 +346,7 @@ export default function MarketingHome() {
 
       {/* Press & Media - Simple Marquee */}
       <section className="bg-muted/20">
-        <Container className="py-12">
+        <Container className="pt-8 pb-12">
           <div className="relative overflow-hidden">
             <div className="flex gap-12 animate-marquee">
               {/* Logo 1 - TechCrunch */}

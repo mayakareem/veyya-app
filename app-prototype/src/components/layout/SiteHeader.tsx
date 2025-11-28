@@ -9,7 +9,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ShoppingCart, MapPin, Gift, ChevronDown, Calendar } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { ShoppingCart, MapPin, Gift, ChevronDown, Calendar, User } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 
 const BANGKOK_AREAS = [
@@ -58,7 +63,7 @@ export default function SiteHeader() {
                   <ChevronDown className="w-3 h-3" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
+              <DropdownMenuContent align="start" className="w-48 bg-white">
                 {BANGKOK_AREAS.map((area) => (
                   <DropdownMenuItem
                     key={area}
@@ -81,34 +86,29 @@ export default function SiteHeader() {
                   <ChevronDown className="w-3 h-3" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56">
+              <DropdownMenuContent align="start" className="w-56 bg-white">
                 <DropdownMenuItem asChild>
                   <Link href="/events/weddings" className="w-full">
-                    <span className="mr-2">💍</span>
                     Wedding Services
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/events/parties" className="w-full">
-                    <span className="mr-2">🎉</span>
                     Party Planning
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/events/corporate" className="w-full">
-                    <span className="mr-2">💼</span>
                     Corporate Events
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/events/photoshoots" className="w-full">
-                    <span className="mr-2">📸</span>
                     Photoshoots
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/events/wellness" className="w-full">
-                    <span className="mr-2">🧘</span>
                     Wellness Retreats
                   </Link>
                 </DropdownMenuItem>
@@ -120,52 +120,104 @@ export default function SiteHeader() {
             </Link>
           </nav>
 
-          {/* Right Actions */}
-          <div className="flex items-center gap-2">
-            {/* Referrals */}
-            <Link href="/referrals">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <Gift className="w-4 h-4" />
-                <span className="hidden sm:inline text-sm">Refer & Earn</span>
-              </Button>
-            </Link>
+          {/* Right Actions - Icon Only with Popovers */}
+          <div className="flex items-center gap-1">
+            {/* Referrals Popover */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm" className="relative">
+                  <Gift className="w-5 h-5" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-64 bg-white" align="end">
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-sm">Refer & Earn</h3>
+                  <p className="text-xs text-muted-foreground">
+                    Share Veyya with friends and earn rewards!
+                  </p>
+                  <Link href="/referrals">
+                    <Button size="sm" className="w-full">
+                      View Referral Program
+                    </Button>
+                  </Link>
+                </div>
+              </PopoverContent>
+            </Popover>
 
-            {/* Cart Icon Only */}
-            <Link href="/cart">
-              <Button variant="ghost" size="sm" className="relative">
-                <ShoppingCart className="w-4 h-4" />
-                {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center font-semibold">
-                    {totalItems}
-                  </span>
-                )}
-              </Button>
-            </Link>
+            {/* Cart Popover */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm" className="relative">
+                  <ShoppingCart className="w-5 h-5" />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center font-semibold">
+                      {totalItems}
+                    </span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-64 bg-white" align="end">
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-sm">Shopping Cart</h3>
+                  {totalItems > 0 ? (
+                    <>
+                      <p className="text-xs text-muted-foreground">
+                        {totalItems} {totalItems === 1 ? 'item' : 'items'} in your cart
+                      </p>
+                      <Link href="/cart">
+                        <Button size="sm" className="w-full">
+                          View Cart
+                        </Button>
+                      </Link>
+                    </>
+                  ) : (
+                    <p className="text-xs text-muted-foreground">Your cart is empty</p>
+                  )}
+                </div>
+              </PopoverContent>
+            </Popover>
 
-            {/* Auth Buttons */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowAuthModal(true)}
-              className="hidden sm:inline-flex"
-            >
-              Log In
-            </Button>
-            <Button
-              size="sm"
-              onClick={() => setShowAuthModal(true)}
-              className="bg-primary hover:bg-primary/90"
-            >
-              Sign Up
-            </Button>
+            {/* Auth Popover */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm" className="relative">
+                  <User className="w-5 h-5" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-64 bg-white" align="end">
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-sm">Account</h3>
+                  <p className="text-xs text-muted-foreground">
+                    Sign in to manage your bookings
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => setShowAuthModal(true)}
+                    >
+                      Log In
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => setShowAuthModal(true)}
+                    >
+                      Sign Up
+                    </Button>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
       </header>
 
       {/* Auth Modal */}
       {showAuthModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="bg-background rounded-xl shadow-2xl max-w-md w-full mx-4 p-8 space-y-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={() => setShowAuthModal(false)}>
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-8 space-y-6" onClick={(e) => e.stopPropagation()}>
             <div className="text-center">
               <h2 className="text-2xl font-bold mb-2">Welcome to Veyya</h2>
               <p className="text-sm text-muted-foreground">Sign in or create an account</p>
