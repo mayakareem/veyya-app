@@ -188,7 +188,7 @@ export default function ProvidersLandingPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/provider/onboarding/form">
+              <Link href="/providers/onboarding">
                 <Button size="lg" className="text-lg px-10 py-6 gap-2">
                   Start Earning Today
                   <TrendingUp className="w-5 h-5" />
@@ -377,7 +377,7 @@ export default function ProvidersLandingPage() {
             </div>
 
             <div className="mt-12 text-center">
-              <Link href="/provider/onboarding/form">
+              <Link href="/providers/onboarding">
                 <Button size="lg" className="text-lg px-10 py-6 gap-2">
                   Begin Application
                   <TrendingUp className="w-5 h-5" />
@@ -440,7 +440,7 @@ export default function ProvidersLandingPage() {
               and building successful businesses with Veyya
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Link href="/provider/onboarding/form">
+              <Link href="/providers/onboarding">
                 <Button size="lg" className="text-lg px-12 py-7 gap-2">
                   Start Your Application
                   <TrendingUp className="w-5 h-5" />

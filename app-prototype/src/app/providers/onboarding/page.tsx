@@ -10,7 +10,8 @@ import BankingInfoStep from "@/components/onboarding/BankingInfoStep";
 import DocumentUploadStep from "@/components/onboarding/DocumentUploadStep";
 import VeyyaPactStep from "@/components/onboarding/VeyyaPactStep";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { ChevronLeft, ChevronRight, CheckCircle2, User, Building2, Briefcase, FileText, CreditCard, Shield } from "lucide-react";
 
 export type OnboardingData = {
   // Personal Information
@@ -92,13 +93,15 @@ export default function ProviderOnboarding() {
 
   const totalSteps = 6;
   const steps = [
-    "Business Type",
-    "Personal Info",
-    "Business Info",
-    "Services",
-    "Banking",
-    "Veyya Pact"
+    { id: 1, title: "Business Type", icon: Building2 },
+    { id: 2, title: "Personal Info", icon: User },
+    { id: 3, title: "Business Info", icon: Briefcase },
+    { id: 4, title: "Services", icon: Briefcase },
+    { id: 5, title: "Banking", icon: CreditCard },
+    { id: 6, title: "Veyya Pact", icon: Shield }
   ];
+
+  const progress = (currentStep / totalSteps) * 100;
 
   const updateFormData = (data: Partial<OnboardingData>) => {
     setFormData((prev) => ({ ...prev, ...data }));
@@ -131,62 +134,83 @@ export default function ProviderOnboarding() {
   };
 
   return (
-    <main className="min-h-screen bg-muted/30">
-      <Container className="py-12">
+    <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+      <Container className="py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold mb-2">
               Provider Application
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground mb-4">
               Complete all steps to join Veyya's provider network
             </p>
+            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+              <CheckCircle2 className="w-4 h-4 text-primary" />
+              <span>Trusted by 1,000+ providers</span>
+              <span className="mx-2">•</span>
+              <CheckCircle2 className="w-4 h-4 text-primary" />
+              <span>Free to join</span>
+              <span className="mx-2">•</span>
+              <CheckCircle2 className="w-4 h-4 text-primary" />
+              <span>Weekly payouts</span>
+            </div>
           </div>
 
           {/* Progress Steps */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
-              {steps.map((step, index) => (
-                <div key={index} className="flex-1 relative">
-                  <div className="flex flex-col items-center">
-                    <button
-                      onClick={() => {
-                        setCurrentStep(index + 1);
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                      }}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all cursor-pointer hover:scale-110 ${
-                        index + 1 === currentStep
-                          ? "bg-primary text-primary-foreground shadow-lg ring-4 ring-primary/20"
-                          : index + 1 < currentStep
-                          ? "bg-primary/20 text-primary hover:bg-primary/30"
-                          : "bg-muted text-muted-foreground hover:bg-muted/80"
-                      }`}
-                    >
-                      {index + 1}
-                    </button>
-                    <p className={`text-xs mt-2 text-center hidden md:block transition-colors ${
-                      index + 1 === currentStep
-                        ? "text-primary font-semibold"
-                        : "text-muted-foreground"
-                    }`}>
-                      {step}
-                    </p>
+              {steps.map((step, index) => {
+                const Icon = step.icon;
+                const isActive = currentStep === step.id;
+                const isCompleted = currentStep > step.id;
+
+                return (
+                  <div key={step.id} className="flex items-center flex-1">
+                    <div className="flex flex-col items-center flex-1">
+                      <button
+                        onClick={() => {
+                          setCurrentStep(step.id);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                        className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold transition-all cursor-pointer hover:scale-110 ${
+                          isCompleted
+                            ? "bg-primary text-primary-foreground"
+                            : isActive
+                            ? "bg-primary text-primary-foreground ring-4 ring-primary/20 shadow-lg"
+                            : "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {isCompleted ? (
+                          <CheckCircle2 className="w-6 h-6" />
+                        ) : (
+                          <Icon className="w-6 h-6" />
+                        )}
+                      </button>
+                      <p className={`text-xs mt-2 text-center hidden md:block font-medium transition-colors ${
+                        isActive
+                          ? "text-foreground"
+                          : "text-muted-foreground"
+                      }`}>
+                        {step.title}
+                      </p>
+                    </div>
+                    {index < steps.length - 1 && (
+                      <div
+                        className={`h-0.5 flex-1 mx-2 transition-colors ${
+                          isCompleted ? "bg-primary" : "bg-muted"
+                        }`}
+                      />
+                    )}
                   </div>
-                  {index < steps.length - 1 && (
-                    <div
-                      className={`absolute top-5 left-[50%] w-full h-0.5 -z-10 transition-colors ${
-                        index + 1 < currentStep ? "bg-primary" : "bg-muted"
-                      }`}
-                    />
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
+            <Progress value={progress} className="h-2" />
           </div>
 
           {/* Form Content */}
-          <div className="bg-background border rounded-lg p-6 md:p-8 mb-6">
+          <div className="bg-card border rounded-2xl p-6 md:p-8 mb-6 shadow-lg">
             {currentStep === 1 && (
               <BusinessTypeStep data={formData} updateData={updateFormData} />
             )}
@@ -229,8 +253,14 @@ export default function ProviderOnboarding() {
               </Button>
             )}
           </div>
+
+          {/* Trust Footer */}
+          <div className="text-center text-sm text-muted-foreground">
+            <p>🔒 Your information is secure and encrypted</p>
+            <p className="mt-2">Application reviewed within 2-3 business days</p>
+          </div>
         </div>
       </Container>
-    </main>
+    </div>
   );
 }

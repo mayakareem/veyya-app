@@ -219,6 +219,7 @@
   },
   "active": "f6fbe874082c8be3",
   "lastOpenFiles": [
+    "app-prototype/src/lib/utils/serviceBundles.ts",
     "SinPrompts.md",
     "vercel.json",
     "app-prototype/src/app/catalog/[id]/page.tsx",
@@ -254,7 +255,6 @@
     "app-prototype/README.md",
     "documents/frd/02_FRD_Modules.md",
     "documents/frd/04_Booking_API.md",
-    "app-prototype/sanity-cms/SCHEMAS_READY.md",
     "app-prototype/sanity-cms/node_modules/@sanity/util/node_modules/date-fns/docs/logotype.svg",
     "app-prototype/sanity-cms/node_modules/@sanity/util/node_modules/date-fns/docs/logo.svg",
     "app-prototype/sanity-cms/node_modules/date-fns/docs/logotype.svg",

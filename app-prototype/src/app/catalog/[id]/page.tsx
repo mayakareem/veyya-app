@@ -1,15 +1,16 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Container from "@/components/layout/Container";
 import { getCategoryById, getServiceById } from "@/lib/constants/services";
 import { getServiceImage } from "@/lib/utils/serviceImages";
 import { Button } from "@/components/ui/button";
-import { Clock, MapPin, Star, Calendar as CalendarIcon, Plus, Minus, ChevronLeft, Shield, Award, ThumbsUp, ChevronRight } from "lucide-react";
+import { Clock, MapPin, Star, Calendar as CalendarIcon, Plus, Minus, ChevronLeft, Shield, Award, ThumbsUp, ChevronRight, Tag, X } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
+import { getBundleRecommendations, calculateBundleDiscount, type BundleOption } from "@/lib/utils/serviceBundles";
 
 export default function ServiceDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -20,6 +21,8 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const [selectedCalendarDate, setSelectedCalendarDate] = useState<Date | null>(null);
+  const [showBundleRecommendations, setShowBundleRecommendations] = useState<boolean>(false);
+  const [selectedBundleServices, setSelectedBundleServices] = useState<BundleOption[]>([]);
 
   // Find service across all categories
   const findService = () => {
