@@ -122,8 +122,8 @@ export default function SiteHeader() {
             {/* Referrals Popover */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-10 w-10">
-                  <Gift className="w-6 h-6" />
+                <Button variant="ghost" size="icon" className="h-12 w-12">
+                  <Gift className="w-7 h-7" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-64 bg-white" align="end">
@@ -144,8 +144,8 @@ export default function SiteHeader() {
             {/* Cart Popover */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-10 w-10 relative">
-                  <ShoppingCart className="w-6 h-6" />
+                <Button variant="ghost" size="icon" className="h-12 w-12 relative">
+                  <ShoppingCart className="w-7 h-7" />
                   {totalItems > 0 && (
                     <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center font-semibold">
                       {totalItems}
@@ -177,8 +177,8 @@ export default function SiteHeader() {
             {/* Auth Popover */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-10 w-10">
-                  <User className="w-6 h-6" />
+                <Button variant="ghost" size="icon" className="h-12 w-12">
+                  <User className="w-7 h-7" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-64 bg-white" align="end">
