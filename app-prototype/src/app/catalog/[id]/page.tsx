@@ -7,7 +7,7 @@ import Container from "@/components/layout/Container";
 import { getCategoryById, getServiceById } from "@/lib/constants/services";
 import { getServiceImage } from "@/lib/utils/serviceImages";
 import { Button } from "@/components/ui/button";
-import { Clock, MapPin, Star, Calendar, Plus, Minus, ChevronLeft, Shield, Award, ThumbsUp } from "lucide-react";
+import { Clock, MapPin, Star, Calendar as CalendarIcon, Plus, Minus, ChevronLeft, Shield, Award, ThumbsUp, ChevronRight } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 
@@ -18,6 +18,8 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
 
   const { addToCart, removeFromCart, getItemQuantity } = useCart();
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
+  const [selectedCalendarDate, setSelectedCalendarDate] = useState<Date | null>(null);
 
   // Find service across all categories
   const findService = () => {
@@ -69,26 +71,53 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
     description: `${subcategory.name} - ${service.name}`,
   };
 
-  // Mock available time slots
-  const getAvailableSlots = () => {
-    const slots = [];
-    const today = new Date();
+  // Get today's date
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
 
-    for (let i = 1; i <= 7; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-
-      slots.push({
-        date: date.toISOString().split('T')[0],
-        displayDate: date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }),
-        times: ["9:00 AM", "10:30 AM", "12:00 PM", "2:00 PM", "4:30 PM", "6:00 PM"],
-      });
-    }
-
-    return slots;
+  // Mock available time slots for today
+  const getTodayTimeSlots = () => {
+    return ["9:00 AM", "10:30 AM", "12:00 PM", "2:00 PM", "4:30 PM", "6:00 PM", "8:00 PM"];
   };
 
-  const availableSlots = getAvailableSlots();
+  // Get time slots for a specific date
+  const getTimeSlotsForDate = (date: Date) => {
+    return ["9:00 AM", "10:30 AM", "12:00 PM", "2:00 PM", "4:30 PM", "6:00 PM", "8:00 PM"];
+  };
+
+  // Generate calendar days for current month
+  const getCalendarDays = () => {
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+
+    const days = [];
+
+    // Add empty slots for days before month starts
+    for (let i = 0; i < startingDayOfWeek; i++) {
+      days.push(null);
+    }
+
+    // Add all days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      // Only show today and future dates
+      if (date >= new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
+        days.push(date);
+      } else {
+        days.push(null);
+      }
+    }
+
+    return days;
+  };
+
+  const calendarDays = getCalendarDays();
+  const displayDate = selectedCalendarDate || today;
+  const timeSlots = selectedCalendarDate ? getTimeSlotsForDate(selectedCalendarDate) : getTodayTimeSlots();
 
   // Mock reviews
   const reviews = [
@@ -304,36 +333,108 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
                 </div>
               </div>
 
-              {/* Date Selection */}
+              {/* Date & Time Selection */}
               <div className="mb-4">
-                <label className="text-sm font-medium mb-2 block">Select Date & Time</label>
-                <div className="space-y-2">
-                  {availableSlots.slice(0, 3).map((slot) => (
-                    <div key={slot.date}>
-                      <p className="text-xs font-medium text-muted-foreground mb-1">
-                        {slot.displayDate}
-                      </p>
-                      <div className="grid grid-cols-3 gap-1">
-                        {slot.times.map((time) => (
-                          <Button
-                            key={time}
-                            variant="outline"
-                            size="sm"
-                            className={`text-xs h-8 ${
-                              selectedDate === `${slot.date}-${time}` ? "bg-primary text-primary-foreground" : ""
-                            }`}
-                            onClick={() => setSelectedDate(`${slot.date}-${time}`)}
-                          >
-                            {time}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+                <div className="flex items-center justify-between mb-3">
+                  <label className="text-sm font-medium">Select Date & Time</label>
+                  {!showCalendar && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowCalendar(true)}
+                      className="text-xs gap-1"
+                    >
+                      <CalendarIcon className="w-3 h-3" />
+                      Other Dates
+                    </Button>
+                  )}
                 </div>
-                <Button variant="link" className="text-xs mt-2 p-0 h-auto">
-                  View more dates
-                </Button>
+
+                {/* Calendar View */}
+                {showCalendar ? (
+                  <div className="border rounded-lg p-3 mb-3">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-semibold">
+                        {displayDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                      </h3>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setShowCalendar(false);
+                          setSelectedCalendarDate(null);
+                        }}
+                        className="text-xs"
+                      >
+                        Today
+                      </Button>
+                    </div>
+
+                    {/* Calendar Grid */}
+                    <div className="grid grid-cols-7 gap-1 mb-2">
+                      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+                        <div key={day} className="text-center text-xs font-medium text-muted-foreground p-1">
+                          {day}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-7 gap-1">
+                      {calendarDays.map((day, index) => {
+                        if (!day) {
+                          return <div key={`empty-${index}`} className="aspect-square" />;
+                        }
+                        const isToday = day.toDateString() === today.toDateString();
+                        const isSelected = selectedCalendarDate?.toDateString() === day.toDateString();
+                        return (
+                          <Button
+                            key={day.toISOString()}
+                            variant={isSelected ? "default" : "outline"}
+                            size="sm"
+                            className={`aspect-square p-0 text-xs ${isToday ? 'border-primary' : ''}`}
+                            onClick={() => setSelectedCalendarDate(day)}
+                          >
+                            {day.getDate()}
+                          </Button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mb-3">
+                    <p className="text-xs font-medium text-muted-foreground mb-2">
+                      Today - {today.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+                    </p>
+                  </div>
+                )}
+
+                {/* Time Slots */}
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground mb-2">
+                    {selectedCalendarDate
+                      ? `Available times for ${selectedCalendarDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}`
+                      : 'Available times today'}
+                  </p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {timeSlots.map((time) => {
+                      const dateTimeKey = selectedCalendarDate
+                        ? `${selectedCalendarDate.toISOString().split('T')[0]}-${time}`
+                        : `${todayStr}-${time}`;
+                      return (
+                        <Button
+                          key={time}
+                          variant="outline"
+                          size="sm"
+                          className={`text-xs h-9 ${
+                            selectedDate === dateTimeKey ? "bg-primary text-primary-foreground" : ""
+                          }`}
+                          onClick={() => setSelectedDate(dateTimeKey)}
+                        >
+                          {time}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
               {/* Quantity */}
@@ -404,7 +505,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
                   <span>Top-rated professionals</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-purple-600" />
+                  <CalendarIcon className="w-4 h-4 text-purple-600" />
                   <span>Flexible rescheduling</span>
                 </div>
               </div>

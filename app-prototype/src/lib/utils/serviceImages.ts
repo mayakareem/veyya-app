@@ -13,7 +13,7 @@ export const getServiceImage = (serviceName: string, categoryName: string): stri
   if (lowerName.includes("upper lip waxing")) return "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80";
   if (lowerName.includes("full body waxing")) return "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=600&q=80";
   if (lowerName.includes("eyebrow threading")) return "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80";
-  if (lowerName.includes("upper lip threading")) return "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80";
+  if (lowerName.includes("upper lip threading")) return "https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600&q=80";
   if (lowerName.includes("full face threading")) return "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=600&q=80";
   if (lowerName.includes("classic eyelash")) return "https://images.unsplash.com/photo-1583001952003-421b25e94e7a?w=600&q=80";
   if (lowerName.includes("volume eyelash")) return "https://images.unsplash.com/photo-1592621385645-e41659e8aabe?w=600&q=80";
@@ -41,28 +41,28 @@ export const getServiceImage = (serviceName: string, categoryName: string): stri
   if (lowerName.includes("men's haircut")) return "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80";
   if (lowerName.includes("kids haircut")) return "https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=600&q=80";
   if (lowerName.includes("hair wash")) return "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=600&q=80";
-  if (lowerName.includes("full color")) return "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80";
+  if (lowerName.includes("full color")) return "https://images.unsplash.com/photo-1560869713-7d0a29430803?w=600&q=80";
   if (lowerName.includes("root touch up")) return "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&q=80";
   if (lowerName.includes("balayage")) return "https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80";
   if (lowerName.includes("highlights - full")) return "https://images.unsplash.com/photo-1528920304568-7aa06b3dda8b?w=600&q=80";
   if (lowerName.includes("highlights - partial")) return "https://images.unsplash.com/photo-1562004760-acb5342a1bc0?w=600&q=80";
   if (lowerName.includes("keratin")) return "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=600&q=80";
-  if (lowerName.includes("deep conditioning")) return "https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=600&q=80";
+  if (lowerName.includes("deep conditioning")) return "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=600&q=80";
   if (lowerName.includes("scalp treatment")) return "https://images.unsplash.com/photo-1498843053639-170ff2122f35?w=600&q=80";
   if (lowerName.includes("hair perm")) return "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=600&q=80";
   if (lowerName.includes("hair straightening")) return "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80";
-  if (lowerName.includes("updo styling")) return "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80";
+  if (lowerName.includes("updo styling")) return "https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=600&q=80";
   if (lowerName.includes("bridal hair")) return "https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600&q=80";
 
   // Makeup services
   if (lowerCategory === "makeup") {
-    if (lowerName.includes("bridal makeup")) return "https://images.unsplash.com/photo-1457972729786-0411a3b2b626?w=600&q=80";
+    if (lowerName.includes("bridal makeup")) return "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80";
     if (lowerName.includes("engagement")) return "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=600&q=80";
-    if (lowerName.includes("party makeup")) return "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80";
+    if (lowerName.includes("party makeup")) return "https://images.unsplash.com/photo-1522337294455-ffcc97a5eefe?w=600&q=80";
     if (lowerName.includes("natural day")) return "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=600&q=80";
     if (lowerName.includes("editorial")) return "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=600&q=80";
-    if (lowerName.includes("hd makeup")) return "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=600&q=80";
-    if (lowerName.includes("airbrush")) return "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80";
+    if (lowerName.includes("hd makeup")) return "https://images.unsplash.com/photo-1457972729786-0411a3b2b626?w=600&q=80";
+    if (lowerName.includes("airbrush")) return "https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=600&q=80";
     if (lowerName.includes("makeup lesson - basic")) return "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80";
     if (lowerName.includes("makeup lesson - advanced")) return "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=600&q=80";
     if (lowerName.includes("brow")) return "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80";
@@ -107,25 +107,25 @@ export const getServiceImage = (serviceName: string, categoryName: string): stri
   if (lowerName.includes("carpet")) return "https://images.unsplash.com/photo-1624704430746-3c0ff912ec8e?w=600&q=80";
 
   // Wellness services
-  if (lowerName.includes("deep tissue massage - 60")) return "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80";
+  if (lowerName.includes("deep tissue massage - 60")) return "https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=600&q=80";
   if (lowerName.includes("deep tissue massage - 90")) return "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=80";
   if (lowerName.includes("thai massage - 60")) return "https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=600&q=80";
   if (lowerName.includes("thai massage - 90")) return "https://images.unsplash.com/photo-1596178060810-36b36a979fb4?w=600&q=80";
   if (lowerName.includes("thai massage - 120")) return "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80";
   if (lowerName.includes("swedish massage - 60")) return "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80";
   if (lowerName.includes("swedish massage - 90")) return "https://images.unsplash.com/photo-1591343395902-bae4d26b17c4?w=600&q=80";
-  if (lowerName.includes("hot stone massage - 60")) return "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80";
+  if (lowerName.includes("hot stone massage - 60")) return "https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?w=600&q=80";
   if (lowerName.includes("hot stone massage - 90")) return "https://images.unsplash.com/photo-1604084861171-e816e86964d1?w=600&q=80";
   if (lowerName.includes("aromatherapy massage - 60")) return "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?w=600&q=80";
   if (lowerName.includes("aromatherapy massage - 90")) return "https://images.unsplash.com/photo-1564072804087-14909b932e27?w=600&q=80";
   if (lowerName.includes("sports massage")) return "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&q=80";
   if (lowerName.includes("prenatal")) return "https://images.unsplash.com/photo-1584308972272-9e4e7685e80f?w=600&q=80";
   if (lowerName.includes("couples")) return "https://images.unsplash.com/photo-1552693673-1bf958298229?w=600&q=80";
-  if (lowerName.includes("head & shoulder")) return "https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=600&q=80";
+  if (lowerName.includes("head & shoulder")) return "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80";
   if (lowerName.includes("foot reflexology")) return "https://images.unsplash.com/photo-1598662779094-e58c92e7af56?w=600&q=80";
 
   // Fitness services
-  if (lowerName.includes("personal training - single")) return "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80";
+  if (lowerName.includes("personal training - single")) return "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80";
   if (lowerName.includes("personal training - 5")) return "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=80";
   if (lowerName.includes("personal training - 10")) return "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80";
   if (lowerName.includes("group training")) return "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80";
@@ -145,11 +145,11 @@ export const getServiceImage = (serviceName: string, categoryName: string): stri
   if (lowerCategory === "beauty") return "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80";
   if (lowerCategory === "nails") return "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=600&q=80";
   if (lowerCategory === "hair") return "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80";
-  if (lowerCategory === "makeup") return "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80";
+  if (lowerCategory === "makeup") return "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=600&q=80";
   if (lowerCategory === "pet care") return "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&q=80";
   if (lowerCategory === "cleaning") return "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80";
-  if (lowerCategory === "wellness") return "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80";
-  if (lowerCategory === "fitness") return "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80";
+  if (lowerCategory === "wellness") return "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80";
+  if (lowerCategory === "fitness") return "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80";
 
   // Ultimate fallback
   return "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80";
