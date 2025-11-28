@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "documents/data-model/00-data-model.md",
+                "file": "SinPrompts.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,7 +52,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "00-data-model"
+              "title": "SinPrompts"
             }
           }
         ],
@@ -217,20 +217,21 @@
       "bases:Create new base": false
     }
   },
-  "active": "f6fbe874082c8be3",
+  "active": "23e0972bfbf17378",
   "lastOpenFiles": [
+    "app-prototype/src/app/privacy/page.tsx",
+    "app-prototype/src/app/privacy",
+    "app-prototype/src/app/terms/page.tsx",
+    "app-prototype/src/app/terms",
+    "documents/data-model/00-data-model.md",
+    "app-prototype/src/app/events/wellness/page.tsx",
+    "app-prototype/src/app/events/photoshoots/page.tsx",
     "app-prototype/src/app/events/corporate/page.tsx",
     "app-prototype/src/app/events/parties/page.tsx",
     "app-prototype/src/app/events/weddings/page.tsx",
     "app-prototype/src/app/events/wellness",
     "app-prototype/src/app/events/weddings",
-    "app-prototype/src/app/events/photoshoots",
-    "app-prototype/src/app/events/parties",
-    "app-prototype/src/app/events/corporate",
-    "app-prototype/src/app/events",
-    "app-prototype/src/lib/utils/serviceBundles.ts",
     "SinPrompts.md",
-    "vercel.json",
     "documents/personas/00-personas.md",
     "app-prototype/PUSH_TO_GITHUB.md",
     "app-prototype/DEPLOYMENT_GUIDE.md",
@@ -248,7 +249,6 @@
     "app-prototype/documents/personas/users/01-hi-so-professional.md",
     "app-prototype/documents/vision/vision-mission.md",
     "documents/frd/00-frd.md",
-    "documents/data-model/00-data-model.md",
     "documents/design/00-wireframes.md",
     "documents/requirements/01_PRD_Veyya.md",
     "documents/personas/05_Personas.md",
