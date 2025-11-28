@@ -375,3 +375,16 @@ export function getSubcategoryById(categoryId: string, subcategoryId: string): S
   const category = getCategoryById(categoryId);
   return category?.subcategories.find((sub) => sub.id === subcategoryId);
 }
+
+// Helper function to get service by ID across all categories
+export function getServiceById(serviceId: string): { service: Service; subcategory: ServiceSubcategory; category: ServiceCategory } | undefined {
+  for (const category of SERVICE_CATALOG) {
+    for (const subcategory of category.subcategories) {
+      const service = subcategory.services.find((s) => s.id === serviceId);
+      if (service) {
+        return { service, subcategory, category };
+      }
+    }
+  }
+  return undefined;
+}

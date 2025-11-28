@@ -3,12 +3,13 @@
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/layout/Container";
 import { SERVICE_CATEGORIES } from "@/lib/constants/categories";
 import { getCategoryById } from "@/lib/constants/services";
-import type { Service } from "@/lib/constants/services";
+import { getServiceImage } from "@/lib/utils/serviceImages";
 import { Button } from "@/components/ui/button";
-import { Plus, Minus, ShoppingCart, Clock, LayoutGrid, List } from "lucide-react";
+import { Plus, Minus, ShoppingCart, Clock, LayoutGrid, List, ChevronDown, ChevronUp, Calendar, Info } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 
@@ -20,6 +21,7 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
   const { cart, addToCart, removeFromCart, getItemQuantity, getTotalItems, getTotalPrice } = useCart();
   const [viewMode, setViewMode] = useState<"tile" | "list">("tile");
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("all");
+  const [expandedService, setExpandedService] = useState<string | null>(null);
 
   // Get category from main categories
   const mainCategory = SERVICE_CATEGORIES.find(c => c.name === categoryName);
@@ -84,10 +86,20 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
 
-  // Generate image URL for service
-  const getServiceImage = (serviceName: string) => {
-    const seed = encodeURIComponent(serviceName.toLowerCase().replace(/\s+/g, '-'));
-    return `https://images.unsplash.com/photo-1${Math.abs(seed.split('').reduce((a, b) => ((a << 5) - a + b.charCodeAt(0)) | 0, 0)) % 1000000000}?w=400&h=300&fit=crop`;
+  // Generate next available slot (mock data - in production this would come from API)
+  const getNextAvailableSlot = () => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const times = ["9:00 AM", "10:30 AM", "2:00 PM", "4:30 PM"];
+    const randomTime = times[Math.floor(Math.random() * times.length)];
+
+    return `Tomorrow, ${randomTime}`;
+  };
+
+  const toggleExpand = (serviceId: string) => {
+    setExpandedService(expandedService === serviceId ? null : serviceId);
   };
 
   return (
@@ -173,7 +185,7 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
           <div className="lg:col-span-2">
             {viewMode === "list" ? (
               /* List View */
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {filteredServices.map((service) => {
                   const cartItem = {
                     name: service.name,
@@ -184,80 +196,123 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
                     description: `${service.subcategoryName} - ${service.name}`,
                   };
                   const quantity = getItemQuantity(service.id);
+                  const isExpanded = expandedService === service.id;
 
                   return (
                     <div
                       key={service.id}
-                      className="bg-background border rounded-lg p-4 hover:shadow-md transition-all"
+                      className="bg-white border rounded-lg overflow-hidden hover:shadow-md transition-all"
                     >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
-                              {service.subcategoryName}
-                            </span>
-                          </div>
-                          <h3 className="font-semibold text-lg mb-1">{service.name}</h3>
-                          <div className="flex items-center gap-4 text-sm">
-                            <div className="flex items-center gap-1 text-muted-foreground">
-                              <Clock className="w-4 h-4" />
-                              {service.duration}
-                            </div>
-                            <div className="font-semibold text-primary">
-                              {service.priceRange}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Add to Cart Controls */}
-                        <div className="flex-shrink-0">
-                          {quantity === 0 ? (
-                            <Button
-                              onClick={() => {
-                                addToCart(cartItem);
-                                toast.success(`${service.name} added to cart`);
-                              }}
-                              size="sm"
-                              className="gap-2"
-                            >
-                              <Plus className="w-4 h-4" />
-                              Add
-                            </Button>
-                          ) : (
-                            <div className="flex items-center gap-2 bg-primary/10 rounded-lg p-1">
-                              <Button
-                                onClick={() => removeFromCart(service.id)}
-                                size="sm"
-                                variant="ghost"
-                                className="h-8 w-8 p-0"
-                              >
-                                <Minus className="w-4 h-4" />
-                              </Button>
-                              <span className="w-8 text-center font-semibold">
-                                {quantity}
+                      {/* Main Service Row */}
+                      <div className="p-3 sm:p-4">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full flex-shrink-0">
+                                {service.subcategoryName}
                               </span>
+                            </div>
+                            <h3 className="font-semibold text-sm sm:text-base mb-1 truncate">{service.name}</h3>
+                            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                              <div className="flex items-center gap-1 text-muted-foreground">
+                                <Clock className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                                <span>{service.duration}</span>
+                              </div>
+                              <div className="font-semibold text-primary">
+                                {service.priceRange}
+                              </div>
+                              <div className="flex items-center gap-1 text-muted-foreground">
+                                <Calendar className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                                <span className="text-xs">{getNextAvailableSlot()}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Action Buttons */}
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => toggleExpand(service.id)}
+                              className="h-8 w-8 p-0"
+                            >
+                              {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                            </Button>
+
+                            {quantity === 0 ? (
                               <Button
                                 onClick={() => {
                                   addToCart(cartItem);
                                   toast.success(`${service.name} added to cart`);
                                 }}
                                 size="sm"
-                                variant="ghost"
-                                className="h-8 w-8 p-0"
+                                className="gap-1 h-8"
                               >
-                                <Plus className="w-4 h-4" />
+                                <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                                <span className="hidden sm:inline text-xs">Add</span>
                               </Button>
-                            </div>
-                          )}
+                            ) : (
+                              <div className="flex items-center gap-1 bg-primary/10 rounded-lg p-0.5">
+                                <Button
+                                  onClick={() => removeFromCart(service.id)}
+                                  size="sm"
+                                  variant="ghost"
+                                  className="h-7 w-7 p-0"
+                                >
+                                  <Minus className="w-3 h-3" />
+                                </Button>
+                                <span className="w-6 text-center font-semibold text-xs">
+                                  {quantity}
+                                </span>
+                                <Button
+                                  onClick={() => {
+                                    addToCart(cartItem);
+                                    toast.success(`${service.name} added to cart`);
+                                  }}
+                                  size="sm"
+                                  variant="ghost"
+                                  className="h-7 w-7 p-0"
+                                >
+                                  <Plus className="w-3 h-3" />
+                                </Button>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
+
+                      {/* Expanded Details */}
+                      {isExpanded && (
+                        <div className="border-t bg-muted/30 p-3 sm:p-4">
+                          <div className="space-y-3">
+                            <div>
+                              <h4 className="font-semibold text-sm mb-2">Service Details</h4>
+                              <p className="text-xs sm:text-sm text-muted-foreground">
+                                Professional {service.subcategoryName.toLowerCase()} service. Duration: {service.duration}.
+                                All our providers are verified and highly rated.
+                              </p>
+                            </div>
+                            <div className="flex gap-2">
+                              <Link
+                                href={`/services/${encodeURIComponent(service.id)}`}
+                                className="flex-1"
+                              >
+                                <Button variant="outline" size="sm" className="w-full gap-1 text-xs">
+                                  <Info className="w-3 h-3" />
+                                  More Details
+                                </Button>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
               </div>
             ) : (
-              /* Tile View */
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              /* Tile View - Smaller, Compact Cards */
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {filteredServices.map((service) => {
                   const cartItem = {
                     name: service.name,
@@ -268,82 +323,113 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
                     description: `${service.subcategoryName} - ${service.name}`,
                   };
                   const quantity = getItemQuantity(service.id);
-                  const imageUrl = getServiceImage(service.name);
+                  const imageUrl = getServiceImage(service.name, categoryName);
+                  const isExpanded = expandedService === service.id;
 
                   return (
                     <div
                       key={service.id}
-                      className="bg-background border rounded-lg overflow-hidden hover:shadow-lg transition-all group"
+                      className="bg-white border rounded-lg overflow-hidden hover:shadow-lg transition-all group"
                     >
-                      {/* Service Image */}
-                      <div className="relative h-40 sm:h-48 w-full overflow-hidden bg-muted">
+                      {/* Service Image - Smaller */}
+                      <div className="relative h-32 sm:h-36 w-full overflow-hidden bg-muted cursor-pointer"
+                        onClick={() => toggleExpand(service.id)}
+                      >
                         <Image
                           src={imageUrl}
                           alt={service.name}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
-                        <div className="absolute top-3 right-3 font-semibold text-white bg-primary px-3 py-1.5 rounded-full shadow-lg text-sm">
-                          {service.priceRange}
-                        </div>
-                        <div className="absolute top-3 left-3">
-                          <span className="text-xs text-white bg-black/60 px-2 py-1 rounded-full">
+                        <div className="absolute top-2 left-2">
+                          <span className="text-[10px] text-white bg-black/60 px-1.5 py-0.5 rounded-full">
                             {service.subcategoryName}
                           </span>
                         </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <div className="text-white text-xs font-medium">
+                            {isExpanded ? "Hide Details" : "Quick View"}
+                          </div>
+                        </div>
                       </div>
 
-                      {/* Service Details */}
-                      <div className="p-4">
-                        <h3 className="font-semibold text-base sm:text-lg mb-2 line-clamp-2">{service.name}</h3>
+                      {/* Service Details - Compact */}
+                      <div className="p-2 sm:p-3">
+                        <h3 className="font-semibold text-xs sm:text-sm mb-1 line-clamp-2 min-h-[2.5rem]">{service.name}</h3>
 
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Clock className="w-4 h-4" />
-                            {service.duration}
+                        <div className="space-y-1 mb-2">
+                          <div className="flex items-center justify-between text-[10px] sm:text-xs">
+                            <div className="flex items-center gap-1 text-muted-foreground">
+                              <Clock className="w-3 h-3 flex-shrink-0" />
+                              <span>{service.duration}</span>
+                            </div>
+                            <div className="font-bold text-primary text-xs">
+                              {service.priceRange?.split("-")[0]}
+                            </div>
                           </div>
+                          <div className="flex items-center gap-1 text-muted-foreground text-[10px]">
+                            <Calendar className="w-3 h-3 flex-shrink-0" />
+                            <span className="truncate">{getNextAvailableSlot()}</span>
+                          </div>
+                        </div>
 
-                          {/* Add to Cart Controls */}
-                          {quantity === 0 ? (
+                        {/* Add to Cart */}
+                        {quantity === 0 ? (
+                          <Button
+                            onClick={() => {
+                              addToCart(cartItem);
+                              toast.success(`Added to cart`);
+                            }}
+                            size="sm"
+                            className="w-full gap-1 h-7 text-xs"
+                          >
+                            <Plus className="w-3 h-3" />
+                            Add
+                          </Button>
+                        ) : (
+                          <div className="flex items-center gap-1 bg-primary/10 rounded-lg p-0.5 justify-center">
+                            <Button
+                              onClick={() => removeFromCart(service.id)}
+                              size="sm"
+                              variant="ghost"
+                              className="h-6 w-6 p-0"
+                            >
+                              <Minus className="w-3 h-3" />
+                            </Button>
+                            <span className="w-6 text-center font-semibold text-xs">
+                              {quantity}
+                            </span>
                             <Button
                               onClick={() => {
                                 addToCart(cartItem);
-                                toast.success(`${service.name} added to cart`);
+                                toast.success(`Added to cart`);
                               }}
                               size="sm"
-                              className="gap-2"
+                              variant="ghost"
+                              className="h-6 w-6 p-0"
                             >
-                              <Plus className="w-4 h-4" />
-                              Add
+                              <Plus className="w-3 h-3" />
                             </Button>
-                          ) : (
-                            <div className="flex items-center gap-2 bg-primary/10 rounded-lg p-1">
-                              <Button
-                                onClick={() => removeFromCart(service.id)}
-                                size="sm"
-                                variant="ghost"
-                                className="h-7 w-7 p-0"
-                              >
-                                <Minus className="w-3 h-3" />
-                              </Button>
-                              <span className="w-6 text-center font-semibold text-sm">
-                                {quantity}
-                              </span>
-                              <Button
-                                onClick={() => {
-                                  addToCart(cartItem);
-                                  toast.success(`${service.name} added to cart`);
-                                }}
-                                size="sm"
-                                variant="ghost"
-                                className="h-7 w-7 p-0"
-                              >
-                                <Plus className="w-3 h-3" />
-                              </Button>
-                            </div>
-                          )}
-                        </div>
+                          </div>
+                        )}
                       </div>
+
+                      {/* Expanded Quick Summary */}
+                      {isExpanded && (
+                        <div className="border-t bg-muted/30 p-2 sm:p-3">
+                          <p className="text-[10px] sm:text-xs text-muted-foreground mb-2">
+                            Professional {service.subcategoryName.toLowerCase()} service by verified providers.
+                          </p>
+                          <Link
+                            href={`/services/${encodeURIComponent(service.id)}`}
+                          >
+                            <Button variant="outline" size="sm" className="w-full gap-1 h-7 text-xs">
+                              <Info className="w-3 h-3" />
+                              View Details
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -353,7 +439,7 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
 
           {/* Cart Summary - Sticky */}
           <div className="lg:col-span-1">
-            <div className="bg-background border rounded-lg sticky top-6 p-4 sm:p-6">
+            <div className="bg-white border rounded-lg sticky top-6 p-4 sm:p-6">
               <div className="flex items-center gap-2 mb-4">
                 <ShoppingCart className="w-5 h-5" />
                 <h2 className="text-lg sm:text-xl font-bold">Your Cart</h2>
