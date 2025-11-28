@@ -152,8 +152,8 @@ export default function ProvidersLandingPage() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="relative border-b bg-gradient-to-b from-primary/5 via-primary/3 to-background">
-        <Container className="py-20 md:py-32">
+      <section className="relative bg-gradient-to-b from-primary/5 via-primary/3 to-background">
+        <Container className="py-12 md:py-20">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
               <Award className="w-4 h-4" />
@@ -205,8 +205,8 @@ export default function ProvidersLandingPage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="border-b">
-        <Container className="py-16 md:py-24">
+      <section>
+        <Container className="py-12 md:py-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold">
               Why Partner with Veyya?
@@ -245,8 +245,8 @@ export default function ProvidersLandingPage() {
       </section>
 
       {/* Veyya Academy Section */}
-      <section className="border-b bg-gradient-to-b from-background to-primary/5">
-        <Container className="py-16 md:py-24">
+      <section className="bg-gradient-to-b from-background to-primary/5">
+        <Container className="py-12 md:py-16">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
               <GraduationCap className="w-4 h-4" />
@@ -297,8 +297,12 @@ export default function ProvidersLandingPage() {
               Complete Veyya Academy courses to earn your Veyya Verified badge,
               rank higher in search results, and attract premium customers
             </p>
-            <Link href="/provider/onboarding/form">
-              <Button size="lg" variant="secondary" className="gap-2">
+            <Link href="/providers/onboarding">
+              <Button
+                size="lg"
+                variant="secondary"
+                className="gap-2"
+              >
                 Start Your Journey
                 <Award className="w-5 h-5" />
               </Button>
@@ -308,8 +312,8 @@ export default function ProvidersLandingPage() {
       </section>
 
       {/* Community & Support Section */}
-      <section className="border-b">
-        <Container className="py-16 md:py-24">
+      <section>
+        <Container className="py-12 md:py-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Join a Thriving Community
@@ -337,8 +341,8 @@ export default function ProvidersLandingPage() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="border-b bg-muted/30">
-        <Container className="py-16 md:py-24">
+      <section id="how-it-works" className="bg-muted/30">
+        <Container className="py-12 md:py-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold">
               How to Get Started
@@ -385,8 +389,8 @@ export default function ProvidersLandingPage() {
       </section>
 
       {/* Requirements Section */}
-      <section className="border-b bg-muted/30">
-        <Container className="py-16 md:py-24">
+      <section className="bg-muted/30">
+        <Container className="py-12 md:py-16">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               What You'll Need
@@ -426,7 +430,7 @@ export default function ProvidersLandingPage() {
 
       {/* CTA Section */}
       <section className="bg-gradient-to-b from-primary/5 to-background">
-        <Container className="py-20 md:py-32">
+        <Container className="py-12 md:py-20">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-bold mb-6">
               Ready to Transform Your Business?

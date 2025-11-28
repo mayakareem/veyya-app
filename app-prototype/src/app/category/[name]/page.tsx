@@ -294,7 +294,7 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
                             </div>
                             <div className="flex gap-2">
                               <Link
-                                href={`/services/${encodeURIComponent(service.id)}`}
+                                href={`/catalog/${encodeURIComponent(service.id)}`}
                                 className="flex-1"
                               >
                                 <Button variant="outline" size="sm" className="w-full gap-1 text-xs">
@@ -331,7 +331,7 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
                       className="bg-white border rounded-lg overflow-hidden hover:shadow-lg transition-all group"
                     >
                       {/* Service Image - Clickable to Detail Page */}
-                      <Link href={`/services/${encodeURIComponent(service.id)}`}>
+                      <Link href={`/catalog/${encodeURIComponent(service.id)}`}>
                         <div className="relative h-32 sm:h-36 w-full overflow-hidden bg-muted cursor-pointer">
                           <Image
                             src={imageUrl}
@@ -354,7 +354,7 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
 
                       {/* Service Details - Compact */}
                       <div className="p-2 sm:p-3">
-                        <Link href={`/services/${encodeURIComponent(service.id)}`}>
+                        <Link href={`/catalog/${encodeURIComponent(service.id)}`}>
                           <h3 className="font-semibold text-xs sm:text-sm mb-1 line-clamp-2 min-h-[2.5rem] hover:text-primary cursor-pointer transition-colors">{service.name}</h3>
                         </Link>
 
