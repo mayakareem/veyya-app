@@ -62,9 +62,255 @@ export default function MarketingHome() {
         </Container>
       </section>
 
-      <Container className="py-14">
-        {/* Trust logos / value props / how it works */}
-      </Container>
+      {/* How Veyya Works */}
+      <section className="bg-muted/30">
+        <Container className="py-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-semibold mb-3">How Veyya Works</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Book trusted home services in three simple steps
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Step 1 */}
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <span className="text-3xl">🔍</span>
+              </div>
+              <h3 className="text-xl font-semibold">1. Search & Browse</h3>
+              <p className="text-muted-foreground">
+                Find verified providers for beauty, pet care, cleaning, and wellness services near you
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <span className="text-3xl">📅</span>
+              </div>
+              <h3 className="text-xl font-semibold">2. Book Instantly</h3>
+              <p className="text-muted-foreground">
+                See real-time availability, transparent pricing, and book your preferred time slot in seconds
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <span className="text-3xl">✨</span>
+              </div>
+              <h3 className="text-xl font-semibold">3. Enjoy & Review</h3>
+              <p className="text-muted-foreground">
+                Get premium service at home, pay securely, and share your experience with the community
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center mt-10">
+            <Link
+              href="/search"
+              className="inline-flex items-center justify-center rounded-lg bg-primary px-8 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+            >
+              Start Booking Now
+            </Link>
+          </div>
+        </Container>
+      </section>
+
+      {/* Customer Testimonials */}
+      <section>
+        <Container className="py-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-semibold mb-3">What Our Customers Say</h2>
+            <p className="text-muted-foreground">Join thousands of satisfied customers</p>
+          </div>
+
+          <div className="overflow-x-auto scrollbar-hide">
+            <div className="flex gap-6 pb-4" style={{ width: 'max-content' }}>
+              {/* Testimonial 1 */}
+              <div className="w-80 bg-card border rounded-xl p-6 space-y-4">
+                <div className="flex items-center gap-1 text-yellow-500">
+                  {'⭐'.repeat(5)}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  "Amazing service! Found a pet groomer for my Golden Retriever in minutes. The booking process was seamless and the groomer was professional and caring."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center font-semibold">
+                    SM
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">Sarah Martinez</p>
+                    <p className="text-xs text-muted-foreground">Bangkok</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 2 */}
+              <div className="w-80 bg-card border rounded-xl p-6 space-y-4">
+                <div className="flex items-center gap-1 text-yellow-500">
+                  {'⭐'.repeat(5)}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  "I use Veyya weekly for my nail appointments. Love that I can see real availability and prices upfront. No more back-and-forth calls!"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center font-semibold">
+                    PK
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">Preeti Kapoor</p>
+                    <p className="text-xs text-muted-foreground">Sukhumvit</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 3 */}
+              <div className="w-80 bg-card border rounded-xl p-6 space-y-4">
+                <div className="flex items-center gap-1 text-yellow-500">
+                  {'⭐'.repeat(5)}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  "Veyya made finding a reliable house cleaner so easy. Transparent pricing, vetted providers, and the quality has been consistently excellent."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center font-semibold">
+                    JL
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">James Liu</p>
+                    <p className="text-xs text-muted-foreground">Silom</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 4 */}
+              <div className="w-80 bg-card border rounded-xl p-6 space-y-4">
+                <div className="flex items-center gap-1 text-yellow-500">
+                  {'⭐'.repeat(5)}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  "As a busy professional, Veyya has been a lifesaver. From haircuts to massage therapy, everything I need comes to me. Highly recommend!"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center font-semibold">
+                    AN
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">Araya Nakamura</p>
+                    <p className="text-xs text-muted-foreground">Thonglor</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 5 */}
+              <div className="w-80 bg-card border rounded-xl p-6 space-y-4">
+                <div className="flex items-center gap-1 text-yellow-500">
+                  {'⭐'.repeat(5)}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  "The verification process gives me peace of mind. I know I'm booking qualified professionals every time. Plus, the customer service is top-notch!"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center font-semibold">
+                    MC
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">Maria Chen</p>
+                    <p className="text-xs text-muted-foreground">Sathorn</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Press & Media */}
+      <section className="bg-muted/20">
+        <Container className="py-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-semibold mb-2">As Featured In</h2>
+            <p className="text-sm text-muted-foreground">Veyya in the news</p>
+          </div>
+
+          <div className="relative overflow-hidden">
+            <div className="flex gap-12 animate-marquee">
+              {/* Logo 1 - TechCrunch */}
+              <Link
+                href="https://techcrunch.com"
+                target="_blank"
+                className="flex items-center justify-center min-w-[180px] h-20 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100"
+              >
+                <div className="text-2xl font-bold">TechCrunch</div>
+              </Link>
+
+              {/* Logo 2 - Bangkok Post */}
+              <Link
+                href="https://bangkokpost.com"
+                target="_blank"
+                className="flex items-center justify-center min-w-[180px] h-20 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100"
+              >
+                <div className="text-2xl font-bold">Bangkok Post</div>
+              </Link>
+
+              {/* Logo 3 - Forbes */}
+              <Link
+                href="https://forbes.com"
+                target="_blank"
+                className="flex items-center justify-center min-w-[180px] h-20 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100"
+              >
+                <div className="text-2xl font-bold">FORBES</div>
+              </Link>
+
+              {/* Logo 4 - The Nation */}
+              <Link
+                href="https://nationthailand.com"
+                target="_blank"
+                className="flex items-center justify-center min-w-[180px] h-20 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100"
+              >
+                <div className="text-2xl font-bold">The Nation</div>
+              </Link>
+
+              {/* Logo 5 - Tech in Asia */}
+              <Link
+                href="https://techinasia.com"
+                target="_blank"
+                className="flex items-center justify-center min-w-[180px] h-20 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100"
+              >
+                <div className="text-2xl font-bold">Tech in Asia</div>
+              </Link>
+
+              {/* Logo 6 - VentureBeat */}
+              <Link
+                href="https://venturebeat.com"
+                target="_blank"
+                className="flex items-center justify-center min-w-[180px] h-20 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100"
+              >
+                <div className="text-2xl font-bold">VentureBeat</div>
+              </Link>
+
+              {/* Duplicate for seamless loop */}
+              <Link
+                href="https://techcrunch.com"
+                target="_blank"
+                className="flex items-center justify-center min-w-[180px] h-20 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100"
+              >
+                <div className="text-2xl font-bold">TechCrunch</div>
+              </Link>
+
+              <Link
+                href="https://bangkokpost.com"
+                target="_blank"
+                className="flex items-center justify-center min-w-[180px] h-20 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100"
+              >
+                <div className="text-2xl font-bold">Bangkok Post</div>
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </section>
     </main>
   );
 }
