@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Container from "@/components/layout/Container";
+import BusinessTypeStep from "@/components/onboarding/BusinessTypeStep";
 import PersonalInfoStep from "@/components/onboarding/PersonalInfoStep";
 import BusinessInfoStep from "@/components/onboarding/BusinessInfoStep";
 import ServiceSelectionStep from "@/components/onboarding/ServiceSelectionStep";
 import BankingInfoStep from "@/components/onboarding/BankingInfoStep";
 import DocumentUploadStep from "@/components/onboarding/DocumentUploadStep";
-import ReviewStep from "@/components/onboarding/ReviewStep";
+import VeyyaPactStep from "@/components/onboarding/VeyyaPactStep";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -55,6 +56,10 @@ export type OnboardingData = {
     profilePhoto?: File;
     portfolioImages?: File[];
   };
+
+  // Veyya Pact
+  acceptedPact?: boolean;
+  acceptedTerms?: boolean;
 };
 
 export default function ProviderOnboarding() {
@@ -87,12 +92,12 @@ export default function ProviderOnboarding() {
 
   const totalSteps = 6;
   const steps = [
+    "Business Type",
     "Personal Info",
     "Business Info",
     "Services",
     "Banking",
-    "Documents",
-    "Review"
+    "Veyya Pact"
   ];
 
   const updateFormData = (data: Partial<OnboardingData>) => {
@@ -114,6 +119,12 @@ export default function ProviderOnboarding() {
   };
 
   const handleSubmit = async () => {
+    // Validate Veyya Pact acceptance
+    if (!formData.acceptedPact || !formData.acceptedTerms) {
+      alert("Please accept the Veyya Pact and Terms of Service to continue.");
+      return;
+    }
+
     console.log("Submitting application:", formData);
     // TODO: Submit to API
     alert("Application submitted! You'll hear from us within 2-3 business days.");
@@ -177,22 +188,22 @@ export default function ProviderOnboarding() {
           {/* Form Content */}
           <div className="bg-background border rounded-lg p-6 md:p-8 mb-6">
             {currentStep === 1 && (
-              <PersonalInfoStep data={formData} updateData={updateFormData} />
+              <BusinessTypeStep data={formData} updateData={updateFormData} />
             )}
             {currentStep === 2 && (
-              <BusinessInfoStep data={formData} updateData={updateFormData} />
+              <PersonalInfoStep data={formData} updateData={updateFormData} />
             )}
             {currentStep === 3 && (
-              <ServiceSelectionStep data={formData} updateData={updateFormData} />
+              <BusinessInfoStep data={formData} updateData={updateFormData} />
             )}
             {currentStep === 4 && (
-              <BankingInfoStep data={formData} updateData={updateFormData} />
+              <ServiceSelectionStep data={formData} updateData={updateFormData} />
             )}
             {currentStep === 5 && (
-              <DocumentUploadStep data={formData} updateData={updateFormData} />
+              <BankingInfoStep data={formData} updateData={updateFormData} />
             )}
             {currentStep === 6 && (
-              <ReviewStep data={formData} />
+              <VeyyaPactStep data={formData} updateData={updateFormData} />
             )}
           </div>
 

@@ -2,7 +2,6 @@ import { OnboardingData } from "@/app/providers/onboarding/page";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 type Props = {
   data: OnboardingData;
@@ -15,41 +14,10 @@ export default function BusinessInfoStep({ data, updateData }: Props) {
       <div>
         <h2 className="text-2xl font-bold mb-2">Business Information</h2>
         <p className="text-muted-foreground">
-          Tell us about your business and professional background
+          {data.businessType === "registered"
+            ? "Tell us about your registered business and professional background"
+            : "Tell us about your professional background and experience"}
         </p>
-      </div>
-
-      <div className="space-y-4">
-        <Label>Business Type <span className="text-red-500">*</span></Label>
-        <RadioGroup
-          value={data.businessType}
-          onValueChange={(value: "individual" | "registered") =>
-            updateData({ businessType: value })
-          }
-        >
-          <div className="flex items-center space-x-2 border p-4 rounded-lg">
-            <RadioGroupItem value="individual" id="individual" />
-            <Label htmlFor="individual" className="cursor-pointer flex-1">
-              <div>
-                <p className="font-semibold">Individual/Sole Proprietor</p>
-                <p className="text-sm text-muted-foreground">
-                  Operating as an individual service provider
-                </p>
-              </div>
-            </Label>
-          </div>
-          <div className="flex items-center space-x-2 border p-4 rounded-lg">
-            <RadioGroupItem value="registered" id="registered" />
-            <Label htmlFor="registered" className="cursor-pointer flex-1">
-              <div>
-                <p className="font-semibold">Registered Business</p>
-                <p className="text-sm text-muted-foreground">
-                  Company, partnership, or registered entity
-                </p>
-              </div>
-            </Label>
-          </div>
-        </RadioGroup>
       </div>
 
       {data.businessType === "registered" && (
