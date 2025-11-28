@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 export default function AdminDashboard() {
   return (
     <main className="mx-auto max-w-6xl p-6 space-y-6">

@@ -11,7 +11,7 @@ const SlotSchema = z.object({
   capacity: z.coerce.number().int().min(1).max(10).default(1),
 });
 
-export async function createSlot(formData: FormData) {
+export async function createSlot(formData: FormData): Promise<void> {
   const user = await requireProvider();
 
   const parsed = SlotSchema.safeParse({
@@ -20,36 +20,45 @@ export async function createSlot(formData: FormData) {
     capacity: formData.get("capacity") || 1,
   });
   if (!parsed.success) {
-    return { ok: false, error: parsed.error.flatten().fieldErrors };
+    console.error("Validation error:", parsed.error.flatten().fieldErrors);
+    return;
   }
 
   const provider = await prisma.providerProfile.findUnique({
     where: { userId: user.id },
     select: { id: true },
   });
-  if (!provider) return { ok: false, error: { provider: ["No provider profile"] } };
+  if (!provider) {
+    console.error("No provider profile");
+    return;
+  }
 
   const { startISO, endISO, capacity } = parsed.data;
   const start = new Date(startISO);
   const end = new Date(endISO);
-  if (end <= start) return { ok: false, error: { endISO: ["End must be after start"] } };
+  if (end <= start) {
+    console.error("End must be after start");
+    return;
+  }
 
   await prisma.availabilitySlot.create({
     data: { providerId: provider.id, start, end, capacity },
   });
 
   revalidatePath("/provider/calendar");
-  return { ok: true };
 }
 
-export async function deleteSlot(slotId: string) {
+export async function deleteSlot(slotId: string): Promise<void> {
   const user = await requireProvider();
 
   const provider = await prisma.providerProfile.findUnique({
     where: { userId: user.id },
     select: { id: true },
   });
-  if (!provider) return { ok: false };
+  if (!provider) {
+    console.error("No provider profile");
+    return;
+  }
 
   // ensure slot belongs to this provider
   await prisma.availabilitySlot.deleteMany({
@@ -57,5 +66,4 @@ export async function deleteSlot(slotId: string) {
   });
 
   revalidatePath("/provider/calendar");
-  return { ok: true };
 }

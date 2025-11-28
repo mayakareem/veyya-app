@@ -13,14 +13,17 @@ const ServiceSchema = z.object({
   active: z.boolean().optional().default(true),
 });
 
-export async function createService(formData: FormData) {
+export async function createService(formData: FormData): Promise<void> {
   const user = await requireProvider();
 
   const provider = await prisma.providerProfile.findUnique({
     where: { userId: user.id },
     select: { id: true },
   });
-  if (!provider) return { ok: false, error: { provider: ["No provider profile"] } };
+  if (!provider) {
+    console.error("No provider profile");
+    return;
+  }
 
   const parsed = ServiceSchema.safeParse({
     title: formData.get("title") || "",
@@ -31,7 +34,8 @@ export async function createService(formData: FormData) {
   });
 
   if (!parsed.success) {
-    return { ok: false, error: parsed.error.flatten().fieldErrors };
+    console.error("Validation error:", parsed.error.flatten().fieldErrors);
+    return;
   }
 
   await prisma.serviceOffering.create({
@@ -42,17 +46,19 @@ export async function createService(formData: FormData) {
   });
 
   revalidatePath("/provider/services");
-  return { ok: true };
 }
 
-export async function updateService(serviceId: string, formData: FormData) {
+export async function updateService(serviceId: string, formData: FormData): Promise<void> {
   const user = await requireProvider();
 
   const provider = await prisma.providerProfile.findUnique({
     where: { userId: user.id },
     select: { id: true },
   });
-  if (!provider) return { ok: false };
+  if (!provider) {
+    console.error("No provider profile");
+    return;
+  }
 
   const parsed = ServiceSchema.safeParse({
     title: formData.get("title") || "",
@@ -63,7 +69,8 @@ export async function updateService(serviceId: string, formData: FormData) {
   });
 
   if (!parsed.success) {
-    return { ok: false, error: parsed.error.flatten().fieldErrors };
+    console.error("Validation error:", parsed.error.flatten().fieldErrors);
+    return;
   }
 
   // Ensure service belongs to this provider
@@ -73,17 +80,19 @@ export async function updateService(serviceId: string, formData: FormData) {
   });
 
   revalidatePath("/provider/services");
-  return { ok: true };
 }
 
-export async function deleteService(serviceId: string) {
+export async function deleteService(serviceId: string): Promise<void> {
   const user = await requireProvider();
 
   const provider = await prisma.providerProfile.findUnique({
     where: { userId: user.id },
     select: { id: true },
   });
-  if (!provider) return { ok: false };
+  if (!provider) {
+    console.error("No provider profile");
+    return;
+  }
 
   // Ensure service belongs to this provider
   await prisma.serviceOffering.deleteMany({
@@ -91,17 +100,19 @@ export async function deleteService(serviceId: string) {
   });
 
   revalidatePath("/provider/services");
-  return { ok: true };
 }
 
-export async function toggleServiceActive(serviceId: string) {
+export async function toggleServiceActive(serviceId: string): Promise<void> {
   const user = await requireProvider();
 
   const provider = await prisma.providerProfile.findUnique({
     where: { userId: user.id },
     select: { id: true },
   });
-  if (!provider) return { ok: false };
+  if (!provider) {
+    console.error("No provider profile");
+    return;
+  }
 
   const service = await prisma.serviceOffering.findFirst({
     where: { id: serviceId, providerId: provider.id },
@@ -115,5 +126,4 @@ export async function toggleServiceActive(serviceId: string) {
   }
 
   revalidatePath("/provider/services");
-  return { ok: true };
 }

@@ -30,8 +30,21 @@
               "icon": "lucide-file",
               "title": "DEPLOYMENT_GUIDE"
             }
+          },
+          {
+            "id": "f6fbe874082c8be3",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.10.3"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.10.3"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -192,7 +205,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "5fd80e986b05f56d",
+  "active": "f6fbe874082c8be3",
   "lastOpenFiles": [
     "vercel.json",
     "documents/personas/00-personas.md",

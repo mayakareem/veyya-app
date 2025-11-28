@@ -12,7 +12,7 @@ const OnboardSchema = z.object({
   basePrice: z.coerce.number().int().min(0).default(0),
 });
 
-export async function upsertProviderProfile(formData: FormData) {
+export async function upsertProviderProfile(formData: FormData): Promise<void> {
   const user = await requireProvider();
 
   const parsed = OnboardSchema.safeParse({
@@ -27,7 +27,8 @@ export async function upsertProviderProfile(formData: FormData) {
   });
 
   if (!parsed.success) {
-    return { ok: false, error: parsed.error.flatten().fieldErrors };
+    console.error("Validation error:", parsed.error.flatten().fieldErrors);
+    return;
   }
 
   const data = parsed.data;
@@ -51,5 +52,4 @@ export async function upsertProviderProfile(formData: FormData) {
   });
 
   revalidatePath("/provider/onboarding");
-  return { ok: true };
 }
