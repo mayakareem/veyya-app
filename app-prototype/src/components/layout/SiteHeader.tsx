@@ -52,41 +52,38 @@ export default function SiteHeader() {
             Veyya
           </Link>
 
-          {/* Center Navigation */}
-          <nav className="hidden lg:flex items-center gap-6">
-            {/* Location Dropdown */}
+          {/* Center Navigation - Text Only */}
+          <nav className="absolute left-1/2 -translate-x-1/2 hidden lg:flex items-center gap-8">
+            {/* Location Dropdown - No Icon */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-2">
-                  <MapPin className="w-4 h-4" />
+                <Button variant="ghost" size="sm" className="gap-1 font-normal">
                   <span className="text-sm">{selectedLocation}</span>
                   <ChevronDown className="w-3 h-3" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48 bg-white">
+              <DropdownMenuContent align="center" className="w-48 bg-white">
                 {BANGKOK_AREAS.map((area) => (
                   <DropdownMenuItem
                     key={area}
                     onClick={() => setSelectedLocation(area)}
                     className={selectedLocation === area ? "bg-muted" : ""}
                   >
-                    <MapPin className="w-4 h-4 mr-2" />
                     {area}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Events Dropdown */}
+            {/* Events Dropdown - No Icon */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-2">
-                  <Calendar className="w-4 h-4" />
+                <Button variant="ghost" size="sm" className="gap-1 font-normal">
                   <span className="text-sm">Events</span>
                   <ChevronDown className="w-3 h-3" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56 bg-white">
+              <DropdownMenuContent align="center" className="w-56 bg-white">
                 <DropdownMenuItem asChild>
                   <Link href="/events/weddings" className="w-full">
                     Wedding Services
@@ -115,18 +112,18 @@ export default function SiteHeader() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link href="/search" className="text-sm hover:text-primary transition-colors">
+            <Link href="/search" className="text-sm hover:text-primary transition-colors font-normal">
               Explore
             </Link>
           </nav>
 
-          {/* Right Actions - Icon Only with Popovers */}
-          <div className="flex items-center gap-1">
+          {/* Right Actions - Larger Icons with Popovers */}
+          <div className="flex items-center gap-2">
             {/* Referrals Popover */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="sm" className="relative">
-                  <Gift className="w-5 h-5" />
+                <Button variant="ghost" size="icon" className="h-10 w-10">
+                  <Gift className="w-6 h-6" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-64 bg-white" align="end">
@@ -147,8 +144,8 @@ export default function SiteHeader() {
             {/* Cart Popover */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="sm" className="relative">
-                  <ShoppingCart className="w-5 h-5" />
+                <Button variant="ghost" size="icon" className="h-10 w-10 relative">
+                  <ShoppingCart className="w-6 h-6" />
                   {totalItems > 0 && (
                     <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center font-semibold">
                       {totalItems}
@@ -180,8 +177,8 @@ export default function SiteHeader() {
             {/* Auth Popover */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="sm" className="relative">
-                  <User className="w-5 h-5" />
+                <Button variant="ghost" size="icon" className="h-10 w-10">
+                  <User className="w-6 h-6" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-64 bg-white" align="end">

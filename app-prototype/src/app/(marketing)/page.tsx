@@ -1,5 +1,6 @@
 import Container from "@/components/layout/Container";
 import Link from "next/link";
+import Image from "next/image";
 import AISearchBar from "@/components/search/AISearchBar";
 import PopularServices from "@/components/home/PopularServices";
 import { SERVICE_CATEGORIES } from "@/lib/constants/categories";
@@ -135,14 +136,20 @@ export default function MarketingHome() {
             <p className="text-muted-foreground">Premium beauty, healthcare & wellness partners</p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {/* Collaboration 1 - L'Oréal */}
             <Link
               href="/collaborations/loreal"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+              className="group flex flex-col items-center justify-center p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">L</span>
+              <div className="h-16 w-full flex items-center justify-center mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+                <Image
+                  src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=200&h=80&fit=crop"
+                  alt="L'Oréal Professional"
+                  width={120}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-semibold text-sm text-center">L'Oréal Professional</h3>
               <p className="text-xs text-muted-foreground text-center mt-1">Premium hair care</p>
@@ -151,10 +158,16 @@ export default function MarketingHome() {
             {/* Collaboration 2 - OPI */}
             <Link
               href="/collaborations/opi"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+              className="group flex flex-col items-center justify-center p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">O</span>
+              <div className="h-16 w-full flex items-center justify-center mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+                <Image
+                  src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=200&h=80&fit=crop"
+                  alt="OPI"
+                  width={120}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-semibold text-sm text-center">OPI</h3>
               <p className="text-xs text-muted-foreground text-center mt-1">Luxury nail products</p>
@@ -163,10 +176,16 @@ export default function MarketingHome() {
             {/* Collaboration 3 - Aveda */}
             <Link
               href="/collaborations/aveda"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+              className="group flex flex-col items-center justify-center p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">A</span>
+              <div className="h-16 w-full flex items-center justify-center mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+                <Image
+                  src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=200&h=80&fit=crop"
+                  alt="Aveda"
+                  width={120}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-semibold text-sm text-center">Aveda</h3>
               <p className="text-xs text-muted-foreground text-center mt-1">Plant-based wellness</p>
@@ -175,10 +194,16 @@ export default function MarketingHome() {
             {/* Collaboration 4 - Dermalogica */}
             <Link
               href="/collaborations/dermalogica"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+              className="group flex flex-col items-center justify-center p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">D</span>
+              <div className="h-16 w-full flex items-center justify-center mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+                <Image
+                  src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=200&h=80&fit=crop"
+                  alt="Dermalogica"
+                  width={120}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-semibold text-sm text-center">Dermalogica</h3>
               <p className="text-xs text-muted-foreground text-center mt-1">Professional skincare</p>
@@ -187,10 +212,16 @@ export default function MarketingHome() {
             {/* Collaboration 5 - Aromatherapy Associates */}
             <Link
               href="/collaborations/aromatherapy"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+              className="group flex flex-col items-center justify-center p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">AA</span>
+              <div className="h-16 w-full flex items-center justify-center mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+                <Image
+                  src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=200&h=80&fit=crop"
+                  alt="Aromatherapy Associates"
+                  width={120}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-semibold text-sm text-center">Aromatherapy</h3>
               <p className="text-xs text-muted-foreground text-center mt-1">Wellness massage oils</p>
@@ -199,10 +230,16 @@ export default function MarketingHome() {
             {/* Collaboration 6 - ghd */}
             <Link
               href="/collaborations/ghd"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+              className="group flex flex-col items-center justify-center p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-slate-400 to-slate-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">ghd</span>
+              <div className="h-16 w-full flex items-center justify-center mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+                <Image
+                  src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=200&h=80&fit=crop"
+                  alt="ghd"
+                  width={120}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-semibold text-sm text-center">ghd</h3>
               <p className="text-xs text-muted-foreground text-center mt-1">Professional styling</p>
@@ -211,10 +248,16 @@ export default function MarketingHome() {
             {/* Collaboration 7 - Kérastase */}
             <Link
               href="/collaborations/kerastase"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+              className="group flex flex-col items-center justify-center p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">K</span>
+              <div className="h-16 w-full flex items-center justify-center mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+                <Image
+                  src="https://images.unsplash.com/photo-1571875257727-256c39da42af?w=200&h=80&fit=crop"
+                  alt="Kérastase"
+                  width={120}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-semibold text-sm text-center">Kérastase</h3>
               <p className="text-xs text-muted-foreground text-center mt-1">Luxury hair treatments</p>
@@ -223,10 +266,16 @@ export default function MarketingHome() {
             {/* Collaboration 8 - Clarins */}
             <Link
               href="/collaborations/clarins"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+              className="group flex flex-col items-center justify-center p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">C</span>
+              <div className="h-16 w-full flex items-center justify-center mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+                <Image
+                  src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=200&h=80&fit=crop"
+                  alt="Clarins"
+                  width={120}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-semibold text-sm text-center">Clarins</h3>
               <p className="text-xs text-muted-foreground text-center mt-1">Spa-quality treatments</p>
