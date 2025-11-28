@@ -19,7 +19,7 @@ export default function BusinessTypeStep({ data, updateData }: Props) {
       </div>
 
       <div className="max-w-2xl mx-auto space-y-4 mt-8">
-        <Label className="text-base">Select your business type <span className="text-red-500">*</span></Label>
+        <Label className="text-base">Select your business type (choose one) <span className="text-red-500">*</span></Label>
         <RadioGroup
           value={data.businessType}
           onValueChange={(value: "individual" | "registered") =>

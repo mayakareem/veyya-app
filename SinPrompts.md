@@ -518,6 +518,44 @@ Update sinprompts with all session updates not just this one, from different ter
 
 ---
 
+**Timestamp:** 2025-11-28 (Current)
+
+**Prompt 6:**
+```
+In the provider application, provide a list down of all the sub categories in the catalog so the provider can mention which ones they have experience in. Additionally allow for each service to provide the number of years of expereince and any certifications they would like to share. Provide a single select option for the 'Business type'.
+```
+
+**Actions Taken:**
+- Updated OnboardingData type to include `selectedSubcategories` array with:
+  - categoryName
+  - subcategoryName
+  - yearsOfExperience
+  - certifications
+- Completely redesigned ServiceSelectionStep component:
+  - Shows all 8 main categories (Beauty, Nails, Hair, Makeup, Pet Care, Cleaning, Wellness, Fitness)
+  - Expands to show subcategories when category is selected
+  - Lists all subcategories from the catalog (e.g., Beauty has: Facial Treatment, Waxing, Eyebrow Threading, Eyelash Extensions)
+  - Added years of experience input field (number input with 0.5 step) for each selected subcategory
+  - Added certifications textarea (optional) for each selected subcategory
+  - Real-time validation showing which subcategories need experience data
+  - Summary section showing all selected services with experience years
+- Clarified Business Type as single-select by adding "(choose one)" to label
+- Business Type already uses RadioGroup which is inherently single-select
+- Enhanced UI with:
+  - Collapsible category sections
+  - Visual indicators for selected items
+  - Experience and certification fields show only when subcategory is selected
+  - Summary card at bottom showing selection count and details
+
+**Files Modified:**
+- `app-prototype/src/app/providers/onboarding/page.tsx` - Updated OnboardingData type
+- `app-prototype/src/components/onboarding/ServiceSelectionStep.tsx` - Complete redesign
+- `app-prototype/src/components/onboarding/BusinessTypeStep.tsx` - Clarified single-select
+
+**Status:** Completed
+
+---
+
 ## Instructions for Future Updates
 
 When new commands are given:

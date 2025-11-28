@@ -36,6 +36,12 @@ export type OnboardingData = {
 
   // Services
   selectedCategories: string[];
+  selectedSubcategories: Array<{
+    categoryName: string;
+    subcategoryName: string;
+    yearsOfExperience: string;
+    certifications: string;
+  }>;
   services: Array<{
     name: string;
     price: string;
@@ -83,6 +89,7 @@ export default function ProviderOnboarding() {
     yearsOfExperience: "",
     bio: "",
     selectedCategories: [],
+    selectedSubcategories: [],
     services: [],
     bankName: "",
     accountNumber: "",
