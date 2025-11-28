@@ -75,10 +75,13 @@ export default function MarketingHome() {
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {/* Step 1 */}
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                <span className="text-3xl">🔍</span>
+              <div className="relative w-20 h-20 mx-auto">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl rotate-6"></div>
+                <div className="relative w-full h-full bg-primary rounded-2xl flex items-center justify-center shadow-lg">
+                  <span className="text-4xl font-bold text-primary-foreground">1</span>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold">1. Search & Browse</h3>
+              <h3 className="text-xl font-semibold">Search & Browse</h3>
               <p className="text-muted-foreground">
                 Find verified providers for beauty, pet care, cleaning, and wellness services near you
               </p>
@@ -86,10 +89,13 @@ export default function MarketingHome() {
 
             {/* Step 2 */}
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                <span className="text-3xl">📅</span>
+              <div className="relative w-20 h-20 mx-auto">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl rotate-6"></div>
+                <div className="relative w-full h-full bg-primary rounded-2xl flex items-center justify-center shadow-lg">
+                  <span className="text-4xl font-bold text-primary-foreground">2</span>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold">2. Book Instantly</h3>
+              <h3 className="text-xl font-semibold">Book Instantly</h3>
               <p className="text-muted-foreground">
                 See real-time availability, transparent pricing, and book your preferred time slot in seconds
               </p>
@@ -97,10 +103,13 @@ export default function MarketingHome() {
 
             {/* Step 3 */}
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                <span className="text-3xl">✨</span>
+              <div className="relative w-20 h-20 mx-auto">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl rotate-6"></div>
+                <div className="relative w-full h-full bg-primary rounded-2xl flex items-center justify-center shadow-lg">
+                  <span className="text-4xl font-bold text-primary-foreground">3</span>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold">3. Enjoy & Review</h3>
+              <h3 className="text-xl font-semibold">Enjoy & Review</h3>
               <p className="text-muted-foreground">
                 Get premium service at home, pay securely, and share your experience with the community
               </p>
@@ -113,6 +122,114 @@ export default function MarketingHome() {
               className="inline-flex items-center justify-center rounded-lg bg-primary px-8 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
             >
               Start Booking Now
+            </Link>
+          </div>
+        </Container>
+      </section>
+
+      {/* Product Collaborations */}
+      <section className="bg-muted/20">
+        <Container className="py-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-semibold mb-3">Product Collaborations</h2>
+            <p className="text-muted-foreground">Partnering with leading brands to bring you the best</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            {/* Collaboration 1 */}
+            <Link
+              href="#"
+              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">G</span>
+              </div>
+              <h3 className="font-semibold text-sm text-center">Google Calendar</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Sync bookings</p>
+            </Link>
+
+            {/* Collaboration 2 */}
+            <Link
+              href="#"
+              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">S</span>
+              </div>
+              <h3 className="font-semibold text-sm text-center">Stripe</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Secure payments</p>
+            </Link>
+
+            {/* Collaboration 3 */}
+            <Link
+              href="#"
+              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">M</span>
+              </div>
+              <h3 className="font-semibold text-sm text-center">Mapbox</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Location services</p>
+            </Link>
+
+            {/* Collaboration 4 */}
+            <Link
+              href="#"
+              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">T</span>
+              </div>
+              <h3 className="font-semibold text-sm text-center">Twilio</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">SMS notifications</p>
+            </Link>
+
+            {/* Collaboration 5 */}
+            <Link
+              href="#"
+              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">A</span>
+              </div>
+              <h3 className="font-semibold text-sm text-center">AWS</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Cloud hosting</p>
+            </Link>
+
+            {/* Collaboration 6 */}
+            <Link
+              href="#"
+              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">F</span>
+              </div>
+              <h3 className="font-semibold text-sm text-center">Firebase</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Real-time updates</p>
+            </Link>
+
+            {/* Collaboration 7 */}
+            <Link
+              href="#"
+              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">S</span>
+              </div>
+              <h3 className="font-semibold text-sm text-center">Sanity</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Content management</p>
+            </Link>
+
+            {/* Collaboration 8 */}
+            <Link
+              href="#"
+              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">V</span>
+              </div>
+              <h3 className="font-semibold text-sm text-center">Vercel</h3>
+              <p className="text-xs text-muted-foreground text-center mt-1">Fast deployment</p>
             </Link>
           </div>
         </Container>
@@ -227,14 +344,9 @@ export default function MarketingHome() {
         </Container>
       </section>
 
-      {/* Press & Media */}
+      {/* Press & Media - Simple Marquee */}
       <section className="bg-muted/20">
         <Container className="py-12">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-semibold mb-2">As Featured In</h2>
-            <p className="text-sm text-muted-foreground">Veyya in the news</p>
-          </div>
-
           <div className="relative overflow-hidden">
             <div className="flex gap-12 animate-marquee">
               {/* Logo 1 - TechCrunch */}
