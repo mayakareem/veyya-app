@@ -74,6 +74,56 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
     description: `${subcategory.name} - ${service.name}`,
   };
 
+  // Get bundle recommendations
+  const bundleRecommendations = getBundleRecommendations(serviceId);
+  const hasBundles = bundleRecommendations.length > 0;
+
+  // Calculate bundle discount
+  const bundleDiscount = selectedBundleServices.length > 0
+    ? calculateBundleDiscount(cartItem, selectedBundleServices)
+    : null;
+
+  // Toggle bundle service selection
+  const toggleBundleService = (bundleService: BundleOption) => {
+    setSelectedBundleServices(prev => {
+      const exists = prev.find(s => s.serviceId === bundleService.serviceId);
+      if (exists) {
+        return prev.filter(s => s.serviceId !== bundleService.serviceId);
+      } else {
+        return [...prev, bundleService];
+      }
+    });
+  };
+
+  // Add service with bundles to cart
+  const handleAddWithBundles = () => {
+    // Add main service
+    addToCart(cartItem);
+
+    // Add all selected bundle services
+    selectedBundleServices.forEach(bundleService => {
+      const bundleCartItem = {
+        name: bundleService.serviceName,
+        price: bundleService.price,
+        duration: parseInt(bundleService.duration.split(" ")[0] || "60"),
+        category: bundleService.category,
+        subcategory: bundleService.subcategory,
+        description: `${bundleService.subcategory} - ${bundleService.serviceName}`,
+      };
+      addToCart(bundleCartItem);
+    });
+
+    // Show success message with savings
+    if (bundleDiscount) {
+      toast.success(`Bundle added! You saved ฿${bundleDiscount.savings} (${bundleDiscount.discount}% off)`);
+    } else {
+      toast.success(`${service.name} added to cart`);
+    }
+
+    setShowBundleRecommendations(false);
+    setSelectedBundleServices([]);
+  };
+
   // Get today's date
   const today = new Date();
   const todayStr = today.toISOString().split('T')[0];
@@ -446,8 +496,12 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
                 {quantity === 0 ? (
                   <Button
                     onClick={() => {
-                      addToCart(cartItem);
-                      toast.success(`${service.name} added to cart`);
+                      if (hasBundles) {
+                        setShowBundleRecommendations(true);
+                      } else {
+                        addToCart(cartItem);
+                        toast.success(`${service.name} added to cart`);
+                      }
                     }}
                     className="w-full gap-2"
                   >
@@ -516,6 +570,149 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
           </div>
         </div>
       </Container>
+
+      {/* Bundle Recommendations Modal */}
+      {showBundleRecommendations && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowBundleRecommendations(false)}
+        >
+          <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full sm:max-w-2xl sm:mx-4 max-h-[85vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold flex items-center gap-2">
+                  <Tag className="w-5 h-5 text-primary" />
+                  Frequently Bundled Together
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Save up to 20% when you bundle services
+                </p>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowBundleRecommendations(false)}
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-4">
+              {/* Selected Service */}
+              <div className="bg-muted/50 rounded-lg p-4 border-2 border-primary">
+                <div className="flex items-center gap-2 text-sm text-primary font-semibold mb-2">
+                  <div className="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-xs">
+                    ✓
+                  </div>
+                  Selected Service
+                </div>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="font-semibold">{service.name}</h3>
+                    <p className="text-sm text-muted-foreground">{service.duration}</p>
+                  </div>
+                  <p className="font-bold text-primary">฿{cartItem.price}</p>
+                </div>
+              </div>
+
+              {/* Bundle Options */}
+              <div>
+                <h3 className="font-semibold mb-3">Add These Services</h3>
+                <div className="space-y-2">
+                  {bundleRecommendations.map((bundleService) => {
+                    const isSelected = selectedBundleServices.some(s => s.serviceId === bundleService.serviceId);
+                    return (
+                      <div
+                        key={bundleService.serviceId}
+                        className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                          isSelected ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
+                        }`}
+                        onClick={() => toggleBundleService(bundleService)}
+                      >
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-start gap-3 flex-1">
+                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                              isSelected ? 'bg-primary border-primary' : 'border-muted-foreground'
+                            }`}>
+                              {isSelected && (
+                                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                </svg>
+                              )}
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="font-semibold">{bundleService.serviceName}</h4>
+                              <p className="text-xs text-muted-foreground">
+                                {bundleService.subcategory} • {bundleService.duration}
+                              </p>
+                            </div>
+                          </div>
+                          <p className="font-bold">฿{bundleService.price}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Price Summary */}
+              <div className="border-t pt-4">
+                {bundleDiscount ? (
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm text-muted-foreground">
+                      <span>Original Total</span>
+                      <span className="line-through">฿{bundleDiscount.originalTotal.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="font-semibold">Bundle Discount ({bundleDiscount.discount}%)</p>
+                        <p className="text-xs text-green-600">
+                          You save ฿{bundleDiscount.savings}!
+                        </p>
+                      </div>
+                      <p className="text-2xl font-bold text-primary">
+                        ฿{bundleDiscount.discountedTotal.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center text-sm text-muted-foreground py-2">
+                    Select services to see your savings
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Footer Actions */}
+            <div className="sticky bottom-0 bg-white border-t px-6 py-4 flex gap-3">
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => {
+                  addToCart(cartItem);
+                  toast.success(`${service.name} added to cart`);
+                  setShowBundleRecommendations(false);
+                  setSelectedBundleServices([]);
+                }}
+              >
+                Skip Bundle
+              </Button>
+              <Button
+                className="flex-1"
+                disabled={selectedBundleServices.length === 0}
+                onClick={handleAddWithBundles}
+              >
+                {selectedBundleServices.length > 0
+                  ? `Add Bundle (Save ฿${bundleDiscount?.savings})`
+                  : 'Select Services'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
