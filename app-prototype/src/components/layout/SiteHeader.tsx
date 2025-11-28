@@ -14,7 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ShoppingCart, MapPin, Gift, ChevronDown, Calendar, User } from "lucide-react";
+import { ShoppingCart, MapPin, Gift, ChevronDown, Calendar, User, Menu, X } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 
 const BANGKOK_AREAS = [
@@ -35,6 +35,7 @@ export default function SiteHeader() {
   const totalItems = getTotalItems();
   const [selectedLocation, setSelectedLocation] = useState<string>("Sukhumvit");
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Auto-detect location on mount (simplified for demo)
   useEffect(() => {
@@ -47,12 +48,22 @@ export default function SiteHeader() {
     <>
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden h-10 w-10"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </Button>
+
           {/* Logo - Larger & Clickable */}
           <Link href="/" className="text-2xl font-bold tracking-tight text-primary hover:text-primary/80 transition-colors">
             Veyya
           </Link>
 
-          {/* Center Navigation - Text Only */}
+          {/* Center Navigation - Text Only - Desktop Only */}
           <nav className="absolute left-1/2 -translate-x-1/2 hidden lg:flex items-center gap-8">
             {/* Location Dropdown - No Icon */}
             <DropdownMenu>
@@ -117,13 +128,13 @@ export default function SiteHeader() {
             </Link>
           </nav>
 
-          {/* Right Actions - Larger Icons with Popovers */}
-          <div className="flex items-center gap-2">
+          {/* Right Actions - Responsive Icons with Popovers */}
+          <div className="flex items-center gap-1 sm:gap-2">
             {/* Referrals Popover */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-12 w-12">
-                  <Gift className="w-7 h-7" />
+                <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-12 sm:w-12">
+                  <Gift className="w-5 h-5 sm:w-7 sm:h-7" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-64 bg-white" align="end">
@@ -144,8 +155,8 @@ export default function SiteHeader() {
             {/* Cart Popover */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-12 w-12 relative">
-                  <ShoppingCart className="w-7 h-7" />
+                <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-12 sm:w-12 relative">
+                  <ShoppingCart className="w-5 h-5 sm:w-7 sm:h-7" />
                   {totalItems > 0 && (
                     <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center font-semibold">
                       {totalItems}
@@ -177,8 +188,8 @@ export default function SiteHeader() {
             {/* Auth Popover */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-12 w-12">
-                  <User className="w-7 h-7" />
+                <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-12 sm:w-12">
+                  <User className="w-5 h-5 sm:w-7 sm:h-7" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-64 bg-white" align="end">
@@ -209,6 +220,91 @@ export default function SiteHeader() {
             </Popover>
           </div>
         </div>
+
+        {/* Mobile Menu Drawer */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t bg-background">
+            <div className="mx-auto max-w-7xl px-4 py-4 space-y-4">
+              {/* Location Dropdown */}
+              <div className="space-y-2">
+                <p className="text-xs font-semibold text-muted-foreground uppercase">Location</p>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-full justify-between">
+                      <span>{selectedLocation}</span>
+                      <ChevronDown className="w-4 h-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-[calc(100vw-2rem)] bg-white">
+                    {BANGKOK_AREAS.map((area) => (
+                      <DropdownMenuItem
+                        key={area}
+                        onClick={() => {
+                          setSelectedLocation(area);
+                          setMobileMenuOpen(false);
+                        }}
+                        className={selectedLocation === area ? "bg-muted" : ""}
+                      >
+                        {area}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              {/* Events Links */}
+              <div className="space-y-2">
+                <p className="text-xs font-semibold text-muted-foreground uppercase">Events</p>
+                <div className="space-y-1">
+                  <Link
+                    href="/events/weddings"
+                    className="block px-4 py-2 rounded-lg hover:bg-muted transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Wedding Services
+                  </Link>
+                  <Link
+                    href="/events/parties"
+                    className="block px-4 py-2 rounded-lg hover:bg-muted transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Party Planning
+                  </Link>
+                  <Link
+                    href="/events/corporate"
+                    className="block px-4 py-2 rounded-lg hover:bg-muted transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Corporate Events
+                  </Link>
+                  <Link
+                    href="/events/photoshoots"
+                    className="block px-4 py-2 rounded-lg hover:bg-muted transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Photoshoots
+                  </Link>
+                  <Link
+                    href="/events/wellness"
+                    className="block px-4 py-2 rounded-lg hover:bg-muted transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Wellness Retreats
+                  </Link>
+                </div>
+              </div>
+
+              {/* Explore */}
+              <Link
+                href="/search"
+                className="block px-4 py-3 bg-primary text-primary-foreground rounded-lg text-center font-semibold hover:bg-primary/90 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Explore Services
+              </Link>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Auth Modal */}
