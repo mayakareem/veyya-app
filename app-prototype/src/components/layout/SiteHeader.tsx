@@ -123,7 +123,7 @@ export default function SiteHeader() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link href="/search" className="text-sm hover:text-primary transition-colors font-normal">
+            <Link href="/explore" className="text-sm hover:text-primary transition-colors font-normal">
               Explore
             </Link>
           </nav>
@@ -296,7 +296,7 @@ export default function SiteHeader() {
 
               {/* Explore */}
               <Link
-                href="/search"
+                href="/explore"
                 className="block px-4 py-3 bg-primary text-primary-foreground rounded-lg text-center font-semibold hover:bg-primary/90 transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
