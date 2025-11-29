@@ -169,7 +169,7 @@ export default function ProviderOnboarding() {
 
           {/* Progress Steps */}
           <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center mb-4">
               {steps.map((step, index) => {
                 const Icon = step.icon;
                 const isActive = currentStep === step.id;
@@ -177,7 +177,7 @@ export default function ProviderOnboarding() {
 
                 return (
                   <div key={step.id} className="flex items-center flex-1">
-                    <div className="flex flex-col items-center flex-1">
+                    <div className="flex flex-col items-center w-full">
                       <button
                         onClick={() => {
                           setCurrentStep(step.id);
@@ -206,11 +206,13 @@ export default function ProviderOnboarding() {
                       </p>
                     </div>
                     {index < steps.length - 1 && (
-                      <div
-                        className={`h-0.5 flex-1 mx-2 transition-colors ${
-                          isCompleted ? "bg-primary" : "bg-muted"
-                        }`}
-                      />
+                      <div className="flex-1 px-2">
+                        <div
+                          className={`h-0.5 w-full transition-colors ${
+                            isCompleted ? "bg-primary" : "bg-muted"
+                          }`}
+                        />
+                      </div>
                     )}
                   </div>
                 );
