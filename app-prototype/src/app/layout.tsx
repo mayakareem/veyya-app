@@ -3,7 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { CartProvider } from "@/contexts/CartContext";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
-import SiteHeader from "@/components/layout/SiteHeader";
+import ConditionalHeader from "@/components/layout/ConditionalHeader";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
 import "@/styles/theme.css";
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geist.className} bg-background text-foreground flex flex-col min-h-screen`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <CartProvider>
-            <SiteHeader />
+            <ConditionalHeader />
             <div className="flex-1">{children}</div>
             <Footer />
             <Toaster />
