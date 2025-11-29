@@ -651,6 +651,30 @@ in the provider application make the spacing between the icons 'banking' and 've
 
 ---
 
+**Timestamp:** 2025-11-28 (Current)
+
+**Prompt 9:**
+```
+can i remove the other header when on this page?
+```
+
+**Actions Taken:**
+- Created provider-specific layout (`/app/providers/layout.tsx`)
+- This layout excludes the default SiteHeader component
+- Prevents double header display on provider pages
+- Provider pages now only show ProviderHeader (which is already included in each provider page)
+- Cleaner UI without duplicate navigation
+
+**Files Created:**
+- `app-prototype/src/app/providers/layout.tsx`
+
+**Commits:**
+- `e644f99` feat: remove duplicate header from provider pages
+
+**Status:** Completed
+
+---
+
 ## Instructions for Future Updates
 
 When new commands are given:
