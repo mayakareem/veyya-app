@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { ServiceDetail } from "@/lib/constants/categories";
@@ -39,6 +39,7 @@ export default function DateTimeSelector({
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const footerRef = useRef<HTMLDivElement>(null);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -100,6 +101,13 @@ export default function DateTimeSelector({
   const handleTimeSelect = (time: string) => {
     setSelectedTime(time);
   };
+
+  // Auto-scroll to footer when time is selected
+  useEffect(() => {
+    if (selectedTime && footerRef.current) {
+      footerRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [selectedTime]);
 
   const handleConfirm = () => {
     if (selectedDate && selectedTime) {
@@ -276,7 +284,7 @@ export default function DateTimeSelector({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-background border-t p-6 flex justify-end gap-3">
+        <div ref={footerRef} className="sticky bottom-0 bg-background border-t p-6 flex justify-end gap-3">
           <Button variant="outline" onClick={onCancel}>
             Cancel
           </Button>

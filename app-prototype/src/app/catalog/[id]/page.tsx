@@ -576,11 +576,11 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm"
           onClick={() => setShowBundleRecommendations(false)}
         >
-          <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full sm:max-w-2xl sm:mx-4 max-h-[85vh] overflow-y-auto"
+          <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full sm:max-w-2xl sm:mx-4 max-h-[90vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
+            <div className="flex-shrink-0 bg-white border-b px-6 py-4 flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-bold flex items-center gap-2">
                   <Tag className="w-5 h-5 text-primary" />
@@ -599,8 +599,8 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
               </Button>
             </div>
 
-            {/* Content */}
-            <div className="p-6 space-y-4">
+            {/* Content - Scrollable */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
               {/* Selected Service */}
               <div className="bg-muted/50 rounded-lg p-4 border-2 border-primary">
                 <div className="flex items-center gap-2 text-sm text-primary font-semibold mb-2">
