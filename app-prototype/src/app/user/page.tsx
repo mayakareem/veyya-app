@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireUser } from "@/lib/auth-helpers";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +11,13 @@ export const dynamic = "force-dynamic";
 
 export default async function UserDashboard() {
   const session = await auth();
-  const user = await requireUser();
+
+  // Redirect to login if not authenticated
+  if (!session?.user) {
+    redirect("/api/auth/signin?callbackUrl=/user");
+  }
+
+  const user = session.user;
 
   // Fetch user's bookings
   const bookings = await prisma.booking.findMany({
