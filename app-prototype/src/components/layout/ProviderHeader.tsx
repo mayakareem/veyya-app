@@ -62,6 +62,13 @@ export default function ProviderHeader() {
 
           {/* Center Navigation - Text Only - Desktop Only */}
           <nav className="absolute left-1/2 -translate-x-1/2 hidden lg:flex items-center gap-8">
+            {/* Dashboard Link */}
+            <Link href="/providers/dashboard">
+              <Button variant="ghost" size="sm" className="font-normal">
+                <span className="text-sm">Dashboard</span>
+              </Button>
+            </Link>
+
             {/* Location Dropdown - Shows provider's service area */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -239,6 +246,15 @@ export default function ProviderHeader() {
         {mobileMenuOpen && (
           <div className="lg:hidden border-t bg-background">
             <div className="mx-auto max-w-7xl px-4 py-4 space-y-4">
+              {/* Dashboard Link */}
+              <Link
+                href="/providers/dashboard"
+                className="block px-4 py-3 bg-primary text-primary-foreground rounded-lg text-center font-semibold hover:bg-primary/90 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Go to Dashboard
+              </Link>
+
               {/* Location Dropdown */}
               <div className="space-y-2">
                 <p className="text-xs font-semibold text-muted-foreground uppercase">Your Service Area</p>
