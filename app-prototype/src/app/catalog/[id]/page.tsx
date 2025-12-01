@@ -687,27 +687,54 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
             </div>
 
             {/* Footer Actions */}
-            <div className="sticky bottom-0 bg-white border-t px-6 py-4 flex gap-3">
+            <div className="flex-shrink-0 bg-white border-t px-6 py-4 flex flex-col gap-3">
+              <div className="flex gap-3">
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => {
+                    addToCart(cartItem);
+                    toast.success(`${service.name} added to cart`);
+                    setShowBundleRecommendations(false);
+                    setSelectedBundleServices([]);
+                  }}
+                >
+                  Skip Bundle
+                </Button>
+                <Button
+                  className="flex-1"
+                  disabled={selectedBundleServices.length === 0}
+                  onClick={handleAddWithBundles}
+                >
+                  {selectedBundleServices.length > 0
+                    ? `Add Bundle (Save ฿${bundleDiscount?.savings})`
+                    : 'Select Services'}
+                </Button>
+              </div>
               <Button
-                variant="outline"
-                className="flex-1"
+                variant="ghost"
+                className="w-full text-sm"
                 onClick={() => {
-                  addToCart(cartItem);
-                  toast.success(`${service.name} added to cart`);
-                  setShowBundleRecommendations(false);
+                  // Add all selected services
+                  if (selectedBundleServices.length > 0) {
+                    selectedBundleServices.forEach(bundleService => {
+                      const bundleCartItem = {
+                        name: bundleService.serviceName,
+                        price: bundleService.price,
+                        duration: parseInt(bundleService.duration.split(" ")[0] || "60"),
+                        category: bundleService.category,
+                        subcategory: bundleService.subcategory,
+                        description: `${bundleService.subcategory} - ${bundleService.serviceName}`,
+                      };
+                      addToCart(bundleCartItem);
+                    });
+                    toast.success(`${selectedBundleServices.length} service${selectedBundleServices.length > 1 ? 's' : ''} added`);
+                  }
+                  // Keep modal open and reset selections to allow adding more
                   setSelectedBundleServices([]);
                 }}
               >
-                Skip Bundle
-              </Button>
-              <Button
-                className="flex-1"
-                disabled={selectedBundleServices.length === 0}
-                onClick={handleAddWithBundles}
-              >
-                {selectedBundleServices.length > 0
-                  ? `Add Bundle (Save ฿${bundleDiscount?.savings})`
-                  : 'Select Services'}
+                Add Selected & Continue Adding
               </Button>
             </div>
           </div>
