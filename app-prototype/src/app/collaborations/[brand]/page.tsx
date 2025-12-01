@@ -1,13 +1,18 @@
+"use client";
+
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { use } from "react";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { BRAND_COLLABORATIONS } from "@/lib/constants/brands";
-import { Award, Clock, DollarSign, CheckCircle, ArrowLeft, Sparkles, Ticket, Package, Gift, Calendar as CalendarIcon } from "lucide-react";
+import { Award, Clock, DollarSign, CheckCircle, ArrowLeft, Sparkles, Ticket, Package, Gift, Calendar as CalendarIcon, Plus, Minus, ShoppingCart } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { ServiceDetail } from "@/lib/constants/categories";
 
 interface BrandPageProps {
   params: Promise<{
@@ -15,19 +20,26 @@ interface BrandPageProps {
   }>;
 }
 
-export async function generateStaticParams() {
-  return Object.keys(BRAND_COLLABORATIONS).map((brand) => ({
-    brand,
-  }));
-}
-
-export default async function BrandPage({ params }: BrandPageProps) {
-  const { brand: brandId } = await params;
+export default function BrandPage({ params }: BrandPageProps) {
+  const { brand: brandId } = use(params);
   const brand = BRAND_COLLABORATIONS[brandId];
+  const { addToCart, removeFromCart, getItemQuantity } = useCart();
 
   if (!brand) {
     notFound();
   }
+
+  // Convert brand service to ServiceDetail format for cart
+  const createServiceDetail = (serviceName: string, price: string, duration: string): ServiceDetail => {
+    const numericPrice = parseInt(price.replace(/[^0-9]/g, ''));
+    const numericDuration = parseInt(duration.replace(/[^0-9]/g, ''));
+    return {
+      name: serviceName,
+      price: numericPrice,
+      duration: numericDuration,
+      description: `${serviceName} from ${brand.name}`,
+    };
+  };
 
   return (
     <main className="min-h-screen">
@@ -169,11 +181,44 @@ export default async function BrandPage({ params }: BrandPageProps) {
                     <div className="text-sm text-muted-foreground">
                       All products are 100% authentic and professionally applied
                     </div>
-                    <Link href="/search">
-                      <Button size="lg" className="w-full sm:w-auto">
-                        Book This Service
-                      </Button>
-                    </Link>
+                    {(() => {
+                      const serviceDetail = createServiceDetail(service.name, service.price, service.duration);
+                      const quantity = getItemQuantity(service.name);
+
+                      return quantity > 0 ? (
+                        <div className="flex items-center gap-3">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => removeFromCart(service.name)}
+                          >
+                            <Minus className="h-4 w-4" />
+                          </Button>
+                          <span className="font-semibold min-w-[2rem] text-center">
+                            {quantity}
+                          </span>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => addToCart(serviceDetail)}
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                          <Badge className="ml-2 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
+                            In Cart
+                          </Badge>
+                        </div>
+                      ) : (
+                        <Button
+                          size="lg"
+                          className="w-full sm:w-auto gap-2"
+                          onClick={() => addToCart(serviceDetail)}
+                        >
+                          <ShoppingCart className="h-4 w-4" />
+                          Add to Cart
+                        </Button>
+                      );
+                    })()}
                   </div>
                 </CardContent>
               </Card>
@@ -339,12 +384,49 @@ export default async function BrandPage({ params }: BrandPageProps) {
                       </span>
                     </div>
 
-                    {/* Book Button */}
-                    <Link href="/search" className="block">
-                      <Button className="w-full" size="lg">
-                        Book This Bundle
-                      </Button>
-                    </Link>
+                    {/* Add to Cart Button */}
+                    {(() => {
+                      const bundleService = createServiceDetail(
+                        bundle.name,
+                        `฿${bundle.bundlePrice}`,
+                        "Varies"
+                      );
+                      const quantity = getItemQuantity(bundle.name);
+
+                      return quantity > 0 ? (
+                        <div className="flex items-center gap-3 w-full">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => removeFromCart(bundle.name)}
+                          >
+                            <Minus className="h-4 w-4" />
+                          </Button>
+                          <span className="font-semibold min-w-[2rem] text-center">
+                            {quantity}
+                          </span>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => addToCart(bundleService)}
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                          <Badge className="ml-auto bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
+                            In Cart
+                          </Badge>
+                        </div>
+                      ) : (
+                        <Button
+                          className="w-full gap-2"
+                          size="lg"
+                          onClick={() => addToCart(bundleService)}
+                        >
+                          <ShoppingCart className="h-4 w-4" />
+                          Add Bundle to Cart
+                        </Button>
+                      );
+                    })()}
                   </div>
                 </CardContent>
               </Card>
