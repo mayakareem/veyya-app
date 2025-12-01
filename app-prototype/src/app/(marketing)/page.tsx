@@ -129,7 +129,7 @@ export default function MarketingHome() {
       </section>
 
       {/* Product Collaborations - Beauty, Healthcare & Wellness Brands */}
-      <section className="bg-muted/20">
+      <section id="brand-collaborations" className="bg-muted/20">
         <Container className="py-10 sm:py-12 md:py-16">
           <div className="text-center mb-8 sm:mb-12 px-4 sm:px-0">
             <h2 className="text-2xl sm:text-3xl font-semibold mb-2 sm:mb-3">Brand Collaborations</h2>
