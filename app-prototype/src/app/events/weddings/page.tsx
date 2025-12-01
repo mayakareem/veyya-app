@@ -8,6 +8,8 @@ import Link from "next/link";
 import { Heart, Calendar, Users, Sparkles, Crown, Clock, CheckCircle, ShoppingCart, Plus, Minus } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { ServiceDetail } from "@/lib/constants/categories";
+import DateTimeSelector from "@/components/booking/DateTimeSelector";
+import { useState } from "react";
 
 const weddingPackages = [
   {
@@ -65,6 +67,8 @@ const individualServices = [
 
 export default function WeddingsPage() {
   const { addToCart, removeFromCart, getItemQuantity } = useCart();
+  const [showDateTimePicker, setShowDateTimePicker] = useState(false);
+  const [selectedService, setSelectedService] = useState<ServiceDetail | null>(null);
 
   const createService = (name: string, price: number, duration: number): ServiceDetail => ({
     name,
@@ -72,6 +76,24 @@ export default function WeddingsPage() {
     duration,
     description: `Professional ${name.toLowerCase()} service`,
   });
+
+  const handleAddToCart = (service: ServiceDetail) => {
+    setSelectedService(service);
+    setShowDateTimePicker(true);
+  };
+
+  const handleConfirmBooking = (date: string, time: string) => {
+    if (selectedService) {
+      addToCart(selectedService, date, time);
+      setShowDateTimePicker(false);
+      setSelectedService(null);
+    }
+  };
+
+  const handleCancelBooking = () => {
+    setShowDateTimePicker(false);
+    setSelectedService(null);
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-pink-50/50 to-background">
@@ -146,15 +168,15 @@ export default function WeddingsPage() {
                           <Minus className="h-4 w-4" />
                         </Button>
                         <span className="font-semibold min-w-[2rem] text-center">{quantity}</span>
-                        <Button variant="outline" size="icon" onClick={() => addToCart(service)}>
+                        <Button variant="outline" size="icon" onClick={() => handleAddToCart(service)}>
                           <Plus className="h-4 w-4" />
                         </Button>
                         <Badge className="ml-auto bg-green-100 text-green-800">In Cart</Badge>
                       </div>
                     ) : (
-                      <Button className="w-full gap-2" onClick={() => addToCart(service)}>
-                        <ShoppingCart className="h-4 w-4" />
-                        Add to Cart
+                      <Button className="w-full gap-2" onClick={() => handleAddToCart(service)}>
+                        <Calendar className="h-4 w-4" />
+                        Select Date & Time
                       </Button>
                     )}
                   </CardContent>
@@ -200,14 +222,14 @@ export default function WeddingsPage() {
                           <Minus className="h-3 w-3" />
                         </Button>
                         <span className="font-semibold text-sm min-w-[1.5rem] text-center">{quantity}</span>
-                        <Button variant="outline" size="sm" onClick={() => addToCart(serviceDetail)}>
+                        <Button variant="outline" size="sm" onClick={() => handleAddToCart(serviceDetail)}>
                           <Plus className="h-3 w-3" />
                         </Button>
                       </div>
                     ) : (
-                      <Button size="sm" className="w-full" onClick={() => addToCart(serviceDetail)}>
-                        <Plus className="h-3 w-3 mr-1" />
-                        Add
+                      <Button size="sm" className="w-full" onClick={() => handleAddToCart(serviceDetail)}>
+                        <Calendar className="h-3 w-3 mr-1" />
+                        Book
                       </Button>
                     )}
                   </CardContent>
@@ -291,6 +313,15 @@ export default function WeddingsPage() {
           </div>
         </Container>
       </section>
+
+      {/* Date/Time Selector Modal */}
+      {showDateTimePicker && selectedService && (
+        <DateTimeSelector
+          service={selectedService}
+          onConfirm={handleConfirmBooking}
+          onCancel={handleCancelBooking}
+        />
+      )}
     </main>
   );
 }

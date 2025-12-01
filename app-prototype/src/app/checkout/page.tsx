@@ -88,8 +88,10 @@ export default function CheckoutPage() {
       return;
     }
 
-    if (!formData.appointmentDate || !formData.appointmentTime) {
-      toast.error("Please select appointment date and time");
+    // Check if all services have booking dates and times
+    const missingBookings = cart.filter(item => !item.bookingDate || !item.bookingTime);
+    if (missingBookings.length > 0) {
+      toast.error("Please select date and time for all services");
       return;
     }
 
@@ -229,38 +231,6 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Appointment Time */}
-              <div className="border rounded-lg p-6 bg-card space-y-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="w-5 h-5 text-primary" />
-                  <h2 className="text-lg font-semibold">Appointment</h2>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="appointmentDate">Date *</Label>
-                    <Input
-                      id="appointmentDate"
-                      type="date"
-                      value={formData.appointmentDate}
-                      onChange={(e) => handleInputChange("appointmentDate", e.target.value)}
-                      min={new Date().toISOString().split('T')[0]}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="appointmentTime">Time *</Label>
-                    <Input
-                      id="appointmentTime"
-                      type="time"
-                      value={formData.appointmentTime}
-                      onChange={(e) => handleInputChange("appointmentTime", e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-
               {/* Payment Method */}
               <div className="border rounded-lg p-6 bg-card space-y-4">
                 <div className="flex items-center gap-2 mb-2">
@@ -383,6 +353,22 @@ export default function CheckoutPage() {
                           <p className="text-xs text-muted-foreground">
                             ฿{item.price} × {item.quantity}
                           </p>
+                          {item.bookingDate && item.bookingTime && (
+                            <div className="flex items-center gap-3 mt-1 text-xs text-primary">
+                              <div className="flex items-center gap-1">
+                                <Calendar className="w-3 h-3" />
+                                {new Date(item.bookingDate).toLocaleDateString('en-US', {
+                                  month: 'short',
+                                  day: 'numeric',
+                                  year: 'numeric'
+                                })}
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
+                                {item.bookingTime}
+                              </div>
+                            </div>
+                          )}
                         </div>
                         <div className="text-right">
                           <p className="font-semibold text-sm">

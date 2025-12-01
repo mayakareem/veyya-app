@@ -5,13 +5,16 @@ import { ServiceDetail } from "@/lib/constants/categories";
 
 export type CartItem = ServiceDetail & {
   quantity: number;
+  bookingDate?: string; // ISO date string
+  bookingTime?: string; // Time slot like "09:00"
 };
 
 type CartContextType = {
   cart: CartItem[];
-  addToCart: (service: ServiceDetail) => void;
+  addToCart: (service: ServiceDetail, bookingDate?: string, bookingTime?: string) => void;
   removeFromCart: (serviceName: string) => void;
   updateQuantity: (serviceName: string, quantity: number) => void;
+  updateBookingDetails: (serviceName: string, bookingDate: string, bookingTime: string) => void;
   clearCart: () => void;
   getItemQuantity: (serviceName: string) => number;
   getTotalItems: () => number;
@@ -23,18 +26,28 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (service: ServiceDetail) => {
+  const addToCart = (service: ServiceDetail, bookingDate?: string, bookingTime?: string) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.name === service.name);
       if (existing) {
         return prev.map((item) =>
           item.name === service.name
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + 1, bookingDate, bookingTime }
             : item
         );
       }
-      return [...prev, { ...service, quantity: 1 }];
+      return [...prev, { ...service, quantity: 1, bookingDate, bookingTime }];
     });
+  };
+
+  const updateBookingDetails = (serviceName: string, bookingDate: string, bookingTime: string) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.name === serviceName
+          ? { ...item, bookingDate, bookingTime }
+          : item
+      )
+    );
   };
 
   const removeFromCart = (serviceName: string) => {
@@ -90,6 +103,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         addToCart,
         removeFromCart,
         updateQuantity,
+        updateBookingDetails,
         clearCart,
         getItemQuantity,
         getTotalItems,
