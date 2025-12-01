@@ -800,9 +800,310 @@ export default function ProviderDashboard() {
                 )}
               </TabsContent>
             </Tabs>
+
+            {/* Certifications Section */}
+            <Card className="mb-8 mt-8">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="flex items-center gap-2">
+                      <Award className="h-5 w-5 text-primary" />
+                      My Certifications
+                    </CardTitle>
+                    <CardDescription>
+                      Veyya verified certifications - {mockCertifications.length} earned
+                    </CardDescription>
+                  </div>
+                  <Button variant="outline" size="sm" asChild>
+                    <a href="/providers/certifications">
+                      View All
+                    </a>
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {mockCertifications.map((cert) => (
+                    <div
+                      key={cert.id}
+                      className="p-4 border rounded-lg hover:border-primary transition-colors"
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <Award className="h-8 w-8 text-primary" />
+                        <Badge className={`${getCertificationLevelBadge(cert.level)} border`}>
+                          {cert.level}
+                        </Badge>
+                      </div>
+                      <h3 className="font-semibold mb-1">{cert.name}</h3>
+                      <p className="text-xs text-muted-foreground mb-2">{cert.category}</p>
+                      <div className="text-xs space-y-1">
+                        <p className="text-muted-foreground">
+                          Completed: {new Date(cert.completedDate).toLocaleDateString()}
+                        </p>
+                        <p className="text-muted-foreground">
+                          Valid until: {new Date(cert.expiryDate).toLocaleDateString()}
+                        </p>
+                        <p className="text-xs font-mono text-muted-foreground">
+                          {cert.certificateNumber}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Services & Pricing Section */}
+            <Card className="mb-8">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="flex items-center gap-2">
+                      <Briefcase className="h-5 w-5 text-primary" />
+                      My Services & Pricing
+                    </CardTitle>
+                    <CardDescription>
+                      Services you offer - {mockServices.filter(s => s.active).length} active
+                    </CardDescription>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit Services
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {/* Group services by category */}
+                  {Array.from(new Set(mockServices.map(s => s.category))).map((category) => (
+                    <div key={category}>
+                      <h3 className="text-sm font-semibold text-muted-foreground mb-2 uppercase">
+                        {category}
+                      </h3>
+                      <div className="space-y-2 mb-4">
+                        {mockServices
+                          .filter(s => s.category === category)
+                          .map((service) => (
+                            <div
+                              key={service.id}
+                              className={`flex items-center justify-between p-3 border rounded-lg ${
+                                service.active
+                                  ? "bg-background hover:border-primary transition-colors"
+                                  : "bg-muted opacity-60"
+                              }`}
+                            >
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <h4 className="font-medium">{service.name}</h4>
+                                  {!service.active && (
+                                    <Badge variant="outline" className="text-xs">
+                                      Inactive
+                                    </Badge>
+                                  )}
+                                </div>
+                                <p className="text-sm text-muted-foreground">
+                                  {service.duration}
+                                </p>
+                              </div>
+                              <div className="text-right">
+                                <p className="text-lg font-bold text-primary">
+                                  ฿{service.price.toLocaleString()}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  You earn: ฿{Math.round(service.price * 0.7).toLocaleString()}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </Container>
       </div>
+
+      {/* Earnings Modal */}
+      <Dialog open={showEarningsModal} onOpenChange={setShowEarningsModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <DollarSign className="h-5 w-5 text-primary" />
+              Earnings Details
+            </DialogTitle>
+            <DialogDescription>
+              View your earnings breakdown and payment history
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-primary/5 rounded-lg">
+                <p className="text-sm text-muted-foreground mb-1">This Month</p>
+                <p className="text-2xl font-bold">฿{mockStats.monthlyEarnings.toLocaleString()}</p>
+              </div>
+              <div className="p-4 bg-primary/5 rounded-lg">
+                <p className="text-sm text-muted-foreground mb-1">Total Earnings</p>
+                <p className="text-2xl font-bold">฿{mockStats.totalEarnings.toLocaleString()}</p>
+              </div>
+            </div>
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-semibold mb-2">Payment Information</h3>
+              <p className="text-sm text-muted-foreground">
+                Your earnings are processed weekly. The next payout is scheduled for December 6, 2025.
+              </p>
+            </div>
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-semibold mb-2">Earnings Breakdown</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Completed Services</span>
+                  <span className="font-medium">฿{mockStats.totalEarnings.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Platform Fee (30%)</span>
+                  <span className="font-medium text-red-600">-฿{Math.round(mockStats.totalEarnings * 0.3).toLocaleString()}</span>
+                </div>
+                <div className="border-t pt-2 flex justify-between">
+                  <span className="font-semibold">Net Earnings</span>
+                  <span className="font-bold text-primary">฿{Math.round(mockStats.totalEarnings * 0.7).toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Reviews Modal */}
+      <Dialog open={showReviewsModal} onOpenChange={setShowReviewsModal}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+              Reviews & Ratings
+            </DialogTitle>
+            <DialogDescription>
+              Your client reviews and rating history
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="p-4 bg-primary/5 rounded-lg text-center">
+              <div className="text-4xl font-bold flex items-center justify-center gap-2 mb-2">
+                {mockStats.averageRating}
+                <Star className="h-8 w-8 fill-yellow-400 text-yellow-400" />
+              </div>
+              <p className="text-muted-foreground">Based on {mockStats.totalReviews} reviews</p>
+            </div>
+            <div className="space-y-3">
+              <h3 className="font-semibold">Recent Reviews</h3>
+              {mockPastBookings.filter(b => b.review).map((booking) => (
+                <div key={booking.id} className="p-4 border rounded-lg">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <p className="font-medium">{booking.clientName}</p>
+                      <p className="text-sm text-muted-foreground">{booking.service}</p>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-4 w-4 ${
+                            i < (booking.rating || 0)
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-sm italic text-muted-foreground">"{booking.review}"</p>
+                  <p className="text-xs text-muted-foreground mt-2">{booking.date}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Bookings Modal */}
+      <Dialog open={showBookingsModal} onOpenChange={setShowBookingsModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CheckCircle2 className="h-5 w-5 text-green-600" />
+              Completed Bookings
+            </DialogTitle>
+            <DialogDescription>
+              Your booking history and statistics
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="grid grid-cols-3 gap-4">
+              <div className="p-4 bg-green-50 dark:bg-green-950/20 rounded-lg text-center">
+                <p className="text-2xl font-bold text-green-600">{mockStats.completedBookings}</p>
+                <p className="text-sm text-muted-foreground">Total Completed</p>
+              </div>
+              <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg text-center">
+                <p className="text-2xl font-bold text-blue-600">{mockScheduledBookings.length}</p>
+                <p className="text-sm text-muted-foreground">Scheduled</p>
+              </div>
+              <div className="p-4 bg-orange-50 dark:bg-orange-950/20 rounded-lg text-center">
+                <p className="text-2xl font-bold text-orange-600">{mockNewRequests.length}</p>
+                <p className="text-sm text-muted-foreground">Pending</p>
+              </div>
+            </div>
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-semibold mb-2">Performance Summary</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Average Rating</span>
+                  <span className="font-medium flex items-center gap-1">
+                    {mockStats.averageRating}
+                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Response Rate</span>
+                  <span className="font-medium">{mockStats.responseRate}%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Total Reviews</span>
+                  <span className="font-medium">{mockStats.totalReviews}</span>
+                </div>
+              </div>
+            </div>
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-semibold mb-2">Recent Completions</h3>
+              <div className="space-y-2">
+                {mockPastBookings.filter(b => b.status === "completed").slice(0, 3).map((booking) => (
+                  <div key={booking.id} className="flex items-center justify-between text-sm">
+                    <div>
+                      <p className="font-medium">{booking.service}</p>
+                      <p className="text-xs text-muted-foreground">{booking.date}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-medium text-green-600">+฿{booking.earnings}</p>
+                      <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`h-3 w-3 ${
+                              i < (booking.rating || 0)
+                                ? "fill-yellow-400 text-yellow-400"
+                                : "text-gray-300"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
