@@ -38,40 +38,44 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  const session = await auth();
+  try {
+    const session = await auth();
 
-  // Check if user is admin
-  if (!session?.user) {
-    redirect("/api/auth/signin?callbackUrl=/admin");
-  }
+    // Check if user is admin
+    if (!session?.user) {
+      redirect("/api/auth/signin?callbackUrl=/admin");
+    }
 
-  // Fetch real-time stats
-  const [
-    totalUsers,
-    totalProviders,
-    totalBookings,
-    activeBookingsToday,
-    completedBookingsToday,
-  ] = await Promise.all([
-    prisma.user.count(),
-    prisma.providerProfile.count(),
-    prisma.booking.count(),
-    prisma.booking.count({
-      where: {
-        createdAt: {
-          gte: new Date(new Date().setHours(0, 0, 0, 0)),
+    // Fetch real-time stats
+    const [
+      totalUsers,
+      totalProviders,
+      totalBookings,
+      activeBookingsToday,
+      completedBookingsToday,
+    ] = await Promise.all([
+      prisma.user.count(),
+      prisma.providerProfile.count(),
+      prisma.booking.count(),
+      prisma.booking.count({
+        where: {
+          createdAt: {
+            gte: new Date(new Date().setHours(0, 0, 0, 0)),
+          },
         },
-      },
-    }),
-    prisma.booking.count({
-      where: {
-        status: "COMPLETED",
-        createdAt: {
-          gte: new Date(new Date().setHours(0, 0, 0, 0)),
+      }),
+      prisma.booking.count({
+        where: {
+          status: "COMPLETED",
+          createdAt: {
+            gte: new Date(new Date().setHours(0, 0, 0, 0)),
+          },
         },
-      },
-    }),
-  ]);
+      }),
+    ]).catch((error) => {
+      console.error("Database error:", error);
+      throw new Error("Failed to fetch dashboard data");
+    });
 
   // Mock pending providers count (in production, add isVerified field to schema)
   const pendingProviders = 3;
@@ -712,4 +716,34 @@ export default async function AdminDashboard() {
       </Tabs>
     </main>
   );
+  } catch (error) {
+    console.error("Admin dashboard error:", error);
+    return (
+      <main className="mx-auto max-w-7xl p-6">
+        <Card className="border-red-200 bg-red-50">
+          <CardHeader>
+            <CardTitle className="text-red-700">Error Loading Admin Dashboard</CardTitle>
+            <CardDescription className="text-red-600">
+              {error instanceof Error ? error.message : "An unexpected error occurred"}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-4">
+              This could be due to:
+            </p>
+            <ul className="list-disc list-inside space-y-2 text-sm text-muted-foreground">
+              <li>Database connection issues</li>
+              <li>Missing environment variables (DATABASE_URL, NEXTAUTH_SECRET)</li>
+              <li>Authentication configuration problems</li>
+            </ul>
+            <div className="mt-6">
+              <Link href="/">
+                <Button variant="outline">Return to Home</Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
 }
