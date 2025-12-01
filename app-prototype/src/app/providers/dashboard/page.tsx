@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Container from "@/components/layout/Container";
 import ProviderHeader from "@/components/layout/ProviderHeader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,7 +24,9 @@ import {
   Briefcase,
   Edit,
   ChevronRight,
-  X
+  X,
+  Navigation,
+  Timer
 } from "lucide-react";
 import {
   Dialog,
@@ -329,11 +331,39 @@ const getCertificationLevelBadge = (level: string) => {
   }
 };
 
+// Helper function to calculate time until booking
+const getTimeUntilBooking = (dateStr: string, timeStr: string) => {
+  const bookingDateTime = new Date(`${dateStr} ${timeStr}`);
+  const now = new Date();
+  const diff = bookingDateTime.getTime() - now.getTime();
+
+  if (diff < 0) return "Booking time passed";
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+  if (days > 0) return `${days}d ${hours}h ${minutes}m`;
+  if (hours > 0) return `${hours}h ${minutes}m`;
+  return `${minutes}m`;
+};
+
 export default function ProviderDashboard() {
   const [activeTab, setActiveTab] = useState("new");
   const [showEarningsModal, setShowEarningsModal] = useState(false);
   const [showReviewsModal, setShowReviewsModal] = useState(false);
   const [showBookingsModal, setShowBookingsModal] = useState(false);
+  const [showResponseRateModal, setShowResponseRateModal] = useState(false);
+  const [selectedBookingForMap, setSelectedBookingForMap] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // Update timer every minute
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); // Update every minute
+    return () => clearInterval(timer);
+  }, []);
 
   const handleAcceptBooking = (bookingId: string) => {
     console.log("Accepting booking:", bookingId);
@@ -451,7 +481,10 @@ export default function ProviderDashboard() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card
+                className="cursor-pointer hover:border-primary transition-colors"
+                onClick={() => setShowResponseRateModal(true)}
+              >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     Response Rate
@@ -462,8 +495,9 @@ export default function ProviderDashboard() {
                   <div className="text-2xl font-bold">
                     {mockStats.responseRate}%
                   </div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground flex items-center gap-1">
                     Last 30 days
+                    <ChevronRight className="h-3 w-3" />
                   </p>
                 </CardContent>
               </Card>
@@ -643,6 +677,34 @@ export default function ProviderDashboard() {
                           <div className="flex items-center gap-2 text-sm">
                             <Phone className="h-4 w-4 text-muted-foreground" />
                             <span>{booking.clientPhone}</span>
+                          </div>
+                        </div>
+
+                        {/* Countdown Timer & Navigation */}
+                        <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-lg border border-green-200 dark:border-green-800">
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center gap-2">
+                              <Timer className="h-5 w-5 text-green-600" />
+                              <div>
+                                <p className="text-sm font-medium text-green-900 dark:text-green-300">
+                                  Time until booking
+                                </p>
+                                <p className="text-2xl font-bold text-green-600">
+                                  {getTimeUntilBooking(booking.date, booking.time)}
+                                </p>
+                              </div>
+                            </div>
+                            <Button
+                              onClick={() => setSelectedBookingForMap(booking.id)}
+                              className="bg-green-600 hover:bg-green-700"
+                            >
+                              <Navigation className="h-4 w-4 mr-2" />
+                              Navigate
+                            </Button>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-green-800 dark:text-green-200">
+                            <MapPin className="h-4 w-4" />
+                            <span>Estimated travel time: 15-20 min</span>
                           </div>
                         </div>
 
@@ -927,7 +989,7 @@ export default function ProviderDashboard() {
 
       {/* Earnings Modal */}
       <Dialog open={showEarningsModal} onOpenChange={setShowEarningsModal}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl bg-white dark:bg-gray-900">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <DollarSign className="h-5 w-5 text-primary" />
@@ -977,7 +1039,7 @@ export default function ProviderDashboard() {
 
       {/* Reviews Modal */}
       <Dialog open={showReviewsModal} onOpenChange={setShowReviewsModal}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-900">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
@@ -1028,7 +1090,7 @@ export default function ProviderDashboard() {
 
       {/* Bookings Modal */}
       <Dialog open={showBookingsModal} onOpenChange={setShowBookingsModal}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl bg-white dark:bg-gray-900">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-green-600" />
@@ -1100,6 +1162,119 @@ export default function ProviderDashboard() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Response Rate Modal */}
+      <Dialog open={showResponseRateModal} onOpenChange={setShowResponseRateModal}>
+        <DialogContent className="max-w-2xl bg-white dark:bg-gray-900">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-primary" />
+              Response Rate Performance
+            </DialogTitle>
+            <DialogDescription>
+              Track how quickly you respond to booking requests
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-6 mt-4">
+            <div className="text-center p-6 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg">
+              <p className="text-5xl font-bold text-primary mb-2">{mockStats.responseRate}%</p>
+              <p className="text-muted-foreground">Average response rate</p>
+              <Badge className="mt-2 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
+                Excellent Performance
+              </Badge>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="font-semibold">Last 30 Days Breakdown</h3>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                  <span className="text-sm">Responded within 5 minutes</span>
+                  <span className="font-bold text-green-600">85%</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                  <span className="text-sm">Responded within 15 minutes</span>
+                  <span className="font-bold text-blue-600">12%</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                  <span className="text-sm">Responded within 30 minutes</span>
+                  <span className="font-bold text-orange-600">3%</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
+              <p className="text-sm text-blue-900 dark:text-blue-300">
+                <strong>Tip:</strong> Faster response rates (within 5 minutes) increase your booking acceptance by up to 40%!
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Map Navigation Modal */}
+      <Dialog open={selectedBookingForMap !== null} onOpenChange={() => setSelectedBookingForMap(null)}>
+        <DialogContent className="max-w-4xl bg-white dark:bg-gray-900">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Navigation className="h-5 w-5 text-primary" />
+              Navigate to Booking Location
+            </DialogTitle>
+            <DialogDescription>
+              Route and estimated travel time
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 mt-4">
+            {/* Mock Map Placeholder */}
+            <div className="w-full h-96 bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900/20 dark:to-green-900/20 rounded-lg flex items-center justify-center border-2 border-dashed border-primary/30">
+              <div className="text-center">
+                <MapPin className="h-16 w-16 mx-auto text-primary mb-4" />
+                <p className="font-semibold text-lg mb-2">Interactive Map</p>
+                <p className="text-sm text-muted-foreground max-w-md">
+                  Google Maps integration will show your current location, route to destination, and real-time traffic updates
+                </p>
+              </div>
+            </div>
+
+            {/* Travel Details */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg text-center">
+                <Clock className="h-6 w-6 mx-auto text-blue-600 mb-2" />
+                <p className="text-2xl font-bold text-blue-600">15-20 min</p>
+                <p className="text-xs text-muted-foreground">Estimated travel time</p>
+              </div>
+              <div className="p-4 bg-green-50 dark:bg-green-950/20 rounded-lg text-center">
+                <Navigation className="h-6 w-6 mx-auto text-green-600 mb-2" />
+                <p className="text-2xl font-bold text-green-600">4.2 km</p>
+                <p className="text-xs text-muted-foreground">Distance</p>
+              </div>
+              <div className="p-4 bg-purple-50 dark:bg-purple-950/20 rounded-lg text-center">
+                <TrendingUp className="h-6 w-6 mx-auto text-purple-600 mb-2" />
+                <p className="text-2xl font-bold text-purple-600">Light</p>
+                <p className="text-xs text-muted-foreground">Traffic conditions</p>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <Button className="flex-1 bg-primary" asChild>
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=Sukhumvit,Bangkok`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Navigation className="h-4 w-4 mr-2" />
+                  Open in Google Maps
+                </a>
+              </Button>
+              <Button variant="outline" onClick={() => setSelectedBookingForMap(null)}>
+                Close
+              </Button>
             </div>
           </div>
         </DialogContent>
