@@ -1,0 +1,1802 @@
+"use client";
+
+import { notFound } from "next/navigation";
+import Container from "@/components/layout/Container";
+import ProviderHeader from "@/components/layout/ProviderHeader";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import {
+  GraduationCap,
+  Award,
+  Clock,
+  CheckCircle2,
+  Sparkles,
+  HeartPulse,
+  Dumbbell,
+  PawPrint,
+  Scissors,
+  Palette,
+  Hand,
+  SprayCan,
+  ChevronDown,
+  ChevronUp,
+  BookOpen,
+  Users,
+  TrendingUp,
+  Star,
+  Shield,
+  Calendar,
+  DollarSign,
+  Target,
+  AlertCircle,
+} from "lucide-react";
+import { useState } from "react";
+
+interface Module {
+  name: string;
+  description: string;
+  duration: string;
+  level: "Beginner" | "Intermediate" | "Advanced";
+  price: number;
+  objectives: string[];
+  prerequisites?: string[];
+  certificateValidity: string;
+}
+
+interface Testimonial {
+  name: string;
+  service: string;
+  rating: number;
+  text: string;
+  earningsIncrease: string;
+}
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface CategoryData {
+  name: string;
+  icon: any;
+  slug: string;
+  description: string;
+  heroDescription: string;
+  benefits: string[];
+  modules: Module[];
+  faqs: FAQ[];
+  testimonials: Testimonial[];
+}
+
+const categoryData: Record<string, CategoryData> = {
+  beauty: {
+    name: "Beauty Services",
+    icon: Sparkles,
+    slug: "beauty",
+    description: "Professional beauty service certifications for facial treatments, waxing, threading, and advanced skincare techniques.",
+    heroDescription: "Master the art of beauty services with our comprehensive certification programs. Learn advanced techniques in facial treatments, waxing, threading, and skincare that will set you apart as a premium beauty professional.",
+    benefits: [
+      "Increase your booking rate by up to 45% with verified skills",
+      "Command premium pricing for specialized treatments",
+      "Gain expertise in skin analysis and client consultation",
+      "Learn proper hygiene and safety protocols",
+      "Access to ongoing education and technique updates",
+      "Build trust with clients through certified expertise",
+    ],
+    modules: [
+      {
+        name: "Facial Treatment Specialist",
+        description: "Master professional facial treatments including cleansing, exfoliation, extractions, masks, and massage techniques. Learn to analyze skin types and recommend appropriate treatments for optimal results.",
+        duration: "4 hours",
+        level: "Intermediate",
+        price: 3500,
+        objectives: [
+          "Perform comprehensive skin analysis and consultation",
+          "Execute professional facial treatments with proper technique",
+          "Understand different skin types and conditions",
+          "Master facial massage and lymphatic drainage techniques",
+          "Recommend appropriate home care and treatment plans",
+        ],
+        prerequisites: ["Basic skincare knowledge"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Advanced Waxing Techniques",
+        description: "Comprehensive training in professional waxing services including body waxing, Brazilian techniques, and sensitive area treatments. Focus on client comfort, hygiene, and efficient hair removal methods.",
+        duration: "3 hours",
+        level: "Beginner",
+        price: 2500,
+        objectives: [
+          "Perform safe and effective waxing on all body areas",
+          "Master hard wax and soft wax application techniques",
+          "Understand hair growth cycles and treatment timing",
+          "Implement proper sanitation and hygiene protocols",
+          "Manage client comfort and minimize pain",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Eyebrow Threading Mastery",
+        description: "Perfect the ancient art of eyebrow threading with precision techniques for shaping, defining, and maintaining beautiful brows. Learn to work with different face shapes and brow preferences.",
+        duration: "2 hours",
+        level: "Beginner",
+        price: 2000,
+        objectives: [
+          "Master the threading technique for precise hair removal",
+          "Design eyebrow shapes that complement face structures",
+          "Understand brow mapping and symmetry principles",
+          "Work efficiently while maintaining client comfort",
+          "Provide aftercare advice and brow maintenance tips",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Eyelash Extension Professional",
+        description: "Advanced training in classic, volume, and hybrid lash extension techniques. Learn to create customized lash looks, proper application methods, and maintenance protocols for long-lasting results.",
+        duration: "6 hours",
+        level: "Advanced",
+        price: 5000,
+        objectives: [
+          "Apply classic, volume, and hybrid lash extensions",
+          "Select appropriate lash lengths, curls, and volumes for each client",
+          "Master isolation and placement techniques",
+          "Understand adhesive chemistry and safe application",
+          "Provide proper aftercare and retention guidance",
+        ],
+        prerequisites: ["Basic beauty service experience"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Skincare Consultation Specialist",
+        description: "Learn to conduct professional skincare consultations, analyze skin conditions, and develop personalized treatment plans. Understand ingredients, product recommendations, and treatment protocols.",
+        duration: "3 hours",
+        level: "Intermediate",
+        price: 3000,
+        objectives: [
+          "Conduct thorough skin analysis and consultation",
+          "Identify common skin conditions and concerns",
+          "Understand active ingredients and their benefits",
+          "Create customized skincare routines and treatment plans",
+          "Provide evidence-based product recommendations",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Anti-Aging Treatments",
+        description: "Specialized training in anti-aging facial treatments, advanced massage techniques, and product application methods. Learn to address fine lines, wrinkles, and skin elasticity concerns.",
+        duration: "5 hours",
+        level: "Advanced",
+        price: 4500,
+        objectives: [
+          "Understand the aging process and skin physiology",
+          "Perform advanced anti-aging facial treatments",
+          "Master facial sculpting and lifting massage techniques",
+          "Work with specialized anti-aging products and tools",
+          "Educate clients on prevention and maintenance",
+        ],
+        prerequisites: ["Facial Treatment Specialist certification"],
+        certificateValidity: "2 years",
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need prior experience to enroll in beauty certifications?",
+        answer: "For beginner-level modules like Waxing and Threading, no prior experience is required. Intermediate and advanced modules may require completion of foundational courses or demonstrated experience in basic beauty services.",
+      },
+      {
+        question: "How long does it take to complete all beauty certifications?",
+        answer: "Each module can be completed at your own pace. The total duration for all 6 modules is approximately 23 hours of training. Most providers complete all certifications within 4-6 weeks while maintaining their regular schedule.",
+      },
+      {
+        question: "Are the certifications recognized by beauty industry standards?",
+        answer: "Yes, Veyya Academy certifications are recognized across Thailand and Southeast Asia. Our curriculum is developed in partnership with industry experts and follows international beauty service standards.",
+      },
+      {
+        question: "What happens after my certification expires?",
+        answer: "Certifications are valid for 2 years. Before expiration, you'll receive renewal options which may include a brief refresher course or updated techniques training to ensure you maintain current industry standards.",
+      },
+      {
+        question: "Can I offer services without certification?",
+        answer: "Basic services can be offered without certification, but certified providers receive priority placement in search results, can command higher prices, and see significantly higher booking rates (up to 45% increase).",
+      },
+    ],
+    testimonials: [
+      {
+        name: "Ploy Suwan",
+        service: "Facial Specialist",
+        rating: 5,
+        text: "After completing the Facial Treatment and Skincare certifications, my bookings tripled! Clients trust my expertise now and I can charge premium rates for my specialized knowledge.",
+        earningsIncrease: "+65%",
+      },
+      {
+        name: "Nina Patel",
+        service: "Lash Extension Artist",
+        rating: 5,
+        text: "The Eyelash Extension certification was incredibly detailed. I learned techniques I never knew existed. Now I'm fully booked weeks in advance!",
+        earningsIncrease: "+80%",
+      },
+      {
+        name: "Araya Chen",
+        service: "Beauty Therapist",
+        rating: 5,
+        text: "Completing all 6 beauty certifications transformed my career. I went from basic services to being a sought-after beauty specialist. Best investment I've made!",
+        earningsIncrease: "+95%",
+      },
+    ],
+  },
+  nails: {
+    name: "Nails",
+    icon: Hand,
+    slug: "nails",
+    description: "Professional nail care certifications covering manicures, pedicures, gel nails, nail art, extensions, and hygiene protocols.",
+    heroDescription: "Transform your passion for nails into professional expertise. Our comprehensive nail certifications cover everything from fundamental manicure techniques to advanced 3D nail art, ensuring you can offer premium services that clients love.",
+    benefits: [
+      "Master all nail service techniques from basic to advanced",
+      "Learn proper hygiene and sanitization protocols",
+      "Develop creative nail art and design skills",
+      "Understand nail health and common conditions",
+      "Increase earnings with specialized nail services",
+      "Build a loyal client base with certified skills",
+    ],
+    modules: [
+      {
+        name: "Professional Manicure & Pedicure",
+        description: "Comprehensive training in professional manicure and pedicure services including nail shaping, cuticle care, hand and foot massage, polish application, and proper sanitization. Learn to provide relaxing, high-quality nail care services.",
+        duration: "3 hours",
+        level: "Beginner",
+        price: 2000,
+        objectives: [
+          "Perform complete manicure and pedicure services",
+          "Master nail shaping and cuticle care techniques",
+          "Execute professional polish application",
+          "Provide relaxing hand and foot massage",
+          "Implement proper tool sanitization and hygiene",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Gel Nails Specialist",
+        description: "Master gel nail application, curing techniques, and removal procedures. Learn to create long-lasting, high-gloss gel manicures and pedicures using professional-grade products and LED/UV curing systems.",
+        duration: "4 hours",
+        level: "Intermediate",
+        price: 3000,
+        objectives: [
+          "Apply gel polish with professional techniques",
+          "Understand proper curing times and methods",
+          "Master gel removal without damaging natural nails",
+          "Create custom gel nail designs and french tips",
+          "Troubleshoot common gel application issues",
+        ],
+        prerequisites: ["Basic manicure experience"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Nail Art & Design",
+        description: "Explore creative nail art techniques including freehand painting, stamping, decals, embellishments, and ombre effects. Develop your artistic skills and learn to execute client-requested designs with precision.",
+        duration: "5 hours",
+        level: "Advanced",
+        price: 4000,
+        objectives: [
+          "Create intricate nail art designs and patterns",
+          "Master various application techniques (stamping, dotting, striping)",
+          "Work with embellishments, rhinestones, and 3D elements",
+          "Understand color theory and design composition",
+          "Develop a signature style and portfolio",
+        ],
+        prerequisites: ["Gel Nails Specialist or equivalent experience"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Nail Extensions Expert",
+        description: "Advanced training in acrylic and gel nail extensions including tip application, sculpting, overlay techniques, and proper maintenance. Learn to create strong, natural-looking nail extensions that clients will love.",
+        duration: "6 hours",
+        level: "Advanced",
+        price: 4500,
+        objectives: [
+          "Apply acrylic and gel nail extensions",
+          "Master tip application and sculpting techniques",
+          "Create natural-looking nail shapes and lengths",
+          "Perform extension maintenance and fills",
+          "Execute safe removal procedures",
+        ],
+        prerequisites: ["Professional Manicure & Gel Nails certifications"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Nail Health & Hygiene",
+        description: "Essential training in nail health, common nail conditions, infection prevention, and professional sanitization protocols. Learn to identify nail disorders and when to refer clients to medical professionals.",
+        duration: "2 hours",
+        level: "Beginner",
+        price: 1800,
+        objectives: [
+          "Identify common nail conditions and disorders",
+          "Implement comprehensive sanitization protocols",
+          "Understand infection prevention and control",
+          "Know when to decline service or refer to professionals",
+          "Maintain a safe and hygienic work environment",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Advanced 3D Nail Art",
+        description: "Master the art of 3D nail design using acrylic, gel, and specialized products. Create stunning dimensional nail art including flowers, bows, characters, and custom sculptured designs that wow clients.",
+        duration: "6 hours",
+        level: "Advanced",
+        price: 4500,
+        objectives: [
+          "Sculpt 3D acrylic and gel nail art designs",
+          "Create dimensional flowers, bows, and decorative elements",
+          "Master product consistency and working times",
+          "Design custom 3D nail art based on client requests",
+          "Build a portfolio of advanced nail art",
+        ],
+        prerequisites: ["Nail Art & Design certification"],
+        certificateValidity: "2 years",
+      },
+    ],
+    faqs: [
+      {
+        question: "What tools and products do I need for nail certifications?",
+        answer: "All training modules include tool lists. For hands-on practice, you'll need basic nail tools (files, buffers, cuticle tools), UV/LED lamp for gel work, and practice products. Many providers start with basic tools and upgrade as they specialize.",
+      },
+      {
+        question: "Can I complete nail certifications if I only do home-based services?",
+        answer: "Absolutely! Our certifications are perfect for mobile nail technicians. We cover proper sanitization and setup for home-based services, ensuring you maintain professional standards wherever you work.",
+      },
+      {
+        question: "How much can I increase my prices with nail certifications?",
+        answer: "Certified nail technicians typically charge 30-50% more than non-certified providers. Specialized services like 3D nail art or extensions can command premium pricing, with some providers seeing 80-100% revenue increases.",
+      },
+      {
+        question: "Do I need all 6 certifications to offer nail services?",
+        answer: "No, you can choose certifications based on services you want to offer. However, completing multiple certifications increases your service range and earning potential. We recommend starting with Professional Manicure & Pedicure and Nail Health & Hygiene.",
+      },
+      {
+        question: "Are nail products provided during training?",
+        answer: "Training modules include demonstrations with professional products. You'll receive product recommendations and supplier contacts, but practice products are purchased separately to build your professional kit.",
+      },
+    ],
+    testimonials: [
+      {
+        name: "Mint Chaiyaporn",
+        service: "Nail Technician",
+        rating: 5,
+        text: "The Gel Nails and Nail Art certifications completely changed my business. I went from basic manicures to creating art that clients show off to everyone. My income doubled!",
+        earningsIncrease: "+105%",
+      },
+      {
+        name: "Lisa Wong",
+        service: "Nail Extension Specialist",
+        rating: 5,
+        text: "Extensions training was so thorough. I learned to create beautiful, durable nails that last. Now I'm booked solid with extension clients who pay premium prices.",
+        earningsIncrease: "+85%",
+      },
+      {
+        name: "Pim Narongdej",
+        service: "3D Nail Artist",
+        rating: 5,
+        text: "3D nail art certification unlocked a whole new level for my business. I create custom designs that clients love and can charge accordingly. Worth every baht!",
+        earningsIncrease: "+120%",
+      },
+    ],
+  },
+  hair: {
+    name: "Hair Styling",
+    icon: Scissors,
+    slug: "hair",
+    description: "Comprehensive hair styling certifications including cutting, coloring, balayage, treatments, and specialized techniques.",
+    heroDescription: "Elevate your hair styling career with professional certifications that cover cutting-edge techniques, color theory, and specialized treatments. From foundational cuts to advanced balayage, become the hair expert clients trust.",
+    benefits: [
+      "Master professional cutting and coloring techniques",
+      "Understand hair chemistry and product formulation",
+      "Learn consultation skills for customized services",
+      "Gain expertise in trending techniques like balayage",
+      "Command premium pricing for specialized skills",
+      "Build reputation as a certified hair professional",
+    ],
+    modules: [
+      {
+        name: "Professional Cutting Techniques",
+        description: "Comprehensive training in professional haircutting including classic cuts, layering, texturizing, and modern styling techniques. Learn to work with different hair types, face shapes, and client preferences to create flattering, maintainable styles.",
+        duration: "8 hours",
+        level: "Intermediate",
+        price: 5000,
+        objectives: [
+          "Master fundamental cutting techniques and tools",
+          "Create various haircut styles for different hair types",
+          "Understand sectioning, elevation, and angles",
+          "Consult with clients to determine ideal cuts",
+          "Execute precision cutting and texturizing",
+        ],
+        prerequisites: ["Basic hair styling experience"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Hair Coloring Fundamentals",
+        description: "Essential color theory and application training covering permanent, semi-permanent, and temporary color. Learn color consultation, formulation, application techniques, and proper processing for beautiful, consistent results.",
+        duration: "6 hours",
+        level: "Intermediate",
+        price: 4500,
+        objectives: [
+          "Understand color theory and the color wheel",
+          "Formulate custom hair color formulas",
+          "Apply various coloring techniques safely",
+          "Perform strand tests and color consultations",
+          "Manage color correction and adjustments",
+        ],
+        prerequisites: ["Professional Cutting Techniques recommended"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Balayage & Highlights Master",
+        description: "Advanced highlighting techniques including balayage, foiling, babylights, and dimensional coloring. Master the art of hand-painted highlights and create natural, sun-kissed looks that clients love. Learn placement strategies and color blending.",
+        duration: "10 hours",
+        level: "Advanced",
+        price: 8000,
+        objectives: [
+          "Execute balayage hand-painting techniques",
+          "Master foil highlighting placement and patterns",
+          "Create dimensional color with multiple techniques",
+          "Understand toning for perfect highlight results",
+          "Design custom color placements for face framing",
+        ],
+        prerequisites: ["Hair Coloring Fundamentals certification required"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Hair Treatment Specialist",
+        description: "Professional training in hair treatments including deep conditioning, keratin treatments, bond repair, and scalp treatments. Learn to assess hair damage, recommend appropriate treatments, and deliver salon-quality results.",
+        duration: "4 hours",
+        level: "Beginner",
+        price: 3000,
+        objectives: [
+          "Assess hair condition and damage levels",
+          "Perform various professional treatment services",
+          "Understand treatment chemistry and processing",
+          "Recommend home care and maintenance plans",
+          "Deliver treatments that improve hair health and appearance",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Keratin Treatment Specialist",
+        description: "Specialized training in professional keratin smoothing and straightening treatments. Learn product chemistry, application techniques, processing times, and aftercare protocols for long-lasting, frizz-free results that clients will love.",
+        duration: "5 hours",
+        level: "Advanced",
+        price: 6000,
+        objectives: [
+          "Understand keratin treatment chemistry and variations",
+          "Apply keratin treatments with proper technique",
+          "Master heat styling for treatment activation",
+          "Manage client expectations and consultation",
+          "Provide comprehensive aftercare instructions",
+        ],
+        prerequisites: ["Hair Treatment Specialist certification"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Hair Loss Solutions",
+        description: "Specialized training in hair loss assessment, scalp health, and treatment options. Learn to identify common hair loss patterns, recommend appropriate treatments, and provide scalp care services that promote healthy hair growth.",
+        duration: "4 hours",
+        level: "Intermediate",
+        price: 4000,
+        objectives: [
+          "Identify common hair loss causes and patterns",
+          "Perform scalp analysis and health assessments",
+          "Recommend appropriate treatments and products",
+          "Provide scalp treatments and massage",
+          "Know when to refer clients to medical professionals",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Bridal Hair Styling",
+        description: "Master the art of bridal and special occasion hair styling. Learn classic updos, romantic styles, hair accessories placement, and long-lasting techniques. Includes trial consultation best practices and timeline management for wedding day success.",
+        duration: "7 hours",
+        level: "Advanced",
+        price: 7000,
+        objectives: [
+          "Create various bridal updo and styling techniques",
+          "Work with hair accessories, veils, and extensions",
+          "Conduct successful bridal consultations and trials",
+          "Manage timing and logistics for wedding day services",
+          "Build long-lasting styles that photograph beautifully",
+        ],
+        prerequisites: ["Professional Cutting Techniques certification"],
+        certificateValidity: "2 years",
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need a cosmetology license to take hair certifications?",
+        answer: "Requirements vary by location. In Thailand, no formal license is required to practice hair services, but certifications demonstrate professional competency. Check local regulations for your specific area.",
+      },
+      {
+        question: "How much does hair color product knowledge matter?",
+        answer: "Extremely important. Our color certifications cover product chemistry, formulation, and brand-specific techniques. Understanding products ensures consistent results and client safety, which builds your reputation and repeat bookings.",
+      },
+      {
+        question: "Can I specialize in only color or only cutting?",
+        answer: "Yes! Many successful stylists specialize. However, we recommend Professional Cutting as a foundation, then choose color or treatment specializations based on your interests and market demand.",
+      },
+      {
+        question: "What's the earning potential for certified hair stylists?",
+        answer: "Certified hair professionals earn 40-60% more than non-certified stylists. Specialists in advanced techniques like balayage or keratin treatments can charge premium rates, with top providers earning 100%+ more.",
+      },
+      {
+        question: "How often do hair techniques and trends change?",
+        answer: "Trends evolve regularly. Certifications are valid for 2 years and include updates on current techniques. We also offer continuing education modules to keep your skills current with industry trends.",
+      },
+    ],
+    testimonials: [
+      {
+        name: "Bow Rattanaporn",
+        service: "Color Specialist",
+        rating: 5,
+        text: "Balayage certification changed everything! I went from basic highlights to creating beautiful, dimensional color that clients travel across Bangkok for. My prices tripled!",
+        earningsIncrease: "+180%",
+      },
+      {
+        name: "Sarah Johnson",
+        service: "Bridal Hair Stylist",
+        rating: 5,
+        text: "Bridal styling certification opened a luxury market I didn't know existed. Now I book weddings months in advance at premium rates. Best career move ever!",
+        earningsIncrease: "+150%",
+      },
+      {
+        name: "Nok Siriporn",
+        service: "Keratin Specialist",
+        rating: 5,
+        text: "Keratin treatment training was incredibly detailed. I now offer a high-demand service with great margins. Clients return every 3-4 months, creating steady income!",
+        earningsIncrease: "+95%",
+      },
+    ],
+  },
+  makeup: {
+    name: "Makeup Artistry",
+    icon: Palette,
+    slug: "makeup",
+    description: "Professional makeup artistry certifications covering bridal, event, airbrush, photography makeup, and color theory.",
+    heroDescription: "Transform faces and build a thriving makeup artistry career with our comprehensive certifications. Master techniques from bridal beauty to special effects, color theory to airbrush application, and establish yourself as a trusted makeup professional.",
+    benefits: [
+      "Master makeup application for all occasions and skin tones",
+      "Learn professional product knowledge and selection",
+      "Understand color theory and face shapes",
+      "Build confidence with diverse client consultations",
+      "Command premium pricing for specialized makeup skills",
+      "Create a professional portfolio to attract ideal clients",
+    ],
+    modules: [
+      {
+        name: "Bridal Makeup Professional",
+        description: "Comprehensive bridal makeup training covering consultation, skin prep, long-lasting techniques, and photogenic makeup application. Learn to create timeless, beautiful bridal looks that last all day and photograph perfectly.",
+        duration: "8 hours",
+        level: "Advanced",
+        price: 6500,
+        objectives: [
+          "Conduct professional bridal makeup consultations and trials",
+          "Create long-lasting, photogenic bridal makeup",
+          "Work with various skin types and tones for bridal looks",
+          "Manage timeline and logistics for wedding day",
+          "Handle makeup emergencies and touch-ups professionally",
+        ],
+        prerequisites: ["Event Makeup Specialist or equivalent experience"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Event Makeup Specialist",
+        description: "Professional makeup for special events including parties, galas, photoshoots, and celebrations. Learn to create glamorous, long-wearing makeup that suits various lighting conditions and client preferences.",
+        duration: "6 hours",
+        level: "Intermediate",
+        price: 4500,
+        objectives: [
+          "Create various event makeup styles and looks",
+          "Understand lighting and how it affects makeup",
+          "Work efficiently within time constraints",
+          "Customize makeup for client preferences and dress codes",
+          "Build a versatile event makeup portfolio",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Airbrush Makeup Techniques",
+        description: "Master airbrush makeup application for flawless, long-lasting coverage. Learn equipment setup, maintenance, foundation application, contouring, and special effects using professional airbrush systems.",
+        duration: "4 hours",
+        level: "Intermediate",
+        price: 5000,
+        objectives: [
+          "Operate and maintain airbrush makeup equipment",
+          "Apply airbrush foundation for flawless coverage",
+          "Create airbrush contouring and highlighting",
+          "Execute body makeup and special effects",
+          "Troubleshoot common airbrush issues",
+        ],
+        prerequisites: ["Basic makeup application skills"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Makeup for Photography",
+        description: "Specialized training in makeup for photo and video including HD makeup, understanding cameras and lighting, and techniques that translate beautifully on screen. Perfect for photographers, models, and content creators.",
+        duration: "5 hours",
+        level: "Advanced",
+        price: 5500,
+        objectives: [
+          "Understand how makeup appears on camera vs in person",
+          "Create HD makeup that looks flawless in high resolution",
+          "Work with various lighting setups and conditions",
+          "Collaborate effectively with photographers and videographers",
+          "Master techniques for both photo and video makeup",
+        ],
+        prerequisites: ["Event Makeup Specialist certification recommended"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Special Effects Makeup",
+        description: "Creative training in special effects makeup including wounds, aging, fantasy looks, and theatrical makeup. Learn to use prosthetics, latex, and special FX products to create stunning transformations.",
+        duration: "6 hours",
+        level: "Advanced",
+        price: 7000,
+        objectives: [
+          "Create realistic wound and injury effects",
+          "Apply aging makeup and character transformations",
+          "Work with prosthetics, latex, and special FX products",
+          "Design fantasy and theatrical makeup looks",
+          "Build special effects makeup portfolio pieces",
+        ],
+        prerequisites: ["Strong foundation in basic makeup application"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Color Theory & Skin Tones",
+        description: "Essential training in color theory, undertones, and makeup color selection for diverse skin tones. Learn to match foundations perfectly, select flattering colors, and create harmonious makeup looks for every client.",
+        duration: "3 hours",
+        level: "Beginner",
+        price: 3500,
+        objectives: [
+          "Understand color theory and the color wheel",
+          "Identify skin undertones and overtones accurately",
+          "Select perfect foundation matches for all skin tones",
+          "Choose flattering makeup colors for each client",
+          "Create cohesive, color-coordinated makeup looks",
+        ],
+        certificateValidity: "2 years",
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need to invest in expensive makeup products for certification?",
+        answer: "Training covers professional product knowledge, but you don't need to own every product. Start with quality basics and build your kit as you specialize. We provide product recommendations at various price points.",
+      },
+      {
+        question: "Can I work as a makeup artist without certifications?",
+        answer: "Yes, but certifications significantly increase client trust and booking rates. Certified makeup artists charge 40-70% more and get priority placement on Veyya. Certifications also provide skills that ensure consistent, professional results.",
+      },
+      {
+        question: "What's the difference between bridal and event makeup certifications?",
+        answer: "Event Makeup covers general special occasion looks and is a foundation for Bridal certification. Bridal focuses specifically on consultation, trials, long-lasting techniques, and managing wedding day logistics. We recommend Event first, then Bridal.",
+      },
+      {
+        question: "Is airbrush makeup worth learning?",
+        answer: "Airbrush is highly valued for bridal, photography, and events. While it requires equipment investment (฿15,000-30,000 for quality systems), certified airbrush artists can charge 50-100% more for services due to the flawless, long-lasting results.",
+      },
+      {
+        question: "How do I build my makeup portfolio?",
+        answer: "Each certification includes portfolio-building guidance. Offer discounted services to models/friends while practicing, collaborate with photographers, and document all your work. Your certification projects can become portfolio pieces.",
+      },
+    ],
+    testimonials: [
+      {
+        name: "Grace Tanaka",
+        service: "Bridal Makeup Artist",
+        rating: 5,
+        text: "Bridal certification was worth every penny! I now book weddings at ฿15,000+ per bride and I'm booked 6 months out. The consultation and trial techniques are game-changers!",
+        earningsIncrease: "+200%",
+      },
+      {
+        name: "Fah Kritchana",
+        service: "Airbrush Specialist",
+        rating: 5,
+        text: "Airbrush certification set me apart immediately. Brides love the flawless finish and I charge premium rates. The equipment investment paid for itself in 2 months!",
+        earningsIncrease: "+140%",
+      },
+      {
+        name: "Maya Rodriguez",
+        service: "Photography Makeup",
+        rating: 5,
+        text: "This certification opened doors to work with professional photographers and models. My makeup looks amazing in photos and I've built an incredible portfolio. Income tripled!",
+        earningsIncrease: "+185%",
+      },
+    ],
+  },
+  wellness: {
+    name: "Wellness & Massage",
+    icon: HeartPulse,
+    slug: "wellness",
+    description: "Professional massage and wellness certifications including Thai massage, deep tissue, Swedish, aromatherapy, and specialized techniques.",
+    heroDescription: "Build a rewarding wellness career with certifications in professional massage and therapy techniques. From traditional Thai massage to specialized modalities, learn to provide healing, relaxing services that clients seek out regularly.",
+    benefits: [
+      "Master multiple massage modalities and techniques",
+      "Understand anatomy, physiology, and body mechanics",
+      "Learn client assessment and treatment planning",
+      "Ensure safety and proper pressure application",
+      "Build a loyal client base with therapeutic skills",
+      "Command premium rates for specialized massage services",
+    ],
+    modules: [
+      {
+        name: "Thai Massage Certified Practitioner",
+        description: "Comprehensive training in traditional Thai massage including sen lines, pressure points, stretching techniques, and full-body sequences. Learn the ancient healing art that combines acupressure, yoga, and energy work for deeply therapeutic results.",
+        duration: "20 hours",
+        level: "Intermediate",
+        price: 8000,
+        objectives: [
+          "Perform complete traditional Thai massage sequences",
+          "Understand sen lines and energy theory",
+          "Execute proper stretching and pressure techniques",
+          "Work with body mechanics to prevent injury",
+          "Adapt pressure and techniques for different clients",
+        ],
+        prerequisites: ["Basic massage knowledge or experience recommended"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Deep Tissue Massage Specialist",
+        description: "Advanced training in deep tissue massage techniques for chronic pain, muscle tension, and injury recovery. Learn to work deeply and effectively while maintaining client comfort and safety. Includes assessment and treatment planning.",
+        duration: "16 hours",
+        level: "Advanced",
+        price: 7500,
+        objectives: [
+          "Apply deep tissue techniques safely and effectively",
+          "Assess muscle tension and pain patterns",
+          "Use proper body mechanics to prevent therapist injury",
+          "Create treatment plans for chronic conditions",
+          "Communicate with clients about pressure and comfort",
+        ],
+        prerequisites: ["Swedish Massage Fundamentals or equivalent required"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Swedish Massage Fundamentals",
+        description: "Foundational training in Swedish massage including effleurage, petrissage, friction, tapotement, and vibration. Learn proper draping, body mechanics, and full-body massage sequences that provide deep relaxation and stress relief.",
+        duration: "12 hours",
+        level: "Beginner",
+        price: 5000,
+        objectives: [
+          "Execute five fundamental Swedish massage techniques",
+          "Perform full-body massage with proper sequencing",
+          "Maintain professional draping and client comfort",
+          "Use correct body mechanics and posture",
+          "Create relaxing, flowing massage sessions",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Hot Stone Massage Therapy",
+        description: "Specialized training in hot stone massage including stone preparation, placement, and massage techniques. Learn to safely use heated stones to release tension, improve circulation, and create deeply relaxing therapeutic experiences.",
+        duration: "8 hours",
+        level: "Intermediate",
+        price: 6000,
+        objectives: [
+          "Safely heat and prepare stones for therapy",
+          "Place stones on key energy points and chakras",
+          "Perform massage using heated stones",
+          "Understand contraindications and safety protocols",
+          "Create unique hot stone treatment experiences",
+        ],
+        prerequisites: ["Swedish Massage Fundamentals certification"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Aromatherapy Massage Specialist",
+        description: "Professional aromatherapy training covering essential oils, blending, therapeutic properties, and massage application. Learn to create customized aromatherapy experiences that enhance massage benefits and address specific client needs.",
+        duration: "10 hours",
+        level: "Intermediate",
+        price: 6500,
+        objectives: [
+          "Understand essential oil properties and safety",
+          "Create custom aromatherapy blends for clients",
+          "Incorporate aromatherapy into massage treatments",
+          "Address specific concerns with appropriate oils",
+          "Educate clients on aromatherapy benefits and home use",
+        ],
+        prerequisites: ["Swedish Massage Fundamentals recommended"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Reflexology Specialist",
+        description: "Comprehensive reflexology training focusing on foot, hand, and ear reflex points. Learn the ancient healing practice of applying pressure to specific points that correspond to organs and systems throughout the body.",
+        duration: "12 hours",
+        level: "Intermediate",
+        price: 5500,
+        objectives: [
+          "Map and locate reflex points on feet, hands, and ears",
+          "Apply appropriate pressure to reflex zones",
+          "Understand zone therapy and meridian theory",
+          "Create reflexology treatment plans",
+          "Recognize when to refer clients to medical professionals",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Sports Massage Therapy",
+        description: "Advanced sports massage training for athletes and active individuals. Learn pre-event, post-event, and maintenance massage techniques, injury assessment, and recovery protocols to help clients perform at their best.",
+        duration: "14 hours",
+        level: "Advanced",
+        price: 7000,
+        objectives: [
+          "Perform pre-event and post-event sports massage",
+          "Assess common sports injuries and muscle imbalances",
+          "Apply massage techniques for injury recovery",
+          "Understand athletic performance and recovery needs",
+          "Create maintenance programs for athletes",
+        ],
+        prerequisites: ["Deep Tissue Massage Specialist certification required"],
+        certificateValidity: "2 years",
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need to understand anatomy to become a massage therapist?",
+        answer: "Yes, anatomy knowledge is essential for safe, effective massage. All our certifications include anatomy education specific to each modality. You'll learn muscles, bones, and how massage affects the body's systems.",
+      },
+      {
+        question: "What equipment do I need for massage certifications?",
+        answer: "For training, you'll need comfortable clothing and a practice partner. For professional practice, investment in a quality massage table (฿8,000-20,000), linens, oils, and modality-specific tools (hot stones, aromatherapy oils) is recommended.",
+      },
+      {
+        question: "Can I practice massage without certification?",
+        answer: "In Thailand, basic massage can be practiced without certification, but professional certifications dramatically increase client trust, booking rates, and prices. Certified therapists earn 50-80% more and receive priority placement on Veyya.",
+      },
+      {
+        question: "How physically demanding is massage work?",
+        answer: "Proper body mechanics (taught in all certifications) prevent injury and fatigue. You'll learn to use body weight rather than muscle strength. Many therapists work successfully for decades with proper technique.",
+      },
+      {
+        question: "Which massage certification should I start with?",
+        answer: "Swedish Massage Fundamentals is the ideal starting point. It provides foundational techniques applicable to many modalities. From there, choose specializations based on your interests and market demand.",
+      },
+    ],
+    testimonials: [
+      {
+        name: "Somchai Prasert",
+        service: "Thai Massage Practitioner",
+        rating: 5,
+        text: "Thai Massage certification deepened my understanding of this traditional art. Clients appreciate my knowledge and technique. I'm now fully booked and earning double what I made before!",
+        earningsIncrease: "+110%",
+      },
+      {
+        name: "Luna Chen",
+        service: "Aromatherapy Specialist",
+        rating: 5,
+        text: "Aromatherapy certification allowed me to offer premium, customized massage experiences. Clients love the personalized blends and I charge significantly more for these specialized sessions!",
+        earningsIncrease: "+75%",
+      },
+      {
+        name: "Kwan Sirichai",
+        service: "Deep Tissue Therapist",
+        rating: 5,
+        text: "Deep Tissue certification taught me to work effectively with chronic pain clients. I have a waiting list now and clients see real results. My income increased by 90%!",
+        earningsIncrease: "+90%",
+      },
+    ],
+  },
+  fitness: {
+    name: "Fitness Training",
+    icon: Dumbbell,
+    slug: "fitness",
+    description: "Professional fitness certifications including personal training, yoga, Pilates, nutrition, HIIT, and specialized fitness instruction.",
+    heroDescription: "Launch or elevate your fitness career with comprehensive certifications in personal training, group fitness, and specialized instruction. Gain the knowledge and credentials to help clients achieve their goals while building a thriving fitness business.",
+    benefits: [
+      "Earn recognized fitness professional credentials",
+      "Learn exercise science, programming, and safety",
+      "Master client assessment and goal-setting techniques",
+      "Understand injury prevention and modification strategies",
+      "Command premium rates as a certified fitness professional",
+      "Build a sustainable, rewarding fitness career",
+    ],
+    modules: [
+      {
+        name: "Certified Personal Trainer",
+        description: "Comprehensive personal training certification covering exercise science, program design, client assessment, nutrition basics, and business skills. Learn to safely and effectively train clients of all fitness levels to achieve their goals.",
+        duration: "40 hours",
+        level: "Advanced",
+        price: 12000,
+        objectives: [
+          "Understand human anatomy, physiology, and biomechanics",
+          "Assess client fitness levels and set SMART goals",
+          "Design periodized training programs for various objectives",
+          "Teach proper exercise form and technique",
+          "Manage client relationships and build a training business",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Yoga Instructor Certification",
+        description: "Professional yoga teacher training covering asana practice, sequencing, alignment, modifications, philosophy, and teaching methodology. Learn to lead safe, effective yoga classes for students of all levels in various styles.",
+        duration: "30 hours",
+        level: "Intermediate",
+        price: 10000,
+        objectives: [
+          "Demonstrate and teach fundamental yoga poses",
+          "Create balanced, safe class sequences",
+          "Provide modifications for different student levels",
+          "Understand yoga philosophy and breathing techniques",
+          "Develop your unique teaching style and voice",
+        ],
+        prerequisites: ["Regular yoga practice (6+ months recommended)"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Pilates Instructor Certification",
+        description: "Comprehensive Pilates instructor training covering mat Pilates exercises, principles, modifications, cueing, and class design. Learn to teach the Pilates method for core strength, flexibility, and body awareness.",
+        duration: "25 hours",
+        level: "Intermediate",
+        price: 9000,
+        objectives: [
+          "Teach fundamental and intermediate Pilates exercises",
+          "Apply Pilates principles in class instruction",
+          "Provide effective cueing and corrections",
+          "Modify exercises for injuries and limitations",
+          "Design balanced Pilates mat class sequences",
+        ],
+        prerequisites: ["Pilates practice experience recommended"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Nutrition and Wellness Consultant",
+        description: "Essential nutrition education for fitness professionals covering macronutrients, meal planning, weight management, supplements, and client coaching. Learn to provide evidence-based nutrition guidance within your scope of practice.",
+        duration: "20 hours",
+        level: "Intermediate",
+        price: 8000,
+        objectives: [
+          "Understand macronutrients, micronutrients, and energy balance",
+          "Provide basic meal planning and nutrition guidance",
+          "Support clients with weight loss and performance goals",
+          "Understand supplement safety and efficacy",
+          "Know when to refer clients to registered dietitians",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "HIIT Specialist Certification",
+        description: "Specialized training in High-Intensity Interval Training programming, exercise selection, timing protocols, and class management. Learn to design and lead safe, effective HIIT workouts that deliver results while managing intensity for various fitness levels.",
+        duration: "12 hours",
+        level: "Advanced",
+        price: 6000,
+        objectives: [
+          "Design effective HIIT workout protocols and intervals",
+          "Select appropriate exercises for HIIT training",
+          "Manage workout intensity and client safety",
+          "Modify HIIT for different fitness levels",
+          "Lead energetic, motivating HIIT classes",
+        ],
+        prerequisites: ["Personal Trainer certification or equivalent required"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Senior Fitness Specialist",
+        description: "Specialized training in fitness for older adults covering age-related changes, exercise modifications, fall prevention, chronic conditions, and motivational strategies. Learn to safely train clients 55+ to maintain independence and quality of life.",
+        duration: "15 hours",
+        level: "Intermediate",
+        price: 7000,
+        objectives: [
+          "Understand physiological changes associated with aging",
+          "Design safe, effective programs for older adults",
+          "Modify exercises for common age-related conditions",
+          "Implement fall prevention and balance training",
+          "Motivate and support senior clients effectively",
+        ],
+        prerequisites: ["Basic fitness training knowledge"],
+        certificateValidity: "2 years",
+      },
+    ],
+    faqs: [
+      {
+        question: "Are fitness certifications recognized internationally?",
+        answer: "Veyya Academy fitness certifications meet international standards and are recognized across Southeast Asia. For work outside the region, you may need additional country-specific certifications. Our curriculum aligns with global fitness education standards.",
+      },
+      {
+        question: "Do I need to be very fit to become a certified trainer?",
+        answer: "You should have a good fitness foundation and be able to demonstrate exercises properly. However, you don't need to be an elite athlete. Many successful trainers specialize in working with everyday people and understand the average client journey.",
+      },
+      {
+        question: "How much can I earn as a certified fitness professional?",
+        answer: "Certified personal trainers in Bangkok earn ฿800-2,500 per hour depending on experience and specialization. Yoga and Pilates instructors earn ฿1,000-3,000 per class. Many fitness professionals earn ฿80,000-200,000+ monthly.",
+      },
+      {
+        question: "Can I work online as a certified trainer?",
+        answer: "Absolutely! Online fitness training is growing rapidly. Certifications provide the knowledge to design effective remote programs. Many certified trainers work hybrid models with both in-person and online clients, expanding earning potential.",
+      },
+      {
+        question: "Which fitness certification should I start with?",
+        answer: "Certified Personal Trainer is the most versatile and comprehensive foundation. It opens doors to one-on-one training, group fitness, and specializations. If you have a specific interest (yoga, Pilates), you can start with that specialization.",
+      },
+    ],
+    testimonials: [
+      {
+        name: "Mike Thompson",
+        service: "Personal Trainer",
+        rating: 5,
+        text: "Personal Trainer certification gave me the knowledge and confidence to build a thriving business. I have 15 regular clients now and earn more than I did in my office job!",
+        earningsIncrease: "+220%",
+      },
+      {
+        name: "Praewa Somboon",
+        service: "Yoga Instructor",
+        rating: 5,
+        text: "Yoga instructor certification transformed my practice into a career. I teach 12 classes weekly and private sessions. Living my dream and earning well!",
+        earningsIncrease: "+160%",
+      },
+      {
+        name: "Alex Nguyen",
+        service: "HIIT Specialist",
+        rating: 5,
+        text: "HIIT certification allowed me to offer high-energy classes that clients love. My classes fill up immediately and I added online sessions. Income has tripled!",
+        earningsIncrease: "+195%",
+      },
+    ],
+  },
+  "pet-care": {
+    name: "Pet Care Services",
+    icon: PawPrint,
+    slug: "pet-care",
+    description: "Professional pet grooming and care certifications covering dog grooming, cat grooming, pet first aid, and behavior handling.",
+    heroDescription: "Turn your love for animals into a professional pet care career with comprehensive certifications in grooming, safety, and animal handling. Learn industry-standard techniques that keep pets safe, comfortable, and looking their best.",
+    benefits: [
+      "Master professional grooming techniques for all breeds",
+      "Learn pet safety and first aid protocols",
+      "Understand animal behavior and stress signals",
+      "Build trust with pet owners through certified expertise",
+      "Command premium prices for specialized grooming",
+      "Create a rewarding career working with animals",
+    ],
+    modules: [
+      {
+        name: "Professional Dog Grooming",
+        description: "Comprehensive dog grooming certification covering bathing, brushing, drying, nail trimming, ear cleaning, and breed-specific cuts. Learn to safely groom dogs of all sizes and temperaments while maintaining professional standards.",
+        duration: "16 hours",
+        level: "Beginner",
+        price: 5000,
+        objectives: [
+          "Perform complete dog grooming services safely",
+          "Master bathing, brushing, and drying techniques",
+          "Execute nail trimming and ear cleaning properly",
+          "Understand coat types and appropriate grooming",
+          "Handle dogs safely and recognize stress signals",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Cat Grooming Specialist",
+        description: "Specialized cat grooming training covering feline behavior, gentle handling techniques, bathing, brushing, nail trimming, and sanitary trims. Learn to work safely with cats who may be fearful or aggressive during grooming.",
+        duration: "12 hours",
+        level: "Intermediate",
+        price: 4500,
+        objectives: [
+          "Safely handle cats during grooming procedures",
+          "Understand feline behavior and stress signals",
+          "Perform bathing, brushing, and drying for cats",
+          "Execute nail trimming and sanitary trims",
+          "Manage fearful or aggressive cats professionally",
+        ],
+        prerequisites: ["Basic animal handling experience recommended"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Pet First Aid & Safety",
+        description: "Essential pet first aid training covering emergency response, CPR, wound care, choking, poisoning, and injury management. Learn to recognize emergencies and provide immediate care while transporting pets to veterinary care.",
+        duration: "6 hours",
+        level: "Beginner",
+        price: 3500,
+        objectives: [
+          "Recognize common pet emergencies and symptoms",
+          "Perform pet CPR and rescue breathing",
+          "Provide first aid for wounds, burns, and injuries",
+          "Respond to choking, poisoning, and heat stroke",
+          "Know when and how to transport pets for veterinary care",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Breed-Specific Grooming Techniques",
+        description: "Advanced grooming training for popular dog breeds covering breed standards, specialized cuts, and styling techniques. Master poodle clips, terrier stripping, Asian fusion styles, and other breed-specific grooming requirements.",
+        duration: "10 hours",
+        level: "Advanced",
+        price: 6000,
+        objectives: [
+          "Execute breed-standard grooming for popular breeds",
+          "Master specialized techniques (hand stripping, Asian fusion)",
+          "Understand breed-specific coat care requirements",
+          "Create stylized cuts and creative grooming",
+          "Build a portfolio of breed-specific work",
+        ],
+        prerequisites: ["Professional Dog Grooming certification required"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Pet Behavior & Handling",
+        description: "Comprehensive training in animal behavior, body language, stress signals, and safe handling techniques for grooming and care situations. Learn to work with anxious, fearful, or reactive pets while maintaining safety for all.",
+        duration: "8 hours",
+        level: "Intermediate",
+        price: 4000,
+        objectives: [
+          "Read pet body language and stress signals",
+          "Understand fear, anxiety, and aggression in pets",
+          "Apply low-stress handling techniques",
+          "Manage difficult behaviors during grooming",
+          "Know when to decline service for safety reasons",
+        ],
+        certificateValidity: "2 years",
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need to own a pet to become a pet groomer?",
+        answer: "No, but hands-on animal experience is helpful. Training includes working with various animals to build handling skills. Volunteering at shelters or assisting experienced groomers can provide valuable practice.",
+      },
+      {
+        question: "What grooming equipment do I need to get started?",
+        answer: "Initial investment for professional grooming tools is ฿15,000-30,000 (clippers, shears, brushes, dryers). Mobile groomers may need additional equipment. We provide detailed equipment lists and recommendations during certification.",
+      },
+      {
+        question: "Is pet grooming safe? Can I get bitten?",
+        answer: "Safety training is extensive in all certifications. You'll learn to read animal behavior, recognize warning signs, and handle pets safely. While bites/scratches can occur, proper technique and awareness minimize risks significantly.",
+      },
+      {
+        question: "How much can I earn as a certified pet groomer?",
+        answer: "Certified pet groomers in Bangkok earn ฿800-2,500 per dog depending on size and services. Full-time groomers servicing 4-6 pets daily earn ฿60,000-120,000+ monthly. Cat grooming commands premium pricing due to specialized skills.",
+      },
+      {
+        question: "Are mobile grooming services popular?",
+        answer: "Very popular! Mobile grooming is growing rapidly in Bangkok. Pet owners pay 20-30% more for convenience of home service. Mobile groomers have lower overhead than shop-based groomers and can earn excellent income.",
+      },
+    ],
+    testimonials: [
+      {
+        name: "Amy Lertwicha",
+        service: "Dog Groomer",
+        rating: 5,
+        text: "Dog grooming certification taught me techniques I never knew existed. Clients trust my certified skills and I'm booked 3 weeks out. Best career change I ever made!",
+        earningsIncrease: "+130%",
+      },
+      {
+        name: "Tom Wilson",
+        service: "Mobile Pet Groomer",
+        rating: 5,
+        text: "Combined grooming certifications with mobile service and it's incredibly lucrative. Pet owners love the convenience and pay premium prices. Earning more than my previous corporate job!",
+        earningsIncrease: "+170%",
+      },
+      {
+        name: "Nana Pongsiri",
+        service: "Cat Grooming Specialist",
+        rating: 5,
+        text: "Cat grooming certification opened a niche market with less competition. Cat owners are thrilled to find someone who understands feline behavior. I charge premium rates and stay busy!",
+        earningsIncrease: "+155%",
+      },
+    ],
+  },
+  cleaning: {
+    name: "Cleaning Services",
+    icon: SprayCan,
+    slug: "cleaning",
+    description: "Professional cleaning certifications covering standards, deep cleaning, eco-friendly methods, and specialized commercial cleaning.",
+    heroDescription: "Build a professional cleaning business with certifications that demonstrate your expertise in efficient, thorough, and eco-friendly cleaning methods. Stand out in the growing cleaning services market with verified professional skills.",
+    benefits: [
+      "Learn efficient, professional cleaning techniques",
+      "Understand proper chemical safety and usage",
+      "Master eco-friendly and sustainable cleaning methods",
+      "Increase booking rates with certified expertise",
+      "Command higher prices for specialized services",
+      "Build trust with commercial and residential clients",
+    ],
+    modules: [
+      {
+        name: "Professional Cleaning Standards",
+        description: "Foundational training in professional cleaning standards covering systematic approaches, time management, quality control, and client communication. Learn efficient techniques that ensure consistent, thorough results on every job.",
+        duration: "6 hours",
+        level: "Beginner",
+        price: 2500,
+        objectives: [
+          "Execute systematic cleaning procedures efficiently",
+          "Understand proper product selection and usage",
+          "Implement quality control and inspection protocols",
+          "Manage time effectively on cleaning jobs",
+          "Communicate professionally with clients",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Deep Cleaning Specialist",
+        description: "Advanced deep cleaning techniques for thorough, detailed cleaning services including kitchens, bathrooms, appliances, and hard-to-reach areas. Learn to tackle heavy soil, stains, and neglected spaces effectively.",
+        duration: "8 hours",
+        level: "Intermediate",
+        price: 4000,
+        objectives: [
+          "Perform comprehensive deep cleaning services",
+          "Clean kitchens including ovens, refrigerators, and exhaust systems",
+          "Master bathroom deep cleaning and sanitization",
+          "Remove stubborn stains and buildup effectively",
+          "Work safely at heights and in confined spaces",
+        ],
+        prerequisites: ["Professional Cleaning Standards recommended"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Eco-Friendly Cleaning Methods",
+        description: "Sustainable cleaning training covering green products, natural alternatives, waste reduction, and environmentally responsible practices. Learn to provide effective cleaning services while minimizing environmental impact.",
+        duration: "4 hours",
+        level: "Beginner",
+        price: 2800,
+        objectives: [
+          "Use eco-friendly products and natural alternatives effectively",
+          "Understand green cleaning certifications and standards",
+          "Implement waste reduction and recycling practices",
+          "Educate clients about sustainable cleaning benefits",
+          "Market green cleaning services to eco-conscious clients",
+        ],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Commercial Cleaning Professional",
+        description: "Specialized commercial cleaning training covering offices, retail spaces, medical facilities, and large-scale cleaning operations. Learn industry standards, team management, and specialized equipment operation.",
+        duration: "12 hours",
+        level: "Advanced",
+        price: 5000,
+        objectives: [
+          "Execute commercial cleaning to industry standards",
+          "Operate professional cleaning equipment safely",
+          "Understand specialized requirements (medical, food service)",
+          "Manage cleaning teams and quality control",
+          "Develop commercial cleaning proposals and pricing",
+        ],
+        prerequisites: ["Professional Cleaning Standards and Deep Cleaning certifications"],
+        certificateValidity: "2 years",
+      },
+      {
+        name: "Hospitality Cleaning Excellence",
+        description: "Premium cleaning standards for hospitality industry including hotels, vacation rentals, and Airbnb properties. Learn turnover procedures, attention to detail, and guest-ready preparation that meets hospitality industry expectations.",
+        duration: "8 hours",
+        level: "Intermediate",
+        price: 4500,
+        objectives: [
+          "Execute hotel-standard room turnovers efficiently",
+          "Meet hospitality industry cleanliness standards",
+          "Perform detailed inspections and quality checks",
+          "Manage linen and amenity preparation",
+          "Work within tight turnover timelines",
+        ],
+        prerequisites: ["Professional Cleaning Standards certification"],
+        certificateValidity: "2 years",
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need certifications to offer cleaning services?",
+        answer: "No legal requirement exists, but certifications dramatically increase client trust and booking rates. Certified cleaners charge 30-40% more and receive priority placement on Veyya. Certifications also teach efficient techniques that save time and increase profits.",
+      },
+      {
+        question: "What cleaning supplies and equipment do I need?",
+        answer: "Initial investment is modest (฿3,000-8,000 for quality supplies). Professional-grade vacuum, mops, microfiber cloths, and cleaning products are essential. Commercial cleaning may require additional equipment. We provide detailed supply lists during certification.",
+      },
+      {
+        question: "Is eco-friendly cleaning as effective as traditional methods?",
+        answer: "Yes! Modern eco-friendly products and methods are highly effective. This certification teaches you which green products work best for different situations, and many clients specifically request eco-friendly services and pay premium prices.",
+      },
+      {
+        question: "Can I build a full-time income with cleaning services?",
+        answer: "Absolutely! Certified cleaners servicing 2-3 homes daily (deep cleaning) earn ฿2,500-5,000 per job, generating ฿50,000-100,000+ monthly. Commercial contracts provide steady, recurring income. Many cleaners build teams and scale to ฿200,000+ monthly.",
+      },
+      {
+        question: "How long does it take to clean a typical home?",
+        answer: "Certification teaches time management and efficiency. A standard 2-bedroom condo deep clean takes 3-4 hours once trained. Regular maintenance cleaning is 1.5-2.5 hours. Efficiency improves with experience, increasing your hourly rate.",
+      },
+    ],
+    testimonials: [
+      {
+        name: "Suda Kamolrat",
+        service: "Deep Cleaning Specialist",
+        rating: 5,
+        text: "Deep Cleaning certification taught me to work faster and more thoroughly. I can charge premium prices because clients see the difference. My income doubled and I love the work!",
+        earningsIncrease: "+110%",
+      },
+      {
+        name: "Maria Santos",
+        service: "Eco-Friendly Cleaner",
+        rating: 5,
+        text: "Eco-friendly certification opened up a market of environmentally conscious clients who pay 40% more! They appreciate my certified green cleaning methods and refer me constantly.",
+        earningsIncrease: "+85%",
+      },
+      {
+        name: "Preecha Wongsa",
+        service: "Commercial Cleaning",
+        rating: 5,
+        text: "Commercial certification helped me land office cleaning contracts. Recurring revenue from 5 offices provides steady ฿120,000 monthly income. Best business decision ever!",
+        earningsIncrease: "+250%",
+      },
+    ],
+  },
+};
+
+export default function CertificationCategoryPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const [expandedModules, setExpandedModules] = useState<number[]>([]);
+  const [expandedFaqs, setExpandedFaqs] = useState<number[]>([]);
+
+  const category = categoryData[params.slug];
+
+  if (!category) {
+    notFound();
+  }
+
+  const Icon = category.icon;
+
+  const toggleModule = (index: number) => {
+    setExpandedModules((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
+  };
+
+  const toggleFaq = (index: number) => {
+    setExpandedFaqs((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
+  };
+
+  const getLevelColor = (level: string) => {
+    switch (level) {
+      case "Beginner":
+        return "bg-green-100 text-green-700 border-green-200";
+      case "Intermediate":
+        return "bg-blue-100 text-blue-700 border-blue-200";
+      case "Advanced":
+        return "bg-purple-100 text-purple-700 border-purple-200";
+      default:
+        return "bg-gray-100 text-gray-700 border-gray-200";
+    }
+  };
+
+  const formatPrice = (price: number) => {
+    return `฿${price.toLocaleString()}`;
+  };
+
+  return (
+    <>
+      <ProviderHeader />
+      <main className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+        {/* Hero Section */}
+        <section className="border-b bg-gradient-to-br from-primary/10 via-primary/5 to-background">
+          <Container className="py-16 md:py-24">
+            <div className="max-w-4xl mx-auto">
+              <Link
+                href="/providers/certifications"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-8 transition-colors"
+              >
+                <ChevronDown className="w-4 h-4 rotate-90" />
+                Back to All Certifications
+              </Link>
+
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-2xl mb-6">
+                  <Icon className="w-10 h-10 text-primary" />
+                </div>
+
+                <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                  {category.name} Certification
+                </h1>
+
+                <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+                  {category.heroDescription}
+                </p>
+
+                <div className="flex items-center justify-center gap-6 text-sm">
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-primary" />
+                    <span className="font-medium">
+                      {category.modules.length} Modules
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-5 h-5 text-primary" />
+                    <span className="font-medium">Self-Paced</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Award className="w-5 h-5 text-primary" />
+                    <span className="font-medium">Certified</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="border-b">
+          <Container className="py-16">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold mb-8 text-center">
+                Why Get Certified in {category.name}?
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                {category.benefits.map((benefit, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-4 bg-background border rounded-xl p-6 hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <CheckCircle2 className="w-5 h-5 text-primary" />
+                    </div>
+                    <p className="text-sm leading-relaxed">{benefit}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* Modules Section */}
+        <section className="border-b">
+          <Container className="py-16">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4">
+                  Certification Modules
+                </h2>
+                <p className="text-lg text-muted-foreground">
+                  Complete individual modules at your own pace or pursue
+                  multiple certifications
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                {category.modules.map((module, index) => {
+                  const isExpanded = expandedModules.includes(index);
+
+                  return (
+                    <div
+                      key={index}
+                      className="bg-background border rounded-xl overflow-hidden hover:shadow-lg transition-all"
+                    >
+                      <div className="p-6">
+                        {/* Module Header */}
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-3">
+                              <h3 className="text-xl font-bold">
+                                {module.name}
+                              </h3>
+                              <span
+                                className={`text-xs px-3 py-1 rounded-full border ${getLevelColor(
+                                  module.level
+                                )}`}
+                              >
+                                {module.level}
+                              </span>
+                            </div>
+                            <p className="text-muted-foreground mb-4">
+                              {module.description}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Module Quick Info */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                          <div className="flex items-center gap-2 text-sm">
+                            <Clock className="w-4 h-4 text-primary" />
+                            <span>{module.duration}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm">
+                            <DollarSign className="w-4 h-4 text-primary" />
+                            <span className="font-semibold">
+                              {formatPrice(module.price)}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm">
+                            <Calendar className="w-4 h-4 text-primary" />
+                            <span>Valid {module.certificateValidity}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm">
+                            <Shield className="w-4 h-4 text-primary" />
+                            <span>Certified</span>
+                          </div>
+                        </div>
+
+                        {/* Expand/Collapse Button */}
+                        <button
+                          onClick={() => toggleModule(index)}
+                          className="w-full flex items-center justify-between py-3 px-4 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors"
+                        >
+                          <span className="text-sm font-medium">
+                            {isExpanded
+                              ? "Hide Details"
+                              : "View Learning Objectives & Details"}
+                          </span>
+                          {isExpanded ? (
+                            <ChevronUp className="w-5 h-5" />
+                          ) : (
+                            <ChevronDown className="w-5 h-5" />
+                          )}
+                        </button>
+
+                        {/* Expanded Content */}
+                        {isExpanded && (
+                          <div className="mt-6 space-y-6 border-t pt-6">
+                            {/* Learning Objectives */}
+                            <div>
+                              <div className="flex items-center gap-2 mb-4">
+                                <Target className="w-5 h-5 text-primary" />
+                                <h4 className="font-semibold">
+                                  Learning Objectives
+                                </h4>
+                              </div>
+                              <ul className="space-y-2 ml-7">
+                                {module.objectives.map((objective, idx) => (
+                                  <li
+                                    key={idx}
+                                    className="flex items-start gap-3 text-sm"
+                                  >
+                                    <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                    <span>{objective}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            {/* Prerequisites */}
+                            {module.prerequisites &&
+                              module.prerequisites.length > 0 && (
+                                <div>
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <AlertCircle className="w-5 h-5 text-amber-500" />
+                                    <h4 className="font-semibold">
+                                      Prerequisites
+                                    </h4>
+                                  </div>
+                                  <ul className="space-y-2 ml-7">
+                                    {module.prerequisites.map((prereq, idx) => (
+                                      <li
+                                        key={idx}
+                                        className="text-sm text-muted-foreground"
+                                      >
+                                        • {prereq}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+
+                            {/* Enroll Button */}
+                            <div className="pt-4">
+                              <Link href="/providers/onboarding">
+                                <Button size="lg" className="w-full gap-2">
+                                  <GraduationCap className="w-5 h-5" />
+                                  Enroll in {module.name} -{" "}
+                                  {formatPrice(module.price)}
+                                </Button>
+                              </Link>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Bundle CTA */}
+              <div className="mt-12 bg-gradient-to-br from-primary/10 to-primary/5 border-2 border-primary/20 rounded-xl p-8 text-center">
+                <TrendingUp className="w-12 h-12 text-primary mx-auto mb-4" />
+                <h3 className="text-2xl font-bold mb-3">
+                  Complete Certification Bundle
+                </h3>
+                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                  Enroll in all {category.modules.length} {category.name}{" "}
+                  modules and save 20%. Become a fully certified specialist and
+                  maximize your earning potential.
+                </p>
+                <div className="flex items-center justify-center gap-4 mb-6">
+                  <span className="text-3xl font-bold text-primary">
+                    {formatPrice(
+                      Math.round(
+                        category.modules.reduce(
+                          (sum, module) => sum + module.price,
+                          0
+                        ) * 0.8
+                      )
+                    )}
+                  </span>
+                  <span className="text-xl text-muted-foreground line-through">
+                    {formatPrice(
+                      category.modules.reduce(
+                        (sum, module) => sum + module.price,
+                        0
+                      )
+                    )}
+                  </span>
+                  <span className="text-sm font-semibold bg-primary text-primary-foreground px-3 py-1 rounded-full">
+                    Save 20%
+                  </span>
+                </div>
+                <Link href="/providers/onboarding">
+                  <Button size="lg" className="gap-2">
+                    <Award className="w-5 h-5" />
+                    Enroll in Complete Bundle
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="border-b bg-muted/30">
+          <Container className="py-16">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <Users className="w-12 h-12 text-primary mx-auto mb-4" />
+                <h2 className="text-3xl font-bold mb-4">
+                  Success Stories from Certified Providers
+                </h2>
+                <p className="text-lg text-muted-foreground">
+                  See how {category.name} certifications transformed careers
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                {category.testimonials.map((testimonial, index) => (
+                  <div
+                    key={index}
+                    className="bg-background border rounded-xl p-6 hover:shadow-lg transition-shadow"
+                  >
+                    <div className="flex items-center gap-1 mb-3">
+                      {Array.from({ length: testimonial.rating }).map(
+                        (_, i) => (
+                          <Star
+                            key={i}
+                            className="w-4 h-4 fill-amber-400 text-amber-400"
+                          />
+                        )
+                      )}
+                    </div>
+
+                    <p className="text-sm mb-4 leading-relaxed">
+                      "{testimonial.text}"
+                    </p>
+
+                    <div className="flex items-center justify-between pt-4 border-t">
+                      <div>
+                        <p className="font-semibold text-sm">
+                          {testimonial.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {testimonial.service}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-lg font-bold text-green-600">
+                          {testimonial.earningsIncrease}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          Earnings
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="border-b">
+          <Container className="py-16">
+            <div className="max-w-3xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-lg text-muted-foreground">
+                  Common questions about {category.name} certifications
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {category.faqs.map((faq, index) => {
+                  const isExpanded = expandedFaqs.includes(index);
+
+                  return (
+                    <div
+                      key={index}
+                      className="bg-background border rounded-xl overflow-hidden"
+                    >
+                      <button
+                        onClick={() => toggleFaq(index)}
+                        className="w-full flex items-center justify-between p-6 text-left hover:bg-muted/30 transition-colors"
+                      >
+                        <span className="font-semibold pr-8">
+                          {faq.question}
+                        </span>
+                        {isExpanded ? (
+                          <ChevronUp className="w-5 h-5 flex-shrink-0" />
+                        ) : (
+                          <ChevronDown className="w-5 h-5 flex-shrink-0" />
+                        )}
+                      </button>
+
+                      {isExpanded && (
+                        <div className="px-6 pb-6 text-muted-foreground">
+                          {faq.answer}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* Final CTA Section */}
+        <section>
+          <Container className="py-16">
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl p-12">
+                <Award className="w-16 h-16 mx-auto mb-6 opacity-90" />
+                <h2 className="text-3xl font-bold mb-4">
+                  Ready to Get Certified?
+                </h2>
+                <p className="text-lg mb-8 opacity-90">
+                  Join thousands of certified {category.name} professionals
+                  earning more and building thriving careers. Start your
+                  certification journey today.
+                </p>
+                <Link href="/providers/onboarding">
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="gap-2 text-lg px-8"
+                  >
+                    <GraduationCap className="w-6 h-6" />
+                    Start Your Certification
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="grid md:grid-cols-3 gap-6 mt-12">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">
+                    1,000+
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Certified Providers
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">
+                    4.9/5
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Course Rating
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">
+                    +45%
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Avg. Earnings Increase
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+      </main>
+    </>
+  );
+}
