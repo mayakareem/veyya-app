@@ -10,9 +10,9 @@ import { BRAND_COLLABORATIONS } from "@/lib/constants/brands";
 import { Award, Clock, DollarSign, CheckCircle, ArrowLeft, Sparkles, Ticket, Package, Gift, Calendar as CalendarIcon } from "lucide-react";
 
 interface BrandPageProps {
-  params: {
+  params: Promise<{
     brand: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -21,8 +21,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function BrandPage({ params }: BrandPageProps) {
-  const brand = BRAND_COLLABORATIONS[params.brand];
+export default async function BrandPage({ params }: BrandPageProps) {
+  const { brand: brandId } = await params;
+  const brand = BRAND_COLLABORATIONS[brandId];
 
   if (!brand) {
     notFound();
