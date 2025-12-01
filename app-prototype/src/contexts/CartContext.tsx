@@ -19,6 +19,9 @@ type CartContextType = {
   getItemQuantity: (serviceName: string) => number;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  getTotalDuration: () => number;
+  getPrimaryService: () => CartItem | undefined;
+  getSecondaryServices: () => CartItem[];
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -96,6 +99,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
 
+  const getTotalDuration = () => {
+    return cart.reduce((sum, item) => sum + (item.duration * item.quantity), 0);
+  };
+
+  const getPrimaryService = () => {
+    return cart.length > 0 ? cart[0] : undefined;
+  };
+
+  const getSecondaryServices = () => {
+    return cart.length > 1 ? cart.slice(1) : [];
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -108,6 +123,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
         getItemQuantity,
         getTotalItems,
         getTotalPrice,
+        getTotalDuration,
+        getPrimaryService,
+        getSecondaryServices,
       }}
     >
       {children}
