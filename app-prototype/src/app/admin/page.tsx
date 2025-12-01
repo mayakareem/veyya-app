@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Input } from "@/components/ui/input";
 import {
   Users,
   Briefcase,
@@ -27,7 +28,11 @@ import {
   Ban,
   CheckSquare,
   XSquare,
-  RefreshCw
+  RefreshCw,
+  Star,
+  Download,
+  Search,
+  Filter
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -71,7 +76,7 @@ export default async function AdminDashboard() {
   // Mock pending providers count (in production, add isVerified field to schema)
   const pendingProviders = 3;
 
-  // Fetch recent users
+  // Fetch recent users with detailed information
   const recentUsers = await prisma.user.findMany({
     take: 10,
     orderBy: { createdAt: "desc" },
@@ -81,19 +86,52 @@ export default async function AdminDashboard() {
       email: true,
       image: true,
       createdAt: true,
+      provider: {
+        select: {
+          id: true,
+        },
+      },
       _count: {
-        select: { bookings: true },
+        select: {
+          bookings: true,
+        },
+      },
+      bookings: {
+        select: {
+          price: true,
+          status: true,
+        },
       },
     },
   });
 
-  // Fetch recent providers (mock pending status for demo)
+  // Fetch recent providers with detailed information
   const pendingProvidersData = await prisma.providerProfile.findMany({
-    take: 5,
+    take: 10,
     orderBy: { createdAt: "desc" },
     include: {
       user: {
         select: { name: true, email: true, image: true },
+      },
+      services: {
+        select: {
+          id: true,
+          title: true,
+          price: true,
+        },
+      },
+      _count: {
+        select: {
+          bookings: true,
+        },
+      },
+      bookings: {
+        where: {
+          status: "COMPLETED",
+        },
+        select: {
+          price: true,
+        },
       },
     },
   });
@@ -367,13 +405,33 @@ export default async function AdminDashboard() {
                   <CardTitle>User Management</CardTitle>
                   <CardDescription>All registered users ({totalUsers} total)</CardDescription>
                 </div>
-                <Button variant="outline" size="sm">
-                  <RefreshCw className="w-4 h-4 mr-2" />
-                  Refresh
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Refresh
+                  </Button>
+                </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
+              {/* Search and Filter Bar */}
+              <div className="flex items-center gap-4">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search users by name or email..."
+                    className="pl-10"
+                  />
+                </div>
+                <Button variant="outline" size="sm">
+                  <Filter className="w-4 h-4 mr-2" />
+                  Filters
+                </Button>
+              </div>
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -381,42 +439,68 @@ export default async function AdminDashboard() {
                     <TableHead>Email</TableHead>
                     <TableHead>Registered</TableHead>
                     <TableHead>Bookings</TableHead>
+                    <TableHead>Spent</TableHead>
+                    <TableHead>Type</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {recentUsers.map((user) => (
-                    <TableRow key={user.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <Avatar className="w-8 h-8">
-                            <AvatarImage src={user.image || undefined} />
-                            <AvatarFallback>
-                              {user.name?.charAt(0)?.toUpperCase() || "U"}
-                            </AvatarFallback>
-                          </Avatar>
-                          <span className="font-medium">{user.name || "Unknown"}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">{user.email}</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        {new Date(user.createdAt).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="secondary">{user._count.bookings}</Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <Button variant="ghost" size="sm">
-                            <Eye className="w-4 h-4" />
-                          </Button>
-                          <Button variant="ghost" size="sm">
-                            <Ban className="w-4 h-4 text-red-600" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {recentUsers.map((user) => {
+                    const totalSpent = user.bookings
+                      .filter(b => b.status === "COMPLETED")
+                      .reduce((sum, b) => sum + b.price, 0);
+                    const isProvider = !!user.provider;
+
+                    return (
+                      <TableRow key={user.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Avatar className="w-8 h-8">
+                              <AvatarImage src={user.image || undefined} />
+                              <AvatarFallback>
+                                {user.name?.charAt(0)?.toUpperCase() || "U"}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <div className="font-medium">{user.name || "Unknown"}</div>
+                              <div className="text-xs text-muted-foreground">
+                                ID: {user.id.slice(0, 8)}...
+                              </div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">{user.email}</TableCell>
+                        <TableCell className="text-sm text-muted-foreground">
+                          {new Date(user.createdAt).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="secondary">{user._count.bookings}</Badge>
+                        </TableCell>
+                        <TableCell className="font-semibold">
+                          ฿{(totalSpent / 100).toFixed(0)}
+                        </TableCell>
+                        <TableCell>
+                          {isProvider ? (
+                            <Badge className="bg-purple-100 text-purple-700">
+                              Client + Provider
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline">Client</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <Button variant="ghost" size="sm">
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm">
+                              <Ban className="w-4 h-4 text-red-600" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </CardContent>
@@ -429,75 +513,116 @@ export default async function AdminDashboard() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle>Provider Approvals</CardTitle>
+                  <CardTitle>Provider Management</CardTitle>
                   <CardDescription>
-                    {pendingProviders} providers awaiting verification
+                    {totalProviders} total providers · {pendingProviders} awaiting verification
                   </CardDescription>
                 </div>
-                <Button variant="outline" size="sm">
-                  <RefreshCw className="w-4 h-4 mr-2" />
-                  Refresh
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Refresh
+                  </Button>
+                </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
+              {/* Search and Filter Bar */}
+              <div className="flex items-center gap-4">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search providers by name, email, or display name..."
+                    className="pl-10"
+                  />
+                </div>
+                <Button variant="outline" size="sm">
+                  <Filter className="w-4 h-4 mr-2" />
+                  Filters
+                </Button>
+              </div>
               <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Provider</TableHead>
                     <TableHead>Display Name</TableHead>
+                    <TableHead>Services</TableHead>
+                    <TableHead>Bookings</TableHead>
+                    <TableHead>Rating</TableHead>
+                    <TableHead>Revenue</TableHead>
                     <TableHead>Submitted</TableHead>
-                    <TableHead>Status</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {pendingProvidersData.map((provider) => (
-                    <TableRow key={provider.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <Avatar className="w-8 h-8">
-                            <AvatarImage src={provider.user.image || undefined} />
-                            <AvatarFallback>
-                              {provider.user.name?.charAt(0)?.toUpperCase() || "P"}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="font-medium">{provider.user.name}</div>
-                            <div className="text-xs text-muted-foreground">
-                              {provider.user.email}
+                  {pendingProvidersData.map((provider) => {
+                    const totalRevenue = provider.bookings.reduce((sum, b) => sum + b.price, 0);
+
+                    return (
+                      <TableRow key={provider.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Avatar className="w-8 h-8">
+                              <AvatarImage src={provider.user.image || undefined} />
+                              <AvatarFallback>
+                                {provider.user.name?.charAt(0)?.toUpperCase() || "P"}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <div className="font-medium">{provider.user.name}</div>
+                              <div className="text-xs text-muted-foreground">
+                                {provider.user.email}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-medium">{provider.displayName}</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        {new Date(provider.createdAt).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="secondary" className="bg-orange-100 text-orange-700">
-                          Pending Review
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <Button variant="ghost" size="sm">
-                            <Eye className="w-4 h-4" />
-                          </Button>
-                          <Button variant="ghost" size="sm" className="text-green-600">
-                            <CheckSquare className="w-4 h-4" />
-                          </Button>
-                          <Button variant="ghost" size="sm" className="text-red-600">
-                            <XSquare className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                        </TableCell>
+                        <TableCell className="font-medium">{provider.displayName}</TableCell>
+                        <TableCell>
+                          <Badge variant="secondary">{provider.services.length} services</Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline">{provider._count.bookings}</Badge>
+                        </TableCell>
+                        <TableCell>
+                          {provider.rating && provider.rating > 0 ? (
+                            <div className="flex items-center gap-1">
+                              <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                              <span className="font-semibold">{provider.rating.toFixed(1)}</span>
+                            </div>
+                          ) : (
+                            <span className="text-muted-foreground text-sm">No rating</span>
+                          )}
+                        </TableCell>
+                        <TableCell className="font-semibold">
+                          ฿{(totalRevenue / 100).toLocaleString()}
+                        </TableCell>
+                        <TableCell className="text-sm text-muted-foreground">
+                          {new Date(provider.createdAt).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <Button variant="ghost" size="sm">
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="text-green-600">
+                              <CheckSquare className="w-4 h-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="text-red-600">
+                              <XSquare className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                   {pendingProvidersData.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                        No pending provider approvals
+                      <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
+                        No providers found
                       </TableCell>
                     </TableRow>
                   )}
