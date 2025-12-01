@@ -22,8 +22,17 @@ import {
   AlertCircle,
   Award,
   Briefcase,
-  Edit
+  Edit,
+  ChevronRight,
+  X
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 // Mock data - replace with actual API calls
 const mockStats = {
@@ -322,6 +331,9 @@ const getCertificationLevelBadge = (level: string) => {
 
 export default function ProviderDashboard() {
   const [activeTab, setActiveTab] = useState("new");
+  const [showEarningsModal, setShowEarningsModal] = useState(false);
+  const [showReviewsModal, setShowReviewsModal] = useState(false);
+  const [showBookingsModal, setShowBookingsModal] = useState(false);
 
   const handleAcceptBooking = (bookingId: string) => {
     console.log("Accepting booking:", bookingId);
@@ -363,7 +375,10 @@ export default function ProviderDashboard() {
 
             {/* Stats Overview */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              <Card>
+              <Card
+                className="cursor-pointer hover:shadow-lg hover:border-primary transition-all"
+                onClick={() => setShowEarningsModal(true)}
+              >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     Monthly Earnings
@@ -371,16 +386,24 @@ export default function ProviderDashboard() {
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">
-                    ฿{mockStats.monthlyEarnings.toLocaleString()}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-2xl font-bold">
+                        ฿{mockStats.monthlyEarnings.toLocaleString()}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        ฿{mockStats.totalEarnings.toLocaleString()} total
+                      </p>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    ฿{mockStats.totalEarnings.toLocaleString()} total
-                  </p>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card
+                className="cursor-pointer hover:shadow-lg hover:border-primary transition-all"
+                onClick={() => setShowReviewsModal(true)}
+              >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     Average Rating
@@ -388,17 +411,25 @@ export default function ProviderDashboard() {
                   <Star className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold flex items-center gap-1">
-                    {mockStats.averageRating}
-                    <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-2xl font-bold flex items-center gap-1">
+                        {mockStats.averageRating}
+                        <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {mockStats.totalReviews} reviews
+                      </p>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    {mockStats.totalReviews} reviews
-                  </p>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card
+                className="cursor-pointer hover:shadow-lg hover:border-primary transition-all"
+                onClick={() => setShowBookingsModal(true)}
+              >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     Completed Bookings
@@ -406,12 +437,17 @@ export default function ProviderDashboard() {
                   <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">
-                    {mockStats.completedBookings}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-2xl font-bold">
+                        {mockStats.completedBookings}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        All time
+                      </p>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    All time
-                  </p>
                 </CardContent>
               </Card>
 
@@ -432,127 +468,6 @@ export default function ProviderDashboard() {
                 </CardContent>
               </Card>
             </div>
-
-            {/* Certifications Section */}
-            <Card className="mb-8">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Award className="h-5 w-5 text-primary" />
-                      My Certifications
-                    </CardTitle>
-                    <CardDescription>
-                      Veyya verified certifications - {mockCertifications.length} earned
-                    </CardDescription>
-                  </div>
-                  <Button variant="outline" size="sm" asChild>
-                    <a href="/providers/certifications">
-                      View All
-                    </a>
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {mockCertifications.map((cert) => (
-                    <div
-                      key={cert.id}
-                      className="p-4 border rounded-lg hover:border-primary transition-colors"
-                    >
-                      <div className="flex items-start justify-between mb-3">
-                        <Award className="h-8 w-8 text-primary" />
-                        <Badge className={`${getCertificationLevelBadge(cert.level)} border`}>
-                          {cert.level}
-                        </Badge>
-                      </div>
-                      <h3 className="font-semibold mb-1">{cert.name}</h3>
-                      <p className="text-xs text-muted-foreground mb-2">{cert.category}</p>
-                      <div className="text-xs space-y-1">
-                        <p className="text-muted-foreground">
-                          Completed: {new Date(cert.completedDate).toLocaleDateString()}
-                        </p>
-                        <p className="text-muted-foreground">
-                          Valid until: {new Date(cert.expiryDate).toLocaleDateString()}
-                        </p>
-                        <p className="text-xs font-mono text-muted-foreground">
-                          {cert.certificateNumber}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Services & Pricing Section */}
-            <Card className="mb-8">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Briefcase className="h-5 w-5 text-primary" />
-                      My Services & Pricing
-                    </CardTitle>
-                    <CardDescription>
-                      Services you offer - {mockServices.filter(s => s.active).length} active
-                    </CardDescription>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    <Edit className="h-4 w-4 mr-2" />
-                    Edit Services
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {/* Group services by category */}
-                  {Array.from(new Set(mockServices.map(s => s.category))).map((category) => (
-                    <div key={category}>
-                      <h3 className="text-sm font-semibold text-muted-foreground mb-2 uppercase">
-                        {category}
-                      </h3>
-                      <div className="space-y-2 mb-4">
-                        {mockServices
-                          .filter(s => s.category === category)
-                          .map((service) => (
-                            <div
-                              key={service.id}
-                              className={`flex items-center justify-between p-3 border rounded-lg ${
-                                service.active
-                                  ? "bg-background hover:border-primary transition-colors"
-                                  : "bg-muted opacity-60"
-                              }`}
-                            >
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                  <h4 className="font-medium">{service.name}</h4>
-                                  {!service.active && (
-                                    <Badge variant="outline" className="text-xs">
-                                      Inactive
-                                    </Badge>
-                                  )}
-                                </div>
-                                <p className="text-sm text-muted-foreground">
-                                  {service.duration}
-                                </p>
-                              </div>
-                              <div className="text-right">
-                                <p className="text-lg font-bold text-primary">
-                                  ฿{service.price.toLocaleString()}
-                                </p>
-                                <p className="text-xs text-muted-foreground">
-                                  You earn: ฿{Math.round(service.price * 0.7).toLocaleString()}
-                                </p>
-                              </div>
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
 
             {/* Bookings Tabs */}
             <Tabs value={activeTab} onValueChange={setActiveTab}>
