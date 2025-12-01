@@ -13,6 +13,26 @@ export interface BrandService {
   products: BrandProduct[];
 }
 
+export interface Voucher {
+  code: string;
+  discount: number;
+  type: "percentage" | "fixed";
+  minSpend: number;
+  expiresAt: string;
+  description: string;
+}
+
+export interface ServiceBundle {
+  name: string;
+  description: string;
+  services: string[];
+  originalPrice: number;
+  bundlePrice: number;
+  savings: number;
+  voucherCode?: string;
+  validUntil: string;
+}
+
 export interface Brand {
   id: string;
   name: string;
@@ -23,6 +43,8 @@ export interface Brand {
   services: BrandService[];
   about: string;
   certifications?: string[];
+  vouchers: Voucher[];
+  bundles: ServiceBundle[];
 }
 
 export const BRAND_COLLABORATIONS: Record<string, Brand> = {
@@ -120,6 +142,54 @@ export const BRAND_COLLABORATIONS: Record<string, Brand> = {
           }
         ]
       }
+    ],
+    vouchers: [
+      {
+        code: "LOREAL20",
+        discount: 20,
+        type: "percentage",
+        minSpend: 2000,
+        expiresAt: "2025-12-31",
+        description: "20% off all L'Oréal hair treatments"
+      },
+      {
+        code: "COLOR500",
+        discount: 500,
+        type: "fixed",
+        minSpend: 3000,
+        expiresAt: "2025-12-25",
+        description: "฿500 off Color Excellence service"
+      },
+      {
+        code: "FIRSTLOREAL",
+        discount: 15,
+        type: "percentage",
+        minSpend: 1500,
+        expiresAt: "2026-01-15",
+        description: "15% off your first L'Oréal treatment"
+      }
+    ],
+    bundles: [
+      {
+        name: "Complete Color Transformation",
+        description: "Color Excellence + Hair Spa Treatment",
+        services: ["Color Excellence", "Hair Spa Treatment"],
+        originalPrice: 4300,
+        bundlePrice: 3499,
+        savings: 801,
+        voucherCode: "COLORBUNDLE",
+        validUntil: "2025-12-31"
+      },
+      {
+        name: "Smoothing & Repair Package",
+        description: "Keratin Smoothing + Hair Spa with Smartbond",
+        services: ["Keratin Smoothing Treatment", "Hair Spa Treatment"],
+        originalPrice: 5500,
+        bundlePrice: 4599,
+        savings: 901,
+        voucherCode: "SMOOTHPRO",
+        validUntil: "2025-12-31"
+      }
     ]
   },
   opi: {
@@ -215,6 +285,54 @@ export const BRAND_COLLABORATIONS: Record<string, Brand> = {
             ],
           }
         ]
+      }
+    ],
+    vouchers: [
+      {
+        code: "OPI25",
+        discount: 25,
+        type: "percentage",
+        minSpend: 1000,
+        expiresAt: "2025-12-31",
+        description: "25% off all OPI nail services"
+      },
+      {
+        code: "GELCOLOR300",
+        discount: 300,
+        type: "fixed",
+        minSpend: 1500,
+        expiresAt: "2025-12-20",
+        description: "฿300 off GelColor treatments"
+      },
+      {
+        code: "NAILSPA",
+        discount: 20,
+        type: "percentage",
+        minSpend: 800,
+        expiresAt: "2026-01-10",
+        description: "20% off manicure & pedicure combo"
+      }
+    ],
+    bundles: [
+      {
+        name: "Complete Nail Care Package",
+        description: "GelColor Manicure + Luxury Pedicure",
+        services: ["OPI GelColor Manicure", "Luxury Pedicure"],
+        originalPrice: 2200,
+        bundlePrice: 1799,
+        savings: 401,
+        voucherCode: "NAILPERFECT",
+        validUntil: "2025-12-31"
+      },
+      {
+        name: "Monthly Maintenance",
+        description: "2x GelColor Manicures (valid for 60 days)",
+        services: ["OPI GelColor Manicure", "OPI GelColor Manicure"],
+        originalPrice: 2400,
+        bundlePrice: 1999,
+        savings: 401,
+        voucherCode: "MONTHLYNAILS",
+        validUntil: "2025-12-31"
       }
     ]
   },
@@ -312,6 +430,54 @@ export const BRAND_COLLABORATIONS: Record<string, Brand> = {
           }
         ]
       }
+    ],
+    vouchers: [
+      {
+        code: "AVEDA30",
+        discount: 30,
+        type: "percentage",
+        minSpend: 2500,
+        expiresAt: "2025-12-31",
+        description: "30% off all Aveda wellness treatments"
+      },
+      {
+        code: "BOTANICAL400",
+        discount: 400,
+        type: "fixed",
+        minSpend: 3000,
+        expiresAt: "2025-12-28",
+        description: "฿400 off Botanical Therapy Massage"
+      },
+      {
+        code: "WELLNESS20",
+        discount: 20,
+        type: "percentage",
+        minSpend: 1800,
+        expiresAt: "2026-01-20",
+        description: "20% off facial and massage combo"
+      }
+    ],
+    bundles: [
+      {
+        name: "Complete Wellness Ritual",
+        description: "Botanical Massage + Tulasāra Facial",
+        services: ["Botanical Therapy Massage", "Tulasāra Facial"],
+        originalPrice: 4700,
+        bundlePrice: 3899,
+        savings: 801,
+        voucherCode: "WELLNESSZEN",
+        validUntil: "2025-12-31"
+      },
+      {
+        name: "Hair & Scalp Revival",
+        description: "Scalp Solutions + Hair Spa Treatment",
+        services: ["Scalp Solutions Treatment", "Hair Spa Treatment"],
+        originalPrice: 3500,
+        bundlePrice: 2899,
+        savings: 601,
+        voucherCode: "SCALPCARE",
+        validUntil: "2025-12-31"
+      }
     ]
   },
   dermalogica: {
@@ -407,6 +573,54 @@ export const BRAND_COLLABORATIONS: Record<string, Brand> = {
             ],
           }
         ]
+      }
+    ],
+    vouchers: [
+      {
+        code: "DERMA35",
+        discount: 35,
+        type: "percentage",
+        minSpend: 3500,
+        expiresAt: "2025-12-31",
+        description: "35% off all Dermalogica facials"
+      },
+      {
+        code: "SKIN600",
+        discount: 600,
+        type: "fixed",
+        minSpend: 4000,
+        expiresAt: "2025-12-22",
+        description: "฿600 off skin resurfacing treatment"
+      },
+      {
+        code: "FIRSTSKIN",
+        discount: 25,
+        type: "percentage",
+        minSpend: 2500,
+        expiresAt: "2026-01-25",
+        description: "25% off your first Dermalogica facial"
+      }
+    ],
+    bundles: [
+      {
+        name: "Anti-Aging Power Duo",
+        description: "BioLumin-C Facial + Skin Resurfacing",
+        services: ["BioLumin-C Facial", "Skin Resurfacing Treatment"],
+        originalPrice: 7000,
+        bundlePrice: 5799,
+        savings: 1201,
+        voucherCode: "AGELESS",
+        validUntil: "2025-12-31"
+      },
+      {
+        name: "Monthly Glow Package",
+        description: "3x ProSkin 60 Facials (valid for 90 days)",
+        services: ["ProSkin 60 Facial", "ProSkin 60 Facial", "ProSkin 60 Facial"],
+        originalPrice: 9600,
+        bundlePrice: 7999,
+        savings: 1601,
+        voucherCode: "GLOWMONTH",
+        validUntil: "2025-12-31"
       }
     ]
   },
@@ -504,6 +718,54 @@ export const BRAND_COLLABORATIONS: Record<string, Brand> = {
           }
         ]
       }
+    ],
+    vouchers: [
+      {
+        code: "AROMA28",
+        discount: 28,
+        type: "percentage",
+        minSpend: 2800,
+        expiresAt: "2025-12-31",
+        description: "28% off all aromatherapy treatments"
+      },
+      {
+        code: "MASSAGE500",
+        discount: 500,
+        type: "fixed",
+        minSpend: 3500,
+        expiresAt: "2025-12-26",
+        description: "฿500 off Rose Indulgence Massage"
+      },
+      {
+        code: "RELAX22",
+        discount: 22,
+        type: "percentage",
+        minSpend: 2000,
+        expiresAt: "2026-01-18",
+        description: "22% off Deep Relax treatment"
+      }
+    ],
+    bundles: [
+      {
+        name: "Ultimate Relaxation Package",
+        description: "Deep Relax + Revive Morning Massage",
+        services: ["Deep Relax Massage", "Revive Morning Massage"],
+        originalPrice: 4300,
+        bundlePrice: 3599,
+        savings: 701,
+        voucherCode: "DOUBLERELAX",
+        validUntil: "2025-12-31"
+      },
+      {
+        name: "Luxury Rose Experience",
+        description: "Rose Indulgence Massage (120min)",
+        services: ["Rose Indulgence Massage"],
+        originalPrice: 4500,
+        bundlePrice: 3799,
+        savings: 701,
+        voucherCode: "ROSETREAT",
+        validUntil: "2025-12-31"
+      }
     ]
   },
   ghd: {
@@ -599,6 +861,54 @@ export const BRAND_COLLABORATIONS: Record<string, Brand> = {
             ],
           }
         ]
+      }
+    ],
+    vouchers: [
+      {
+        code: "GHD18",
+        discount: 18,
+        type: "percentage",
+        minSpend: 1200,
+        expiresAt: "2025-12-31",
+        description: "18% off all ghd styling services"
+      },
+      {
+        code: "STYLE200",
+        discount: 200,
+        type: "fixed",
+        minSpend: 1500,
+        expiresAt: "2025-12-27",
+        description: "฿200 off any styling service"
+      },
+      {
+        code: "GLAMCURLS",
+        discount: 15,
+        type: "percentage",
+        minSpend: 1000,
+        expiresAt: "2026-01-12",
+        description: "15% off curls & waves styling"
+      }
+    ],
+    bundles: [
+      {
+        name: "Complete Styling Package",
+        description: "Blow-Dry + Sleek Styling",
+        services: ["Signature Blow-Dry", "Sleek & Smooth Styling"],
+        originalPrice: 2200,
+        bundlePrice: 1849,
+        savings: 351,
+        voucherCode: "STYLEALL",
+        validUntil: "2025-12-31"
+      },
+      {
+        name: "Weekly Styling Pass",
+        description: "4x Signature Blow-Dry (valid for 30 days)",
+        services: ["Signature Blow-Dry", "Signature Blow-Dry", "Signature Blow-Dry", "Signature Blow-Dry"],
+        originalPrice: 4800,
+        bundlePrice: 3999,
+        savings: 801,
+        voucherCode: "WEEKLYGHD",
+        validUntil: "2025-12-31"
       }
     ]
   },
@@ -696,6 +1006,54 @@ export const BRAND_COLLABORATIONS: Record<string, Brand> = {
           }
         ]
       }
+    ],
+    vouchers: [
+      {
+        code: "KERA32",
+        discount: 32,
+        type: "percentage",
+        minSpend: 3000,
+        expiresAt: "2025-12-31",
+        description: "32% off all Kérastase treatments"
+      },
+      {
+        code: "CHRONO700",
+        discount: 700,
+        type: "fixed",
+        minSpend: 4000,
+        expiresAt: "2025-12-29",
+        description: "฿700 off Chronologiste Luxury Ritual"
+      },
+      {
+        code: "FUSIO15",
+        discount: 15,
+        type: "percentage",
+        minSpend: 1500,
+        expiresAt: "2026-01-22",
+        description: "15% off Fusio-Dose treatments"
+      }
+    ],
+    bundles: [
+      {
+        name: "Ultimate Hair Luxury",
+        description: "Chronologiste Ritual + Fusio-Dose Treatment",
+        services: ["Chronologiste Luxury Ritual", "Fusio-Dose Treatment"],
+        originalPrice: 5000,
+        bundlePrice: 4199,
+        savings: 801,
+        voucherCode: "KERALUX",
+        validUntil: "2025-12-31"
+      },
+      {
+        name: "Elixir Oil Experience",
+        description: "Elixir Ultime Treatment + At-home Oil",
+        services: ["Elixir Ultime Oil Treatment"],
+        originalPrice: 2800,
+        bundlePrice: 2399,
+        savings: 401,
+        voucherCode: "OILTREAT",
+        validUntil: "2025-12-31"
+      }
     ]
   },
   clarins: {
@@ -791,6 +1149,54 @@ export const BRAND_COLLABORATIONS: Record<string, Brand> = {
             ],
           }
         ]
+      }
+    ],
+    vouchers: [
+      {
+        code: "CLARINS27",
+        discount: 27,
+        type: "percentage",
+        minSpend: 3200,
+        expiresAt: "2025-12-31",
+        description: "27% off all Clarins spa treatments"
+      },
+      {
+        code: "PRECIOUS800",
+        discount: 800,
+        type: "fixed",
+        minSpend: 4500,
+        expiresAt: "2025-12-30",
+        description: "฿800 off Precious Facial treatment"
+      },
+      {
+        code: "BODYFIT",
+        discount: 23,
+        type: "percentage",
+        minSpend: 2500,
+        expiresAt: "2026-01-28",
+        description: "23% off body shaping treatments"
+      }
+    ],
+    bundles: [
+      {
+        name: "Anti-Aging Spa Package",
+        description: "Precious Facial + Super Restorative Treatment",
+        services: ["Precious Facial", "Super Restorative Treatment"],
+        originalPrice: 6300,
+        bundlePrice: 5299,
+        savings: 1001,
+        voucherCode: "AGELESSSPA",
+        validUntil: "2025-12-31"
+      },
+      {
+        name: "Complete Body & Face",
+        description: "Body Shaping + Super Restorative Facial",
+        services: ["Body Shaping Treatment", "Super Restorative Treatment"],
+        originalPrice: 5700,
+        bundlePrice: 4799,
+        savings: 901,
+        voucherCode: "TOTALSPA",
+        validUntil: "2025-12-31"
       }
     ]
   }

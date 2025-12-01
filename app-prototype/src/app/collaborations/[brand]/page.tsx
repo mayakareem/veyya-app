@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { BRAND_COLLABORATIONS } from "@/lib/constants/brands";
-import { Award, Clock, DollarSign, CheckCircle, ArrowLeft, Sparkles } from "lucide-react";
+import { Award, Clock, DollarSign, CheckCircle, ArrowLeft, Sparkles, Ticket, Package, Gift, Calendar as CalendarIcon } from "lucide-react";
 
 interface BrandPageProps {
   params: {
@@ -171,6 +171,177 @@ export default function BrandPage({ params }: BrandPageProps) {
                     <Link href="/search">
                       <Button size="lg" className="w-full sm:w-auto">
                         Book This Service
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* Vouchers Section */}
+      <section className="bg-muted/30">
+        <Container className="py-12 md:py-16">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-semibold mb-3 flex items-center justify-center gap-2">
+              <Ticket className="w-8 h-8 text-primary" />
+              Exclusive Vouchers
+            </h2>
+            <p className="text-muted-foreground">
+              Save more on your {brand.name} treatments
+            </p>
+          </div>
+
+          <div className="overflow-x-auto pb-4">
+            <div className="flex gap-6 min-w-max mx-auto justify-center">
+              {brand.vouchers.map((voucher, idx) => (
+                <Card
+                  key={idx}
+                  className="w-80 border-2 border-dashed border-primary/50 bg-gradient-to-br from-primary/5 to-background hover:shadow-lg transition-all"
+                >
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-2">
+                        <Gift className="w-6 h-6 text-primary" />
+                        <CardTitle className="font-mono text-xl">{voucher.code}</CardTitle>
+                      </div>
+                      <Badge className="bg-green-100 text-green-700 border-green-300">
+                        {voucher.type === "percentage"
+                          ? `${voucher.discount}% OFF`
+                          : `฿${voucher.discount} OFF`}
+                      </Badge>
+                    </div>
+                    <CardDescription className="mt-2">
+                      {voucher.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Minimum Spend:</span>
+                        <span className="font-semibold">฿{voucher.minSpend.toLocaleString()}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground flex items-center gap-1">
+                          <CalendarIcon className="w-4 h-4" />
+                          Valid Until:
+                        </span>
+                        <span className="font-semibold">
+                          {new Date(voucher.expiresAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <Separator />
+                      <Button className="w-full" variant="outline">
+                        <Ticket className="w-4 h-4 mr-2" />
+                        Copy Code
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Bundled Services Section */}
+      <section>
+        <Container className="py-12 md:py-16">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-semibold mb-3 flex items-center justify-center gap-2">
+              <Package className="w-8 h-8 text-primary" />
+              Service Bundles
+            </h2>
+            <p className="text-muted-foreground">
+              Save even more when you book these popular combinations
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {brand.bundles.map((bundle, idx) => (
+              <Card
+                key={idx}
+                className="overflow-hidden hover:shadow-xl transition-all border-2"
+              >
+                <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-xl mb-2">{bundle.name}</CardTitle>
+                      <CardDescription>{bundle.description}</CardDescription>
+                    </div>
+                    <Badge className="bg-green-100 text-green-700 border-green-300 text-lg px-3 py-1">
+                      Save ฿{bundle.savings}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    {/* Services Included */}
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-2">
+                        Services Included:
+                      </p>
+                      <ul className="space-y-1.5">
+                        {bundle.services.map((service, sidx) => (
+                          <li key={sidx} className="flex items-center gap-2 text-sm">
+                            <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
+                            <span>{service}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <Separator />
+
+                    {/* Pricing */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Regular Price:</span>
+                        <span className="line-through text-muted-foreground">
+                          ฿{bundle.originalPrice.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-lg">Bundle Price:</span>
+                        <span className="text-2xl font-bold text-primary">
+                          ฿{bundle.bundlePrice.toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Voucher Code */}
+                    {bundle.voucherCode && (
+                      <div className="bg-muted/50 rounded-lg p-3 border border-dashed">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-xs text-muted-foreground mb-1">Use Code:</p>
+                            <p className="font-mono font-bold text-primary">
+                              {bundle.voucherCode}
+                            </p>
+                          </div>
+                          <Button size="sm" variant="ghost">
+                            Copy
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+
+                    <Separator />
+
+                    {/* Valid Until */}
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                      <span>Valid until:</span>
+                      <span className="font-medium">
+                        {new Date(bundle.validUntil).toLocaleDateString()}
+                      </span>
+                    </div>
+
+                    {/* Book Button */}
+                    <Link href="/search" className="block">
+                      <Button className="w-full" size="lg">
+                        Book This Bundle
                       </Button>
                     </Link>
                   </div>
