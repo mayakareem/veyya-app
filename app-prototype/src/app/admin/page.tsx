@@ -38,6 +38,46 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
+  // Check if database URL is configured
+  if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes("localhost:5432")) {
+    return (
+      <main className="mx-auto max-w-7xl p-6">
+        <Card className="border-orange-200 bg-orange-50">
+          <CardHeader>
+            <CardTitle className="text-orange-700">Database Not Configured</CardTitle>
+            <CardDescription className="text-orange-600">
+              The admin dashboard requires a database connection
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm mb-4">
+              Please configure the following environment variables in Vercel:
+            </p>
+            <ul className="list-disc list-inside space-y-2 text-sm bg-white p-4 rounded border font-mono">
+              <li>DATABASE_URL (PostgreSQL connection string)</li>
+              <li>NEXTAUTH_SECRET (Authentication secret)</li>
+              <li>NEXTAUTH_URL (https://veyya-app.vercel.app)</li>
+            </ul>
+            <div className="mt-6 space-y-2">
+              <p className="text-sm font-semibold">Steps to fix:</p>
+              <ol className="list-decimal list-inside space-y-1 text-sm ml-2">
+                <li>Go to Vercel project settings</li>
+                <li>Navigate to Environment Variables</li>
+                <li>Add the three variables above</li>
+                <li>Redeploy the application</li>
+              </ol>
+            </div>
+            <div className="mt-6">
+              <Link href="/">
+                <Button variant="outline">Return to Home</Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
+
   try {
     const session = await auth();
 
