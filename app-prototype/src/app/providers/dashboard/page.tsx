@@ -19,7 +19,10 @@ import {
   User,
   Phone,
   MessageSquare,
-  AlertCircle
+  AlertCircle,
+  Award,
+  Briefcase,
+  Edit
 } from "lucide-react";
 
 // Mock data - replace with actual API calls
@@ -31,6 +34,137 @@ const mockStats = {
   completedBookings: 156,
   responseRate: 98,
 };
+
+const mockCertifications = [
+  {
+    id: "cert-001",
+    name: "Advanced Hair Styling",
+    category: "Beauty Services",
+    level: "Expert",
+    completedDate: "2024-08-15",
+    expiryDate: "2026-08-15",
+    certificateNumber: "VEY-HS-2024-1523",
+  },
+  {
+    id: "cert-002",
+    name: "Swedish Massage Therapy",
+    category: "Wellness & Massage",
+    level: "Professional",
+    completedDate: "2024-06-20",
+    expiryDate: "2026-06-20",
+    certificateNumber: "VEY-SM-2024-0892",
+  },
+  {
+    id: "cert-003",
+    name: "Nail Art & Design",
+    category: "Beauty Services",
+    level: "Intermediate",
+    completedDate: "2024-09-10",
+    expiryDate: "2026-09-10",
+    certificateNumber: "VEY-NA-2024-2156",
+  },
+  {
+    id: "cert-004",
+    name: "Deep Tissue Massage",
+    category: "Wellness & Massage",
+    level: "Expert",
+    completedDate: "2024-07-05",
+    expiryDate: "2026-07-05",
+    certificateNumber: "VEY-DT-2024-1047",
+  },
+  {
+    id: "cert-005",
+    name: "Bridal Makeup Specialist",
+    category: "Beauty Services",
+    level: "Professional",
+    completedDate: "2024-10-12",
+    expiryDate: "2026-10-12",
+    certificateNumber: "VEY-BM-2024-2789",
+  },
+];
+
+const mockServices = [
+  {
+    id: "svc-001",
+    name: "Haircut & Styling",
+    category: "Hair Services",
+    price: 850,
+    duration: "1.5 hours",
+    active: true,
+  },
+  {
+    id: "svc-002",
+    name: "Hair Coloring",
+    category: "Hair Services",
+    price: 3200,
+    duration: "3 hours",
+    active: true,
+  },
+  {
+    id: "svc-003",
+    name: "Swedish Massage",
+    category: "Massage Therapy",
+    price: 1000,
+    duration: "1 hour",
+    active: true,
+  },
+  {
+    id: "svc-004",
+    name: "Deep Tissue Massage",
+    category: "Massage Therapy",
+    price: 1200,
+    duration: "1 hour",
+    active: true,
+  },
+  {
+    id: "svc-005",
+    name: "Aromatherapy Massage",
+    category: "Massage Therapy",
+    price: 1500,
+    duration: "1.5 hours",
+    active: true,
+  },
+  {
+    id: "svc-006",
+    name: "Classic Manicure",
+    category: "Nail Services",
+    price: 450,
+    duration: "45 minutes",
+    active: true,
+  },
+  {
+    id: "svc-007",
+    name: "Gel Nails",
+    category: "Nail Services",
+    price: 800,
+    duration: "1 hour",
+    active: true,
+  },
+  {
+    id: "svc-008",
+    name: "Nail Art & Design",
+    category: "Nail Services",
+    price: 650,
+    duration: "1 hour",
+    active: true,
+  },
+  {
+    id: "svc-009",
+    name: "Bridal Makeup",
+    category: "Makeup Services",
+    price: 2500,
+    duration: "2 hours",
+    active: true,
+  },
+  {
+    id: "svc-010",
+    name: "Special Event Makeup",
+    category: "Makeup Services",
+    price: 1800,
+    duration: "1.5 hours",
+    active: false,
+  },
+];
 
 const mockNewRequests = [
   {
@@ -172,6 +306,20 @@ const mockPastBookings = [
   },
 ];
 
+// Helper function to get badge color based on certification level
+const getCertificationLevelBadge = (level: string) => {
+  switch (level) {
+    case "Expert":
+      return "bg-purple-100 text-purple-800 border-purple-300 dark:bg-purple-900 dark:text-purple-100";
+    case "Professional":
+      return "bg-blue-100 text-blue-800 border-blue-300 dark:bg-blue-900 dark:text-blue-100";
+    case "Intermediate":
+      return "bg-green-100 text-green-800 border-green-300 dark:bg-green-900 dark:text-green-100";
+    default:
+      return "bg-gray-100 text-gray-800 border-gray-300 dark:bg-gray-900 dark:text-gray-100";
+  }
+};
+
 export default function ProviderDashboard() {
   const [activeTab, setActiveTab] = useState("new");
 
@@ -284,6 +432,127 @@ export default function ProviderDashboard() {
                 </CardContent>
               </Card>
             </div>
+
+            {/* Certifications Section */}
+            <Card className="mb-8">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="flex items-center gap-2">
+                      <Award className="h-5 w-5 text-primary" />
+                      My Certifications
+                    </CardTitle>
+                    <CardDescription>
+                      Veyya verified certifications - {mockCertifications.length} earned
+                    </CardDescription>
+                  </div>
+                  <Button variant="outline" size="sm" asChild>
+                    <a href="/providers/certifications">
+                      View All
+                    </a>
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {mockCertifications.map((cert) => (
+                    <div
+                      key={cert.id}
+                      className="p-4 border rounded-lg hover:border-primary transition-colors"
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <Award className="h-8 w-8 text-primary" />
+                        <Badge className={`${getCertificationLevelBadge(cert.level)} border`}>
+                          {cert.level}
+                        </Badge>
+                      </div>
+                      <h3 className="font-semibold mb-1">{cert.name}</h3>
+                      <p className="text-xs text-muted-foreground mb-2">{cert.category}</p>
+                      <div className="text-xs space-y-1">
+                        <p className="text-muted-foreground">
+                          Completed: {new Date(cert.completedDate).toLocaleDateString()}
+                        </p>
+                        <p className="text-muted-foreground">
+                          Valid until: {new Date(cert.expiryDate).toLocaleDateString()}
+                        </p>
+                        <p className="text-xs font-mono text-muted-foreground">
+                          {cert.certificateNumber}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Services & Pricing Section */}
+            <Card className="mb-8">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="flex items-center gap-2">
+                      <Briefcase className="h-5 w-5 text-primary" />
+                      My Services & Pricing
+                    </CardTitle>
+                    <CardDescription>
+                      Services you offer - {mockServices.filter(s => s.active).length} active
+                    </CardDescription>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit Services
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {/* Group services by category */}
+                  {Array.from(new Set(mockServices.map(s => s.category))).map((category) => (
+                    <div key={category}>
+                      <h3 className="text-sm font-semibold text-muted-foreground mb-2 uppercase">
+                        {category}
+                      </h3>
+                      <div className="space-y-2 mb-4">
+                        {mockServices
+                          .filter(s => s.category === category)
+                          .map((service) => (
+                            <div
+                              key={service.id}
+                              className={`flex items-center justify-between p-3 border rounded-lg ${
+                                service.active
+                                  ? "bg-background hover:border-primary transition-colors"
+                                  : "bg-muted opacity-60"
+                              }`}
+                            >
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <h4 className="font-medium">{service.name}</h4>
+                                  {!service.active && (
+                                    <Badge variant="outline" className="text-xs">
+                                      Inactive
+                                    </Badge>
+                                  )}
+                                </div>
+                                <p className="text-sm text-muted-foreground">
+                                  {service.duration}
+                                </p>
+                              </div>
+                              <div className="text-right">
+                                <p className="text-lg font-bold text-primary">
+                                  ฿{service.price.toLocaleString()}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  You earn: ฿{Math.round(service.price * 0.7).toLocaleString()}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
 
             {/* Bookings Tabs */}
             <Tabs value={activeTab} onValueChange={setActiveTab}>
