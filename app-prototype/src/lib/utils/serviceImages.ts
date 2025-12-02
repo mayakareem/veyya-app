@@ -141,6 +141,48 @@ export const getServiceImage = (serviceName: string, categoryName: string): stri
   if (lowerName.includes("fitness assessment")) return "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80";
   if (lowerName.includes("meal planning")) return "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80";
 
+  // Healthcare services - Lab Tests
+  if (lowerName.includes("complete blood count") || lowerName.includes("cbc")) return "/images/healthcare/cbc-test.svg";
+  if (lowerName.includes("lipid profile")) return "/images/healthcare/lipid-profile.svg";
+  if (lowerName.includes("diabetes panel") || lowerName.includes("hba1c")) return "/images/healthcare/diabetes-panel.svg";
+  if (lowerName.includes("thyroid function") || lowerName.includes("tsh")) return "/images/healthcare/thyroid-test.svg";
+  if (lowerName.includes("liver function")) return "/images/healthcare/liver-function.svg";
+  if (lowerName.includes("kidney function")) return "/images/healthcare/kidney-function.svg";
+  if (lowerName.includes("vitamin d")) return "/images/healthcare/vitamin-d.svg";
+
+  // Healthcare services - IV Therapy
+  if (lowerName.includes("hydration iv")) return "/images/healthcare/hydration-iv.svg";
+  if (lowerName.includes("immunity boost iv") || lowerName.includes("immunity iv")) return "/images/healthcare/immunity-iv.svg";
+  if (lowerName.includes("energy boost iv") || lowerName.includes("energy iv")) return "/images/healthcare/energy-iv.svg";
+  if (lowerName.includes("beauty glow iv") || lowerName.includes("glutathione")) return "/images/healthcare/beauty-iv.svg";
+
+  // Healthcare services - Doctor Consultations
+  if (lowerName.includes("general practitioner")) return "/images/healthcare/gp-consultation.svg";
+  if (lowerName.includes("pediatrician")) return "/images/healthcare/pediatrician.svg";
+
+  // Healthcare services - Vaccines
+  if (lowerName.includes("flu vaccine")) return "/images/healthcare/flu-vaccine.svg";
+  if (lowerName.includes("covid-19 vaccine") || lowerName.includes("covid vaccine")) return "/images/healthcare/covid-vaccine.svg";
+  if (lowerName.includes("hepatitis b")) return "/images/healthcare/hepatitis-b.svg";
+
+  // Healthcare services - Nurse Care
+  if (lowerName.includes("nurse visit") && lowerName.includes("2 hour")) return "/images/healthcare/nurse-visit-2h.svg";
+  if (lowerName.includes("nurse visit") && lowerName.includes("4 hour")) return "/images/healthcare/nurse-visit-4h.svg";
+  if (lowerName.includes("wound care")) return "/images/healthcare/wound-care.svg";
+  if (lowerName.includes("post-surgery care")) return "/images/healthcare/post-surgery.svg";
+
+  // Healthcare services - Physiotherapy
+  if (lowerName.includes("general physiotherapy")) return "/images/healthcare/physiotherapy-general.svg";
+  if (lowerName.includes("sports injury rehabilitation") || lowerName.includes("sports rehab")) return "/images/healthcare/sports-rehab.svg";
+  if (lowerName.includes("post-stroke rehabilitation") || lowerName.includes("stroke rehab")) return "/images/healthcare/stroke-rehab.svg";
+
+  // Healthcare services - Psychotherapy
+  if (lowerName.includes("individual therapy")) return "/images/healthcare/individual-therapy.svg";
+  if (lowerName.includes("couples therapy")) return "/images/healthcare/couples-therapy.svg";
+  if (lowerName.includes("family therapy")) return "/images/healthcare/family-therapy.svg";
+  if (lowerName.includes("cognitive behavioral therapy") || lowerName.includes("cbt")) return "/images/healthcare/cbt-therapy.svg";
+  if (lowerName.includes("anxiety") && lowerName.includes("depression")) return "/images/healthcare/anxiety-depression.svg";
+
   // Default fallback images by category
   if (lowerCategory === "beauty") return "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80";
   if (lowerCategory === "nails") return "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=600&q=80";
@@ -150,6 +192,7 @@ export const getServiceImage = (serviceName: string, categoryName: string): stri
   if (lowerCategory === "cleaning") return "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80";
   if (lowerCategory === "wellness") return "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80";
   if (lowerCategory === "fitness") return "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80";
+  if (lowerCategory === "healthcare") return "/images/healthcare/gp-consultation.svg";
 
   // Ultimate fallback
   return "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80";
