@@ -186,9 +186,9 @@ export default function DateTimeSelector({
               </div>
 
               {/* Calendar Grid */}
-              <div className="border rounded-xl overflow-hidden">
+              <div className="border rounded-xl overflow-hidden bg-white">
                 {/* Day headers */}
-                <div className="grid grid-cols-7 bg-muted/50">
+                <div className="grid grid-cols-7 bg-gray-50">
                   {DAYS_OF_WEEK.map((day) => (
                     <div
                       key={day}
@@ -200,7 +200,7 @@ export default function DateTimeSelector({
                 </div>
 
                 {/* Calendar days */}
-                <div className="grid grid-cols-7">
+                <div className="grid grid-cols-7 bg-white">
                   {days.map((date, index) => {
                     const disabled = isDateDisabled(date);
                     const selected = isSameDay(date, selectedDate);
@@ -212,10 +212,10 @@ export default function DateTimeSelector({
                         onClick={() => handleDateSelect(date)}
                         disabled={disabled}
                         className={`
-                          aspect-square p-2 text-sm border-b border-r
+                          aspect-square p-2 text-sm border-b border-r bg-white
                           transition-all
-                          ${disabled ? "text-muted-foreground/30 cursor-not-allowed" : "hover:bg-muted cursor-pointer"}
-                          ${selected ? "bg-primary text-primary-foreground font-bold hover:bg-primary" : ""}
+                          ${disabled ? "text-muted-foreground/30 cursor-not-allowed" : "hover:bg-gray-50 cursor-pointer"}
+                          ${selected ? "!bg-primary text-primary-foreground font-bold hover:!bg-primary" : ""}
                           ${isToday && !selected ? "border-2 border-primary" : ""}
                         `}
                       >
@@ -249,7 +249,7 @@ export default function DateTimeSelector({
                   <p>Please select a date first</p>
                 </div>
               ) : (
-                <div className="border rounded-xl p-4 max-h-[400px] overflow-y-auto">
+                <div className="border rounded-xl p-4 max-h-[400px] overflow-y-auto bg-white">
                   <div className="grid grid-cols-3 gap-2">
                     {TIME_SLOTS.map((time) => {
                       const selected = time === selectedTime;
@@ -258,10 +258,10 @@ export default function DateTimeSelector({
                           key={time}
                           onClick={() => handleTimeSelect(time)}
                           className={`
-                            py-3 px-2 text-sm rounded-lg border transition-all
+                            py-3 px-2 text-sm rounded-lg border transition-all bg-white
                             ${selected
-                              ? "bg-primary text-primary-foreground border-primary font-semibold"
-                              : "hover:bg-muted hover:border-primary/50"
+                              ? "!bg-primary text-primary-foreground border-primary font-semibold"
+                              : "hover:bg-gray-50 hover:border-primary/50"
                             }
                           `}
                         >
