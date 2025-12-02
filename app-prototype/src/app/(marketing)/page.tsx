@@ -129,157 +129,209 @@ export default function MarketingHome() {
       </section>
 
       {/* Product Collaborations - Beauty, Healthcare & Wellness Brands */}
-      <section id="brand-collaborations" className="bg-muted/20">
+      <section id="brand-collaborations" className="bg-gradient-to-b from-muted/30 to-background">
         <Container className="py-10 sm:py-12 md:py-16">
           <div className="text-center mb-8 sm:mb-12 px-4 sm:px-0">
-            <h2 className="text-2xl sm:text-3xl font-semibold mb-2 sm:mb-3">Brand Collaborations</h2>
-            <p className="text-sm sm:text-base text-muted-foreground">Premium beauty, healthcare & wellness partners</p>
+            <div className="inline-block mb-3 px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-semibold">
+              Premium Partners
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">Brand Collaborations</h2>
+            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
+              Exclusive partnerships with world-leading beauty, healthcare & wellness brands
+            </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto px-4 sm:px-0">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto px-4 sm:px-0">
             {/* Collaboration 1 - L'Oréal */}
             <Link
               href="/collaborations/loreal"
-              className="group flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+              className="group relative flex flex-col items-center justify-center p-6 sm:p-8 bg-white border-2 border-border rounded-2xl hover:shadow-2xl hover:border-primary hover:-translate-y-1 transition-all duration-300 overflow-hidden"
             >
-              <div className="h-12 sm:h-16 w-full flex items-center justify-center mb-2 sm:mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative h-16 sm:h-20 w-full flex items-center justify-center mb-3 sm:mb-4 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
                 <Image
                   src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=200&h=80&fit=crop"
                   alt="L'Oréal Professional"
-                  width={120}
-                  height={48}
-                  className="object-contain max-w-[80px] sm:max-w-[120px]"
+                  width={140}
+                  height={56}
+                  className="object-contain max-w-[100px] sm:max-w-[140px]"
                 />
               </div>
-              <h3 className="font-semibold text-xs sm:text-sm text-center">L'Oréal Professional</h3>
-              <p className="text-[10px] sm:text-xs text-muted-foreground text-center mt-1">Premium hair care</p>
+              <h3 className="relative font-bold text-sm sm:text-base text-center group-hover:text-primary transition-colors">L'Oréal Professional</h3>
+              <p className="relative text-xs sm:text-sm text-muted-foreground text-center mt-1.5">Premium hair care</p>
             </Link>
 
             {/* Collaboration 2 - OPI */}
             <Link
               href="/collaborations/opi"
-              className="group flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
+              className="group relative flex flex-col items-center justify-center p-6 sm:p-8 bg-white border-2 border-border rounded-2xl hover:shadow-2xl hover:border-primary hover:-translate-y-1 transition-all duration-300 overflow-hidden"
             >
-              <div className="h-12 sm:h-16 w-full flex items-center justify-center mb-2 sm:mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative h-16 sm:h-20 w-full flex items-center justify-center mb-3 sm:mb-4 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
                 <Image
                   src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=200&h=80&fit=crop"
                   alt="OPI"
-                  width={120}
-                  height={48}
-                  className="object-contain max-w-[80px] sm:max-w-[120px]"
+                  width={140}
+                  height={56}
+                  className="object-contain max-w-[100px] sm:max-w-[140px]"
                 />
               </div>
-              <h3 className="font-semibold text-xs sm:text-sm text-center">OPI</h3>
-              <p className="text-[10px] sm:text-xs text-muted-foreground text-center mt-1">Luxury nail products</p>
+              <h3 className="relative font-bold text-sm sm:text-base text-center group-hover:text-primary transition-colors">OPI</h3>
+              <p className="relative text-xs sm:text-sm text-muted-foreground text-center mt-1.5">Luxury nail products</p>
             </Link>
 
-            {/* Collaboration 3 - Aveda */}
-            <Link
-              href="/collaborations/aveda"
-              className="group flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
-            >
-              <div className="h-12 sm:h-16 w-full flex items-center justify-center mb-2 sm:mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
-                <Image
-                  src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=200&h=80&fit=crop"
-                  alt="Aveda"
-                  width={120}
-                  height={48}
-                  className="object-contain max-w-[80px] sm:max-w-[120px]"
-                />
-              </div>
-              <h3 className="font-semibold text-xs sm:text-sm text-center">Aveda</h3>
-              <p className="text-[10px] sm:text-xs text-muted-foreground text-center mt-1">Plant-based wellness</p>
-            </Link>
+            {[
+              { href: "/collaborations/aveda", img: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=200&h=80&fit=crop", name: "Aveda", desc: "Plant-based wellness" },
+              { href: "/collaborations/dermalogica", img: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=200&h=80&fit=crop", name: "Dermalogica", desc: "Professional skincare" },
+              { href: "/collaborations/aromatherapy", img: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=200&h=80&fit=crop", name: "Aromatherapy", desc: "Wellness massage oils" },
+              { href: "/collaborations/ghd", img: "https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=200&h=80&fit=crop", name: "ghd", desc: "Professional styling" },
+              { href: "/collaborations/kerastase", img: "https://images.unsplash.com/photo-1571875257727-256c39da42af?w=200&h=80&fit=crop", name: "Kérastase", desc: "Luxury hair treatments" },
+              { href: "/collaborations/clarins", img: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=200&h=80&fit=crop", name: "Clarins", desc: "Spa-quality treatments" },
+            ].map((brand) => (
+              <Link
+                key={brand.href}
+                href={brand.href}
+                className="group relative flex flex-col items-center justify-center p-6 sm:p-8 bg-white border-2 border-border rounded-2xl hover:shadow-2xl hover:border-primary hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative h-16 sm:h-20 w-full flex items-center justify-center mb-3 sm:mb-4 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
+                  <Image
+                    src={brand.img}
+                    alt={brand.name}
+                    width={140}
+                    height={56}
+                    className="object-contain max-w-[100px] sm:max-w-[140px]"
+                  />
+                </div>
+                <h3 className="relative font-bold text-sm sm:text-base text-center group-hover:text-primary transition-colors">{brand.name}</h3>
+                <p className="relative text-xs sm:text-sm text-muted-foreground text-center mt-1.5">{brand.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
 
-            {/* Collaboration 4 - Dermalogica */}
-            <Link
-              href="/collaborations/dermalogica"
-              className="group flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
-            >
-              <div className="h-12 sm:h-16 w-full flex items-center justify-center mb-2 sm:mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
-                <Image
-                  src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=200&h=80&fit=crop"
-                  alt="Dermalogica"
-                  width={120}
-                  height={48}
-                  className="object-contain max-w-[80px] sm:max-w-[120px]"
-                />
-              </div>
-              <h3 className="font-semibold text-xs sm:text-sm text-center">Dermalogica</h3>
-              <p className="text-[10px] sm:text-xs text-muted-foreground text-center mt-1">Professional skincare</p>
-            </Link>
+      {/* Bundled Voucher Marquee */}
+      <section className="bg-white border-y">
+        <Container className="py-8 sm:py-10">
+          <div className="text-center mb-6 px-4 sm:px-0">
+            <h3 className="text-xl sm:text-2xl font-bold mb-2">Exclusive Bundled Vouchers</h3>
+            <p className="text-sm text-muted-foreground">Save more with our curated service packages</p>
+          </div>
 
-            {/* Collaboration 5 - Aromatherapy Associates */}
-            <Link
-              href="/collaborations/aromatherapy"
-              className="group flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
-            >
-              <div className="h-12 sm:h-16 w-full flex items-center justify-center mb-2 sm:mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
-                <Image
-                  src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=200&h=80&fit=crop"
-                  alt="Aromatherapy Associates"
-                  width={120}
-                  height={48}
-                  className="object-contain max-w-[80px] sm:max-w-[120px]"
-                />
+          <div className="relative overflow-hidden">
+            <div className="flex gap-4 sm:gap-6 animate-marquee">
+              {/* Voucher 1 - Beauty Bundle */}
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-pink-50 to-purple-50 border-2 border-pink-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 25%</div>
+                  <div className="text-2xl">💅</div>
+                </div>
+                <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Beauty Complete</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">Manicure + Pedicure + Facial</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-muted-foreground line-through">฿3,500</span>
+                    <span className="text-xl font-bold text-pink-600 ml-2">฿2,625</span>
+                  </div>
+                </div>
               </div>
-              <h3 className="font-semibold text-xs sm:text-sm text-center">Aromatherapy</h3>
-              <p className="text-[10px] sm:text-xs text-muted-foreground text-center mt-1">Wellness massage oils</p>
-            </Link>
 
-            {/* Collaboration 6 - ghd */}
-            <Link
-              href="/collaborations/ghd"
-              className="group flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
-            >
-              <div className="h-12 sm:h-16 w-full flex items-center justify-center mb-2 sm:mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
-                <Image
-                  src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=200&h=80&fit=crop"
-                  alt="ghd"
-                  width={120}
-                  height={48}
-                  className="object-contain max-w-[80px] sm:max-w-[120px]"
-                />
+              {/* Voucher 2 - Hair Care Bundle */}
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 20%</div>
+                  <div className="text-2xl">💇</div>
+                </div>
+                <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Hair Luxury</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">Cut + Color + Treatment</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-muted-foreground line-through">฿4,000</span>
+                    <span className="text-xl font-bold text-blue-600 ml-2">฿3,200</span>
+                  </div>
+                </div>
               </div>
-              <h3 className="font-semibold text-xs sm:text-sm text-center">ghd</h3>
-              <p className="text-[10px] sm:text-xs text-muted-foreground text-center mt-1">Professional styling</p>
-            </Link>
 
-            {/* Collaboration 7 - Kérastase */}
-            <Link
-              href="/collaborations/kerastase"
-              className="group flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
-            >
-              <div className="h-12 sm:h-16 w-full flex items-center justify-center mb-2 sm:mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
-                <Image
-                  src="https://images.unsplash.com/photo-1571875257727-256c39da42af?w=200&h=80&fit=crop"
-                  alt="Kérastase"
-                  width={120}
-                  height={48}
-                  className="object-contain max-w-[80px] sm:max-w-[120px]"
-                />
+              {/* Voucher 3 - Wellness Bundle */}
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 30%</div>
+                  <div className="text-2xl">🧘</div>
+                </div>
+                <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Wellness Week</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">4 Massages + 2 Yoga Sessions</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-muted-foreground line-through">฿5,000</span>
+                    <span className="text-xl font-bold text-green-600 ml-2">฿3,500</span>
+                  </div>
+                </div>
               </div>
-              <h3 className="font-semibold text-xs sm:text-sm text-center">Kérastase</h3>
-              <p className="text-[10px] sm:text-xs text-muted-foreground text-center mt-1">Luxury hair treatments</p>
-            </Link>
 
-            {/* Collaboration 8 - Clarins */}
-            <Link
-              href="/collaborations/clarins"
-              className="group flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 bg-white border rounded-xl hover:shadow-lg hover:border-primary/50 transition-all"
-            >
-              <div className="h-12 sm:h-16 w-full flex items-center justify-center mb-2 sm:mb-3 grayscale group-hover:grayscale-0 transition-all group-hover:scale-110">
-                <Image
-                  src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=200&h=80&fit=crop"
-                  alt="Clarins"
-                  width={120}
-                  height={48}
-                  className="object-contain max-w-[80px] sm:max-w-[120px]"
-                />
+              {/* Voucher 4 - Pet Care Bundle */}
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 15%</div>
+                  <div className="text-2xl">🐾</div>
+                </div>
+                <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Pet Pamper</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">Grooming + Bath + Nail Trim</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-muted-foreground line-through">฿2,000</span>
+                    <span className="text-xl font-bold text-orange-600 ml-2">฿1,700</span>
+                  </div>
+                </div>
               </div>
-              <h3 className="font-semibold text-xs sm:text-sm text-center">Clarins</h3>
-              <p className="text-[10px] sm:text-xs text-muted-foreground text-center mt-1">Spa-quality treatments</p>
-            </Link>
+
+              {/* Voucher 5 - Spa Day Bundle */}
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 35%</div>
+                  <div className="text-2xl">✨</div>
+                </div>
+                <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Full Spa Day</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">Massage + Facial + Body Scrub</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-muted-foreground line-through">฿6,000</span>
+                    <span className="text-xl font-bold text-purple-600 ml-2">฿3,900</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Duplicate for seamless loop */}
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-pink-50 to-purple-50 border-2 border-pink-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 25%</div>
+                  <div className="text-2xl">💅</div>
+                </div>
+                <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Beauty Complete</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">Manicure + Pedicure + Facial</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-muted-foreground line-through">฿3,500</span>
+                    <span className="text-xl font-bold text-pink-600 ml-2">฿2,625</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 20%</div>
+                  <div className="text-2xl">💇</div>
+                </div>
+                <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Hair Luxury</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">Cut + Color + Treatment</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-muted-foreground line-through">฿4,000</span>
+                    <span className="text-xl font-bold text-blue-600 ml-2">฿3,200</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </section>
