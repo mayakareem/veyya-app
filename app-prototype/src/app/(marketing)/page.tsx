@@ -212,7 +212,7 @@ export default function MarketingHome() {
       </section>
 
       {/* Bundled Voucher Marquee */}
-      <section className="bg-white border-y">
+      <section className="bg-white">
         <Container className="py-8 sm:py-10">
           <div className="text-center mb-6 px-4 sm:px-0">
             <h3 className="text-xl sm:text-2xl font-bold mb-2">Exclusive Bundled Vouchers</h3>
@@ -222,112 +222,154 @@ export default function MarketingHome() {
           <div className="relative overflow-hidden">
             <div className="flex gap-4 sm:gap-6 animate-marquee">
               {/* Voucher 1 - Beauty Bundle */}
-              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-pink-50 to-purple-50 border-2 border-pink-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-pink-50/50 to-purple-50/50 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
                 <div className="flex items-start justify-between mb-3">
-                  <div className="bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 25%</div>
-                  <div className="text-2xl">💅</div>
+                  <div className="bg-pink-400/80 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 25%</div>
+                  <Image
+                    src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=80&h=80&fit=crop"
+                    alt="Beauty"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
                 </div>
                 <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Beauty Complete</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground mb-3">Manicure + Pedicure + Facial</p>
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs text-muted-foreground line-through">฿3,500</span>
-                    <span className="text-xl font-bold text-pink-600 ml-2">฿2,625</span>
+                    <span className="text-xl font-bold text-pink-500 ml-2">฿2,625</span>
                   </div>
                 </div>
               </div>
 
               {/* Voucher 2 - Hair Care Bundle */}
-              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-blue-50/50 to-cyan-50/50 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
                 <div className="flex items-start justify-between mb-3">
-                  <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 20%</div>
-                  <div className="text-2xl">💇</div>
+                  <div className="bg-blue-400/80 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 20%</div>
+                  <Image
+                    src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=80&h=80&fit=crop"
+                    alt="Hair"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
                 </div>
                 <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Hair Luxury</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground mb-3">Cut + Color + Treatment</p>
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs text-muted-foreground line-through">฿4,000</span>
-                    <span className="text-xl font-bold text-blue-600 ml-2">฿3,200</span>
+                    <span className="text-xl font-bold text-blue-500 ml-2">฿3,200</span>
                   </div>
                 </div>
               </div>
 
               {/* Voucher 3 - Wellness Bundle */}
-              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-green-50/50 to-emerald-50/50 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
                 <div className="flex items-start justify-between mb-3">
-                  <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 30%</div>
-                  <div className="text-2xl">🧘</div>
+                  <div className="bg-green-400/80 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 30%</div>
+                  <Image
+                    src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=80&h=80&fit=crop"
+                    alt="Wellness"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
                 </div>
                 <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Wellness Week</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground mb-3">4 Massages + 2 Yoga Sessions</p>
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs text-muted-foreground line-through">฿5,000</span>
-                    <span className="text-xl font-bold text-green-600 ml-2">฿3,500</span>
+                    <span className="text-xl font-bold text-green-500 ml-2">฿3,500</span>
                   </div>
                 </div>
               </div>
 
               {/* Voucher 4 - Pet Care Bundle */}
-              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-orange-50/50 to-amber-50/50 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
                 <div className="flex items-start justify-between mb-3">
-                  <div className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 15%</div>
-                  <div className="text-2xl">🐾</div>
+                  <div className="bg-orange-400/80 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 15%</div>
+                  <Image
+                    src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=80&h=80&fit=crop"
+                    alt="Pet Care"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
                 </div>
                 <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Pet Pamper</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground mb-3">Grooming + Bath + Nail Trim</p>
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs text-muted-foreground line-through">฿2,000</span>
-                    <span className="text-xl font-bold text-orange-600 ml-2">฿1,700</span>
+                    <span className="text-xl font-bold text-orange-500 ml-2">฿1,700</span>
                   </div>
                 </div>
               </div>
 
               {/* Voucher 5 - Spa Day Bundle */}
-              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-purple-50/50 to-pink-50/50 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
                 <div className="flex items-start justify-between mb-3">
-                  <div className="bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 35%</div>
-                  <div className="text-2xl">✨</div>
+                  <div className="bg-purple-400/80 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 35%</div>
+                  <Image
+                    src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=80&h=80&fit=crop"
+                    alt="Spa"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
                 </div>
                 <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Full Spa Day</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground mb-3">Massage + Facial + Body Scrub</p>
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs text-muted-foreground line-through">฿6,000</span>
-                    <span className="text-xl font-bold text-purple-600 ml-2">฿3,900</span>
+                    <span className="text-xl font-bold text-purple-500 ml-2">฿3,900</span>
                   </div>
                 </div>
               </div>
 
               {/* Duplicate for seamless loop */}
-              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-pink-50 to-purple-50 border-2 border-pink-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-pink-50/50 to-purple-50/50 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
                 <div className="flex items-start justify-between mb-3">
-                  <div className="bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 25%</div>
-                  <div className="text-2xl">💅</div>
+                  <div className="bg-pink-400/80 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 25%</div>
+                  <Image
+                    src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=80&h=80&fit=crop"
+                    alt="Beauty"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
                 </div>
                 <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Beauty Complete</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground mb-3">Manicure + Pedicure + Facial</p>
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs text-muted-foreground line-through">฿3,500</span>
-                    <span className="text-xl font-bold text-pink-600 ml-2">฿2,625</span>
+                    <span className="text-xl font-bold text-pink-500 ml-2">฿2,625</span>
                   </div>
                 </div>
               </div>
 
-              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
+              <div className="min-w-[280px] sm:min-w-[320px] bg-gradient-to-br from-blue-50/50 to-cyan-50/50 rounded-2xl p-5 sm:p-6 flex-shrink-0 hover:shadow-lg transition-all cursor-pointer group">
                 <div className="flex items-start justify-between mb-3">
-                  <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 20%</div>
-                  <div className="text-2xl">💇</div>
+                  <div className="bg-blue-400/80 text-white px-3 py-1 rounded-full text-xs font-bold">SAVE 20%</div>
+                  <Image
+                    src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=80&h=80&fit=crop"
+                    alt="Hair"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
                 </div>
                 <h4 className="font-bold text-base sm:text-lg mb-2 group-hover:text-primary transition-colors">Hair Luxury</h4>
                 <p className="text-xs sm:text-sm text-muted-foreground mb-3">Cut + Color + Treatment</p>
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs text-muted-foreground line-through">฿4,000</span>
-                    <span className="text-xl font-bold text-blue-600 ml-2">฿3,200</span>
+                    <span className="text-xl font-bold text-blue-500 ml-2">฿3,200</span>
                   </div>
                 </div>
               </div>
