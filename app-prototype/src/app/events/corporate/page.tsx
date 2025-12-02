@@ -90,7 +90,7 @@ export default function CorporatePage() {
             </p>
             <div className="flex flex-wrap gap-2 justify-center">
               <Badge className="bg-blue-100 text-blue-800 border-blue-300">Team Building</Badge>
-              <Badge className="bg-gray-100 text-gray-800 border-gray-300">Executive Grooming</Badge>
+              <Badge className="bg-gray-100 text-gray-800 border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700">Executive Grooming</Badge>
               <Badge className="bg-green-100 text-green-800 border-green-300">Wellness Programs</Badge>
             </div>
           </div>
@@ -115,7 +115,7 @@ export default function CorporatePage() {
               return (
                 <Card key={pkg.name} className={`relative ${pkg.popular ? 'border-blue-500 border-2 shadow-lg' : ''}`}>
                   {pkg.popular && (
-                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white">
+                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white dark:bg-blue-500">
                       Most Popular
                     </Badge>
                   )}
@@ -240,7 +240,7 @@ export default function CorporatePage() {
 
             <div className="text-center">
               <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-900/20 flex items-center justify-center mx-auto mb-4">
-                <Calendar className="w-6 h-6 text-gray-600" />
+                <Calendar className="w-6 h-6 text-gray-600 dark:text-gray-400" />
               </div>
               <h3 className="font-semibold mb-2">Flexible Timing</h3>
               <p className="text-sm text-muted-foreground">
@@ -272,7 +272,7 @@ export default function CorporatePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-gradient-to-r from-blue-600 via-gray-700 to-green-600 text-white">
+      <section className="bg-gradient-to-r from-blue-600 via-gray-700 to-green-600 text-white dark:from-blue-700 dark:via-gray-800 dark:to-green-700">
         <Container className="py-16 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Elevate Your Corporate Event?</h2>
           <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">

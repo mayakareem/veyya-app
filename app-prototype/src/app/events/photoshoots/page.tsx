@@ -116,7 +116,7 @@ export default function PhotoshootsPage() {
               return (
                 <Card key={pkg.name} className={`relative ${pkg.popular ? 'border-purple-500 border-2 shadow-lg' : ''}`}>
                   {pkg.popular && (
-                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white">
+                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white dark:bg-purple-500">
                       Most Popular
                     </Badge>
                   )}

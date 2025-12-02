@@ -135,7 +135,7 @@ export default function WeddingsPage() {
               return (
                 <Card key={pkg.name} className={`relative ${pkg.popular ? 'border-pink-500 border-2 shadow-lg' : ''}`}>
                   {pkg.popular && (
-                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-pink-600 text-white">
+                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-pink-600 text-white dark:bg-pink-500">
                       Most Popular
                     </Badge>
                   )}

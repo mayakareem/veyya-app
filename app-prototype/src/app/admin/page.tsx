@@ -39,37 +39,71 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
   // Check if database URL is configured
-  if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes("localhost:5432")) {
+  const isDatabaseConfigured = process.env.DATABASE_URL &&
+    !process.env.DATABASE_URL.includes("localhost:5432") &&
+    !process.env.DATABASE_URL.includes("YOUR_DATABASE_URL");
+
+  if (!isDatabaseConfigured) {
     return (
       <main className="mx-auto max-w-7xl p-6">
         <Card className="border-orange-200 bg-orange-50">
           <CardHeader>
             <CardTitle className="text-orange-700">Database Not Configured</CardTitle>
             <CardDescription className="text-orange-600">
-              The admin dashboard requires a database connection
+              The admin dashboard requires a PostgreSQL database connection
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <p className="text-sm mb-4">
-              Please configure the following environment variables in Vercel:
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-sm bg-white p-4 rounded border font-mono">
-              <li>DATABASE_URL (PostgreSQL connection string)</li>
-              <li>NEXTAUTH_SECRET (Authentication secret)</li>
-              <li>NEXTAUTH_URL (https://veyya-app.vercel.app)</li>
-            </ul>
-            <div className="mt-6 space-y-2">
-              <p className="text-sm font-semibold">Steps to fix:</p>
+          <CardContent className="space-y-6">
+            <div>
+              <p className="text-sm mb-4 font-medium">
+                Required environment variables:
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-sm bg-white p-4 rounded border font-mono">
+                <li>DATABASE_URL (PostgreSQL connection string)</li>
+                <li>NEXTAUTH_SECRET (Random secret string)</li>
+                <li>NEXTAUTH_URL (https://veyya-app.vercel.app)</li>
+              </ul>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded p-4">
+              <p className="text-sm font-semibold text-blue-800 mb-2">Quick Setup Options:</p>
+              <div className="space-y-3 text-sm">
+                <div>
+                  <p className="font-medium text-blue-700">Option 1: Vercel Postgres (Recommended)</p>
+                  <ol className="list-decimal list-inside space-y-1 ml-2 text-blue-600 mt-1">
+                    <li>Go to your Vercel project</li>
+                    <li>Click "Storage" tab</li>
+                    <li>Create "Postgres" database</li>
+                    <li>It will auto-configure DATABASE_URL</li>
+                  </ol>
+                </div>
+                <div>
+                  <p className="font-medium text-blue-700">Option 2: External Database</p>
+                  <ol className="list-decimal list-inside space-y-1 ml-2 text-blue-600 mt-1">
+                    <li>Create PostgreSQL database (Neon, Supabase, etc.)</li>
+                    <li>Copy connection string</li>
+                    <li>Add to Vercel Environment Variables</li>
+                    <li>Redeploy the application</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white border rounded p-4">
+              <p className="text-sm font-semibold mb-2">After adding DATABASE_URL:</p>
               <ol className="list-decimal list-inside space-y-1 text-sm ml-2">
-                <li>Go to Vercel project settings</li>
-                <li>Navigate to Environment Variables</li>
-                <li>Add the three variables above</li>
-                <li>Redeploy the application</li>
+                <li>Run database migrations: <code className="bg-gray-100 px-2 py-0.5 rounded">npx prisma db push</code></li>
+                <li>Redeploy on Vercel</li>
+                <li>Access the admin dashboard</li>
               </ol>
             </div>
-            <div className="mt-6">
+
+            <div className="flex gap-3">
               <Link href="/">
                 <Button variant="outline">Return to Home</Button>
+              </Link>
+              <Link href="/hub">
+                <Button variant="outline">View All Pages</Button>
               </Link>
             </div>
           </CardContent>

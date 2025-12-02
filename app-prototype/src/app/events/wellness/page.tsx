@@ -117,7 +117,7 @@ export default function WellnessPage() {
               return (
                 <Card key={pkg.name} className={`relative ${pkg.popular ? 'border-green-500 border-2 shadow-lg' : ''}`}>
                   {pkg.popular && (
-                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white">
+                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white dark:bg-green-500">
                       Most Popular
                     </Badge>
                   )}
@@ -274,7 +274,7 @@ export default function WellnessPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-gradient-to-r from-green-600 via-blue-600 to-teal-600 text-white">
+      <section className="bg-gradient-to-r from-green-600 via-blue-600 to-teal-600 text-white dark:from-green-700 dark:via-blue-700 dark:to-teal-700">
         <Container className="py-16 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Begin Your Wellness Journey?</h2>
           <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
