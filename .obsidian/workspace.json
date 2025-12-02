@@ -219,6 +219,7 @@
   },
   "active": "23e0972bfbf17378",
   "lastOpenFiles": [
+    "app-prototype/src/components/booking/MultiStepBooking.tsx",
     "vercel.json",
     "app-prototype/vercel.json",
     "app-prototype/src/app/admin-simple/page.tsx",
@@ -229,7 +230,6 @@
     "app-prototype/src/app/admin-test/db-test",
     "app-prototype/src/app/providers/certifications/[slug]/CertificationCategoryClient.tsx",
     "app-prototype/src/app/admin-test/page.tsx",
-    "app-prototype/src/app/admin-test",
     "MOBILE-APP-SUMMARY.md",
     "app-mobile/README-VEYYA.md",
     "app-mobile/README.md",
