@@ -1,15 +1,52 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-helpers";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
 type BookingStatus = "PENDING" | "CONFIRMED" | "COMPLETED" | "CANCELED" | "REFUNDED";
 
 export default async function AdminBookingsPage() {
-  await requireAdmin();
+  // Check if database is configured
+  const isDatabaseConfigured = process.env.DATABASE_URL &&
+    !process.env.DATABASE_URL.includes("localhost:5432") &&
+    !process.env.DATABASE_URL.includes("YOUR_DATABASE_URL");
 
-  const bookings = await prisma.booking.findMany({
+  if (!isDatabaseConfigured) {
+    return (
+      <main className="mx-auto max-w-7xl p-6">
+        <Card className="border-orange-200 bg-orange-50">
+          <CardHeader>
+            <CardTitle className="text-orange-700">Database Required</CardTitle>
+            <CardDescription className="text-orange-600">
+              Booking management requires a database connection
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm mb-4">
+              Please configure the DATABASE_URL environment variable in Vercel to access this page.
+            </p>
+            <div className="flex gap-3">
+              <Link href="/admin">
+                <Button variant="outline">Back to Admin</Button>
+              </Link>
+              <Link href="/">
+                <Button variant="outline">Return to Home</Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
+
+  try {
+    await requireAdmin();
+
+    const bookings = await prisma.booking.findMany({
     include: {
       user: { select: { name: true, email: true } },
       provider: { select: { displayName: true } },
@@ -240,4 +277,29 @@ export default async function AdminBookingsPage() {
       </div>
     </main>
   );
+  } catch (error) {
+    console.error("Booking management error:", error);
+    return (
+      <main className="mx-auto max-w-7xl p-6">
+        <Card className="border-red-200 bg-red-50">
+          <CardHeader>
+            <CardTitle className="text-red-700">Error Loading Bookings</CardTitle>
+            <CardDescription className="text-red-600">
+              {error instanceof Error ? error.message : "An unexpected error occurred"}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex gap-3">
+              <Link href="/admin">
+                <Button variant="outline">Back to Admin</Button>
+              </Link>
+              <Link href="/">
+                <Button variant="outline">Return to Home</Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
 }
