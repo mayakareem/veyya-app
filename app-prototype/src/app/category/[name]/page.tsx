@@ -44,6 +44,7 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
     "Beauty": "beauty",
     "Nails": "nails",
     "Hair": "hair",
+    "Healthcare": "healthcare",
     "Pet Care": "pet-care",
     "Cleaning": "cleaning",
     "Wellness": "wellness",
@@ -153,6 +154,43 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
           <p className="text-xs sm:text-sm text-muted-foreground mb-4">
             {filteredServices.length} services available
           </p>
+
+          {/* Patrangsit Hospital Partner Banner - Only for Healthcare */}
+          {mainCategory.name === "Healthcare" && (
+            <div className="mb-6 bg-gradient-to-r from-blue-50 to-green-50 border-2 border-blue-200 rounded-xl p-4 sm:p-6">
+              <div className="flex items-center gap-4">
+                <div className="flex-shrink-0 bg-white p-3 rounded-lg shadow-sm">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 relative">
+                    {/* Hospital Logo Placeholder */}
+                    <div className="w-full h-full bg-blue-600 rounded-lg flex items-center justify-center">
+                      <svg className="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-lg sm:text-xl font-bold text-blue-900">Patrangsit Hospital</h3>
+                    <div className="flex items-center gap-1 bg-green-100 px-2 py-0.5 rounded-full">
+                      <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-xs font-semibold text-green-700">Verified Partner</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-blue-800 mb-2">
+                    All healthcare services are provided by certified medical professionals from Patrangsit Hospital
+                  </p>
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">JCI Accredited</span>
+                    <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">Licensed Practitioners</span>
+                    <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">Insured Services</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Subcategory Filter Bar */}
           <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">

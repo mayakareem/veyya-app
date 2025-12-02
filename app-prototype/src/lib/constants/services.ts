@@ -363,6 +363,90 @@ export const SERVICE_CATALOG: ServiceCategory[] = [
       },
     ],
   },
+  {
+    id: "healthcare",
+    name: "Healthcare",
+    description: "At-home medical services by Patrangsit Hospital",
+    subcategories: [
+      {
+        id: "lab-tests",
+        name: "Lab Tests",
+        description: "Home blood tests and diagnostics",
+        services: [
+          { id: "cbc-test", name: "Complete Blood Count (CBC)", duration: "30 min", priceRange: "฿800" },
+          { id: "lipid-profile", name: "Lipid Profile Test", duration: "30 min", priceRange: "฿1,200" },
+          { id: "diabetes-panel", name: "Diabetes Panel (HbA1c + Glucose)", duration: "30 min", priceRange: "฿1,500" },
+          { id: "thyroid-test", name: "Thyroid Function Test (TSH)", duration: "30 min", priceRange: "฿1,800" },
+          { id: "liver-function", name: "Liver Function Test", duration: "30 min", priceRange: "฿1,400" },
+          { id: "kidney-function", name: "Kidney Function Test", duration: "30 min", priceRange: "฿1,300" },
+          { id: "vitamin-d-test", name: "Vitamin D Test", duration: "30 min", priceRange: "฿1,600" },
+        ],
+      },
+      {
+        id: "iv-therapy",
+        name: "IV Therapy",
+        description: "Intravenous vitamin and hydration therapy",
+        services: [
+          { id: "hydration-iv", name: "Hydration IV Drip", duration: "45 min", priceRange: "฿2,500" },
+          { id: "immunity-boost-iv", name: "Immunity Boost IV", duration: "60 min", priceRange: "฿3,500" },
+          { id: "energy-boost-iv", name: "Energy Boost IV", duration: "60 min", priceRange: "฿3,000" },
+          { id: "beauty-glow-iv", name: "Beauty Glow IV (Glutathione)", duration: "60 min", priceRange: "฿4,000" },
+        ],
+      },
+      {
+        id: "doctor-visits",
+        name: "Doctor Consultations",
+        description: "Home doctor visits",
+        services: [
+          { id: "general-practitioner", name: "General Practitioner Consultation", duration: "45 min", priceRange: "฿3,000" },
+          { id: "pediatrician", name: "Pediatrician Consultation", duration: "45 min", priceRange: "฿3,500" },
+        ],
+      },
+      {
+        id: "vaccines",
+        name: "Flu Vaccines",
+        description: "Home vaccination services",
+        services: [
+          { id: "flu-vaccine", name: "Flu Vaccine", duration: "30 min", priceRange: "฿800" },
+          { id: "covid-vaccine", name: "COVID-19 Vaccine", duration: "30 min", priceRange: "฿1,200" },
+          { id: "hepatitis-b", name: "Hepatitis B Vaccine", duration: "30 min", priceRange: "฿1,000" },
+        ],
+      },
+      {
+        id: "nurse-care",
+        name: "Nurse Care",
+        description: "Professional nursing services at home",
+        services: [
+          { id: "nurse-visit-2h", name: "Nurse Visit (2 hours)", duration: "120 min", priceRange: "฿1,500" },
+          { id: "nurse-visit-4h", name: "Nurse Visit (4 hours)", duration: "240 min", priceRange: "฿2,800" },
+          { id: "wound-care", name: "Wound Care & Dressing", duration: "60 min", priceRange: "฿1,200" },
+          { id: "post-surgery-care", name: "Post-Surgery Care", duration: "90 min", priceRange: "฿2,000" },
+        ],
+      },
+      {
+        id: "physiotherapy",
+        name: "Physiotherapy",
+        description: "Physical therapy and rehabilitation",
+        services: [
+          { id: "physiotherapy-general", name: "General Physiotherapy Session", duration: "60 min", priceRange: "฿2,500" },
+          { id: "sports-injury-rehab", name: "Sports Injury Rehabilitation", duration: "60 min", priceRange: "฿3,000" },
+          { id: "post-stroke-rehab", name: "Post-Stroke Rehabilitation", duration: "90 min", priceRange: "฿3,500" },
+        ],
+      },
+      {
+        id: "psychotherapy",
+        name: "Psychotherapy & Counselling",
+        description: "Mental health support services",
+        services: [
+          { id: "individual-therapy", name: "Individual Therapy Session", duration: "60 min", priceRange: "฿2,500" },
+          { id: "couples-therapy", name: "Couples Therapy", duration: "90 min", priceRange: "฿3,500" },
+          { id: "family-therapy", name: "Family Therapy", duration: "90 min", priceRange: "฿4,000" },
+          { id: "cbt-session", name: "Cognitive Behavioral Therapy (CBT)", duration: "60 min", priceRange: "฿3,000" },
+          { id: "anxiety-depression", name: "Anxiety & Depression Counselling", duration: "60 min", priceRange: "฿2,800" },
+        ],
+      },
+    ],
+  },
 ];
 
 // Helper function to get category by ID
