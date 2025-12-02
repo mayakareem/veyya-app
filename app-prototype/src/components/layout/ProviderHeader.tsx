@@ -14,7 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Gift, ChevronDown, User, Menu, X, GraduationCap } from "lucide-react";
+import { Gift, ChevronDown, User, Menu, X, GraduationCap, Bell } from "lucide-react";
 
 const BANGKOK_AREAS = [
   "Sukhumvit",
@@ -33,12 +33,37 @@ export default function ProviderHeader() {
   const [selectedLocation, setSelectedLocation] = useState<string>("Sukhumvit");
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [newBookingsCount, setNewBookingsCount] = useState(0);
 
   // Auto-detect location on mount (simplified for demo)
   useEffect(() => {
     // In production, use geolocation API or IP-based detection
     const defaultLocation = BANGKOK_AREAS[0];
     setSelectedLocation(defaultLocation);
+  }, []);
+
+  // Fetch new bookings count
+  useEffect(() => {
+    const fetchNewBookings = async () => {
+      try {
+        // TODO: Replace with actual API endpoint
+        // const response = await fetch('/api/provider/bookings/new-count');
+        // const data = await response.json();
+        // setNewBookingsCount(data.count);
+
+        // Simulate new bookings for demo
+        setNewBookingsCount(3);
+      } catch (error) {
+        console.error('Failed to fetch new bookings:', error);
+      }
+    };
+
+    fetchNewBookings();
+
+    // Poll for new bookings every 30 seconds
+    const interval = setInterval(fetchNewBookings, 30000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -176,6 +201,72 @@ export default function ProviderHeader() {
 
           {/* Right Actions - Responsive Icons with Popovers */}
           <div className="flex items-center gap-1 sm:gap-2">
+            {/* Notification Bell */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-12 sm:w-12 relative">
+                  <Bell className="w-5 h-5 sm:w-7 sm:h-7" />
+                  {newBookingsCount > 0 && (
+                    <span className="absolute top-1 right-1 sm:top-2 sm:right-2 flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-red-500 text-[10px] sm:text-xs font-bold text-white">
+                      {newBookingsCount > 9 ? '9+' : newBookingsCount}
+                    </span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 bg-white" align="end">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold">New Bookings</h3>
+                    {newBookingsCount > 0 && (
+                      <span className="text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">
+                        {newBookingsCount} new
+                      </span>
+                    )}
+                  </div>
+
+                  {newBookingsCount > 0 ? (
+                    <>
+                      <div className="space-y-2 max-h-96 overflow-y-auto">
+                        {/* Sample booking notifications - replace with actual data */}
+                        {Array.from({ length: newBookingsCount }).map((_, i) => (
+                          <div
+                            key={i}
+                            className="p-3 rounded-lg border bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer"
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                                <User className="w-5 h-5 text-primary" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium">New booking request</p>
+                                <p className="text-xs text-muted-foreground mt-0.5">
+                                  Hair styling • Tomorrow at 2:00 PM
+                                </p>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                  ฿1,500 • Sukhumvit area
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <Link href="/provider/bookings" className="block">
+                        <Button size="sm" className="w-full">
+                          View All Bookings
+                        </Button>
+                      </Link>
+                    </>
+                  ) : (
+                    <div className="py-8 text-center text-muted-foreground">
+                      <Bell className="w-12 h-12 mx-auto mb-2 opacity-20" />
+                      <p className="text-sm">No new bookings</p>
+                      <p className="text-xs mt-1">Check back later for updates</p>
+                    </div>
+                  )}
+                </div>
+              </PopoverContent>
+            </Popover>
+
             {/* Provider Referrals Popover */}
             <Popover>
               <PopoverTrigger asChild>
