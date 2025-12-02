@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,8 +11,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCart } from "@/contexts/CartContext";
 import { getServiceImage } from "@/lib/utils/serviceImages";
-import DateTimeSelector from "@/components/booking/DateTimeSelector";
-import { Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Calendar, Clock, Home, MapPin, CreditCard, CheckCircle2, ChevronRight } from "lucide-react";
+import { Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Calendar, Clock, Home, MapPin, CreditCard, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 
 type CheckoutStep = "review" | "datetime" | "address" | "payment" | "complete";
@@ -26,6 +25,26 @@ interface SavedAddress {
   postalCode: string;
 }
 
+const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+// Generate time slots
+const generateTimeSlots = () => {
+  const slots: string[] = [];
+  for (let hour = 9; hour <= 20; hour++) {
+    slots.push(`${hour.toString().padStart(2, "0")}:00`);
+    if (hour < 20) {
+      slots.push(`${hour.toString().padStart(2, "0")}:30`);
+    }
+  }
+  return slots;
+};
+
+const TIME_SLOTS = generateTimeSlots();
+
 export default function CartPage() {
   const router = useRouter();
   const {
@@ -38,15 +57,14 @@ export default function CartPage() {
     getTotalDuration,
     getPrimaryService,
     getSecondaryServices,
-    clearCart
   } = useCart();
 
   const [currentStep, setCurrentStep] = useState<CheckoutStep>("review");
-  const [showDateTimePicker, setShowDateTimePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string>("");
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  // Saved addresses (mock data - would come from user profile in real app)
+  // Saved addresses
   const [savedAddresses] = useState<SavedAddress[]>([
     {
       id: "1",
@@ -87,15 +105,58 @@ export default function CartPage() {
   const secondaryServices = getSecondaryServices();
   const totalPrice = getTotalPrice();
   const totalDuration = getTotalDuration();
-  const serviceFee = Math.round(totalPrice * 0.05); // 5% service fee
+  const serviceFee = Math.round(totalPrice * 0.05);
   const grandTotal = totalPrice + serviceFee;
 
-  const handleDateTimeConfirm = (date: string, time: string) => {
-    setSelectedDate(date);
-    setSelectedTime(time);
-    setShowDateTimePicker(false);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Calendar functions
+  const getDaysInMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+
+    const days: (Date | null)[] = [];
+    for (let i = 0; i < startingDayOfWeek; i++) {
+      days.push(null);
+    }
+    for (let day = 1; day <= daysInMonth; day++) {
+      days.push(new Date(year, month, day));
+    }
+    return days;
+  };
+
+  const isDateDisabled = (date: Date | null) => {
+    if (!date) return true;
+    return date < today;
+  };
+
+  const isSameDay = (date1: Date | null, date2: Date | null) => {
+    if (!date1 || !date2) return false;
+    return (
+      date1.getDate() === date2.getDate() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getFullYear() === date2.getFullYear()
+    );
+  };
+
+  const canGoToPrevMonth = () => {
+    const prevMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1);
+    const todayMonth = new Date(today.getFullYear(), today.getMonth());
+    return prevMonth >= todayMonth;
+  };
+
+  const handleDateTimeConfirm = () => {
+    if (!selectedDate || !selectedTime) {
+      toast.error("Please select both date and time");
+      return;
+    }
     setCurrentStep("address");
-    toast.success("Date & time selected!");
+    toast.success("Date & time confirmed!");
   };
 
   const handleAddressConfirm = () => {
@@ -119,15 +180,14 @@ export default function CartPage() {
       }
     }
 
-    // Process payment
-    if (primaryService) {
-      updateBookingDetails(primaryService.name, selectedDate, selectedTime);
+    if (primaryService && selectedDate) {
+      const dateStr = selectedDate.toISOString().split("T")[0];
+      updateBookingDetails(primaryService.name, dateStr, selectedTime);
     }
 
     setCurrentStep("complete");
     toast.success("Order placed successfully!");
 
-    // Redirect to confirmation page after 2 seconds
     setTimeout(() => {
       router.push("/confirmation");
     }, 2000);
@@ -151,6 +211,7 @@ export default function CartPage() {
   ];
 
   const currentStepIndex = steps.findIndex(s => s.key === currentStep);
+  const days = getDaysInMonth(currentMonth);
 
   if (cart.length === 0) {
     return (
@@ -247,9 +308,8 @@ export default function CartPage() {
                   Review Your Services
                 </h2>
 
-                {/* Primary Service */}
                 {primaryService && (
-                  <div className="border-2 border-primary/20 rounded-lg bg-card shadow-sm p-4">
+                  <div className="border-2 border-primary/20 rounded-lg bg-white shadow-sm p-4">
                     <div className="flex items-center gap-2 text-sm font-medium text-primary mb-3">
                       <Calendar className="w-4 h-4" />
                       <span>Primary Service</span>
@@ -310,9 +370,8 @@ export default function CartPage() {
                   </div>
                 )}
 
-                {/* Secondary Services */}
                 {secondaryServices.length > 0 && (
-                  <div className="border rounded-lg bg-card">
+                  <div className="border rounded-lg bg-white">
                     <div className="px-4 py-3 bg-muted/30 border-b">
                       <h3 className="text-sm font-medium">Additional Services</h3>
                     </div>
@@ -380,7 +439,7 @@ export default function CartPage() {
                 <Button
                   size="lg"
                   className="w-full gap-2"
-                  onClick={() => setShowDateTimePicker(true)}
+                  onClick={() => setCurrentStep("datetime")}
                 >
                   Continue to Date & Time
                   <ChevronRight className="w-4 h-4" />
@@ -388,65 +447,154 @@ export default function CartPage() {
               </div>
             )}
 
-            {/* Step 2: Date & Time - Show confirmation */}
+            {/* Step 2: Date & Time - Inline Calendar */}
             {currentStep === "datetime" && (
-              <div className="border-2 border-primary/20 rounded-lg bg-card p-6">
+              <div className="border-2 border-primary/20 rounded-lg bg-white p-6">
                 <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
                   <Calendar className="w-5 h-5 text-primary" />
                   Select Date & Time
                 </h2>
 
-                <div className="space-y-4">
-                  {selectedDate && selectedTime ? (
-                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                      <div className="flex items-center gap-2 text-sm font-medium text-green-700 mb-2">
-                        <CheckCircle2 className="w-4 h-4" />
-                        <span>Booking Time Confirmed</span>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Calendar */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <button
+                        onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
+                        disabled={!canGoToPrevMonth()}
+                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+                      <div className="text-center font-semibold">
+                        {MONTHS[currentMonth.getMonth()]} {currentMonth.getFullYear()}
                       </div>
-                      <p className="text-sm text-green-600">
-                        {new Date(selectedDate).toLocaleDateString("en-US", {
-                          weekday: "long",
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}{" "}
-                        at {selectedTime}
-                      </p>
+                      <button
+                        onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
+                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
                     </div>
-                  ) : (
-                    <div className="text-center py-8">
-                      <Calendar className="w-16 h-16 mx-auto text-muted-foreground mb-3" />
-                      <p className="text-muted-foreground mb-4">No time selected yet</p>
-                      <Button onClick={() => setShowDateTimePicker(true)}>
-                        Select Date & Time
-                      </Button>
-                    </div>
-                  )}
 
-                  {selectedDate && selectedTime && (
-                    <div className="flex gap-3">
-                      <Button
-                        variant="outline"
-                        onClick={() => setShowDateTimePicker(true)}
-                      >
-                        Change Time
-                      </Button>
-                      <Button
-                        className="flex-1 gap-2"
-                        onClick={() => setCurrentStep("address")}
-                      >
-                        Continue to Address
-                        <ChevronRight className="w-4 h-4" />
-                      </Button>
+                    <div className="border rounded-xl overflow-hidden bg-white">
+                      <div className="grid grid-cols-7 bg-gray-50">
+                        {DAYS_OF_WEEK.map((day) => (
+                          <div key={day} className="text-center text-xs font-medium py-2 text-muted-foreground">
+                            {day}
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="grid grid-cols-7 bg-white">
+                        {days.map((date, index) => {
+                          const disabled = isDateDisabled(date);
+                          const selected = isSameDay(date, selectedDate);
+                          const isToday = date && isSameDay(date, today);
+
+                          return (
+                            <button
+                              key={index}
+                              onClick={() => !disabled && setSelectedDate(date)}
+                              disabled={disabled}
+                              className={`
+                                aspect-square p-2 text-sm border-b border-r bg-white transition-all
+                                ${disabled ? "text-muted-foreground/30 cursor-not-allowed" : "hover:bg-gray-50 cursor-pointer"}
+                                ${selected ? "!bg-primary text-primary-foreground font-bold hover:!bg-primary" : ""}
+                                ${isToday && !selected ? "border-2 border-primary" : ""}
+                              `}
+                            >
+                              {date ? date.getDate() : ""}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
-                  )}
+
+                    {selectedDate && (
+                      <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div className="text-sm font-medium text-green-700">Selected Date:</div>
+                        <div className="text-sm mt-1 text-green-600">
+                          {selectedDate.toLocaleDateString("en-US", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Time Slots */}
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-primary" />
+                      Select Time
+                    </h3>
+
+                    {!selectedDate ? (
+                      <div className="text-center py-12 text-muted-foreground">
+                        <Calendar className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                        <p>Please select a date first</p>
+                      </div>
+                    ) : (
+                      <div className="border rounded-xl p-4 max-h-[400px] overflow-y-auto bg-white">
+                        <div className="grid grid-cols-3 gap-2">
+                          {TIME_SLOTS.map((time) => {
+                            const selected = time === selectedTime;
+                            return (
+                              <button
+                                key={time}
+                                onClick={() => setSelectedTime(time)}
+                                className={`
+                                  py-3 px-2 text-sm rounded-lg border transition-all bg-white
+                                  ${selected
+                                    ? "!bg-primary text-primary-foreground border-primary font-semibold"
+                                    : "hover:bg-gray-50 hover:border-primary/50"
+                                  }
+                                `}
+                              >
+                                {time}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedTime && (
+                      <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div className="text-sm font-medium text-green-700">Selected Time:</div>
+                        <div className="text-sm mt-1 text-green-600">{selectedTime}</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex gap-3 mt-6 pt-6 border-t">
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentStep("review")}
+                  >
+                    <ChevronLeft className="w-4 h-4 mr-1" />
+                    Back
+                  </Button>
+                  <Button
+                    className="flex-1 gap-2"
+                    onClick={handleDateTimeConfirm}
+                    disabled={!selectedDate || !selectedTime}
+                  >
+                    Continue to Address
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
                 </div>
               </div>
             )}
 
             {/* Step 3: Address Selection */}
             {currentStep === "address" && (
-              <div className="border-2 border-primary/20 rounded-lg bg-card p-6">
+              <div className="border-2 border-primary/20 rounded-lg bg-white p-6">
                 <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
                   <Home className="w-5 h-5 text-primary" />
                   Service Address
@@ -543,12 +691,13 @@ export default function CartPage() {
                       variant="outline"
                       onClick={() => setCurrentStep("datetime")}
                     >
+                      <ChevronLeft className="w-4 h-4 mr-1" />
                       Back
                     </Button>
                     <Button
                       className="flex-1 gap-2"
                       onClick={handleAddressConfirm}
-                      disabled={!selectedAddressId && !showNewAddressForm}
+                      disabled={!selectedAddressId && (!showNewAddressForm || !newAddress.street)}
                     >
                       Continue to Payment
                       <ChevronRight className="w-4 h-4" />
@@ -560,7 +709,7 @@ export default function CartPage() {
 
             {/* Step 4: Payment */}
             {currentStep === "payment" && (
-              <div className="border-2 border-primary/20 rounded-lg bg-card p-6">
+              <div className="border-2 border-primary/20 rounded-lg bg-white p-6">
                 <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
                   <CreditCard className="w-5 h-5 text-primary" />
                   Payment Method
@@ -657,6 +806,7 @@ export default function CartPage() {
                     variant="outline"
                     onClick={() => setCurrentStep("address")}
                   >
+                    <ChevronLeft className="w-4 h-4 mr-1" />
                     Back
                   </Button>
                   <Button
@@ -684,10 +834,9 @@ export default function CartPage() {
 
           {/* Order Summary - Sticky */}
           <div className="lg:col-span-1">
-            <div className="border rounded-lg p-6 bg-card sticky top-4 space-y-4">
+            <div className="border rounded-lg p-6 bg-white sticky top-4 space-y-4">
               <h2 className="text-lg font-semibold">Order Summary</h2>
 
-              {/* Selected Date & Time */}
               {selectedDate && selectedTime && (
                 <div className="pb-4 border-b space-y-2">
                   <div className="flex items-center gap-2 text-sm font-medium">
@@ -695,7 +844,7 @@ export default function CartPage() {
                     <span>Booking Time</span>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    {new Date(selectedDate).toLocaleDateString("en-US", {
+                    {selectedDate.toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
@@ -705,7 +854,6 @@ export default function CartPage() {
                 </div>
               )}
 
-              {/* Selected Address */}
               {getSelectedAddress() && (
                 <div className="pb-4 border-b space-y-2">
                   <div className="flex items-center gap-2 text-sm font-medium">
@@ -718,7 +866,6 @@ export default function CartPage() {
                 </div>
               )}
 
-              {/* Price Breakdown */}
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
@@ -748,15 +895,6 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-
-      {/* Date & Time Picker Modal */}
-      {showDateTimePicker && primaryService && (
-        <DateTimeSelector
-          service={primaryService}
-          onConfirm={handleDateTimeConfirm}
-          onCancel={() => setShowDateTimePicker(false)}
-        />
-      )}
     </Container>
   );
 }
