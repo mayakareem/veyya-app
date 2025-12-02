@@ -251,8 +251,8 @@ export default function CartPage() {
         </div>
 
         {/* Progress Steps */}
-        <div className="mb-8 bg-white border rounded-lg p-6">
-          <div className="flex items-center justify-between">
+        <div className="mb-8 bg-white dark:bg-card border rounded-lg p-4 sm:p-6 overflow-x-auto">
+          <div className="flex items-center justify-between min-w-max sm:min-w-0">
             {steps.map((step, index) => {
               const StepIcon = step.icon;
               const isCompleted = index < currentStepIndex;
@@ -260,9 +260,9 @@ export default function CartPage() {
 
               return (
                 <div key={step.key} className="flex items-center flex-1">
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center min-w-[80px] sm:min-w-0">
                     <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all ${
+                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-2 transition-all ${
                         isCompleted
                           ? "bg-green-500 border-green-500 text-white dark:bg-green-600 dark:border-green-600"
                           : isCurrent
@@ -271,13 +271,13 @@ export default function CartPage() {
                       }`}
                     >
                       {isCompleted ? (
-                        <CheckCircle2 className="w-6 h-6" />
+                        <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" />
                       ) : (
-                        <StepIcon className="w-6 h-6" />
+                        <StepIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                       )}
                     </div>
                     <p
-                      className={`text-xs mt-2 font-medium ${
+                      className={`text-[10px] sm:text-xs mt-2 font-medium text-center ${
                         isCurrent ? "text-primary" : isCompleted ? "text-green-600 dark:text-green-400" : "text-gray-500 dark:text-gray-400"
                       }`}
                     >
@@ -315,8 +315,8 @@ export default function CartPage() {
                       <span>Primary Service</span>
                     </div>
 
-                    <div className="flex gap-4">
-                      <div className="relative w-24 h-24 flex-shrink-0 rounded-md overflow-hidden">
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="relative w-full sm:w-24 h-32 sm:h-24 flex-shrink-0 rounded-md overflow-hidden">
                         <Image
                           src={getServiceImage(primaryService.name, "")}
                           alt={primaryService.name}
@@ -326,13 +326,51 @@ export default function CartPage() {
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold mb-1">{primaryService.name}</h3>
+                        <h3 className="font-semibold mb-1 text-base sm:text-lg">{primaryService.name}</h3>
                         <p className="text-sm text-muted-foreground mb-2">
                           {primaryService.duration} min • ฿{primaryService.price}
                         </p>
+
+                        {/* Mobile controls */}
+                        <div className="flex sm:hidden items-center justify-between mt-3">
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => removeFromCart(primaryService.name)}
+                            >
+                              <Minus className="w-3 h-3" />
+                            </Button>
+                            <span className="w-8 text-center font-medium">
+                              {primaryService.quantity}
+                            </span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => addToCart(primaryService)}
+                            >
+                              <Plus className="w-3 h-3" />
+                            </Button>
+                          </div>
+
+                          <div className="flex items-center gap-3">
+                            <p className="font-semibold">
+                              ฿{(primaryService.price * primaryService.quantity).toLocaleString()}
+                            </p>
+                            <button
+                              onClick={() => updateQuantity(primaryService.name, 0)}
+                              className="text-muted-foreground hover:text-destructive transition-colors"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
 
-                      <div className="flex flex-col items-end justify-between">
+                      {/* Desktop controls */}
+                      <div className="hidden sm:flex flex-col items-end justify-between">
                         <button
                           onClick={() => updateQuantity(primaryService.name, 0)}
                           className="text-muted-foreground hover:text-destructive transition-colors"
@@ -377,8 +415,8 @@ export default function CartPage() {
                     </div>
                     <div className="divide-y">
                       {secondaryServices.map((item) => (
-                        <div key={item.name} className="p-4 flex items-center gap-4">
-                          <div className="relative w-16 h-16 flex-shrink-0 rounded overflow-hidden">
+                        <div key={item.name} className="p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                          <div className="relative w-full sm:w-16 h-24 sm:h-16 flex-shrink-0 rounded overflow-hidden">
                             <Image
                               src={getServiceImage(item.name, "")}
                               alt={item.name}
@@ -387,14 +425,52 @@ export default function CartPage() {
                             />
                           </div>
 
-                          <div className="flex-1 min-w-0">
+                          <div className="flex-1 min-w-0 w-full sm:w-auto">
                             <h4 className="font-medium text-sm">{item.name}</h4>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-muted-foreground mb-2 sm:mb-0">
                               {item.duration} min • ฿{item.price}
                             </p>
+
+                            {/* Mobile controls */}
+                            <div className="flex sm:hidden items-center justify-between mt-3">
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-7 w-7"
+                                  onClick={() => removeFromCart(item.name)}
+                                >
+                                  <Minus className="w-3 h-3" />
+                                </Button>
+                                <span className="w-6 text-center text-sm font-medium">
+                                  {item.quantity}
+                                </span>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-7 w-7"
+                                  onClick={() => addToCart(item)}
+                                >
+                                  <Plus className="w-3 h-3" />
+                                </Button>
+                              </div>
+
+                              <div className="flex items-center gap-3">
+                                <p className="text-sm font-semibold">
+                                  ฿{(item.price * item.quantity).toLocaleString()}
+                                </p>
+                                <button
+                                  onClick={() => updateQuantity(item.name, 0)}
+                                  className="text-muted-foreground hover:text-destructive transition-colors"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </div>
                           </div>
 
-                          <div className="flex items-center gap-3">
+                          {/* Desktop controls */}
+                          <div className="hidden sm:flex items-center gap-3">
                             <div className="flex items-center gap-2">
                               <Button
                                 variant="ghost"
