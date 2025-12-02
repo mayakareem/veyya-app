@@ -66,27 +66,47 @@ export default async function AdminDashboard() {
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded p-4">
-              <p className="text-sm font-semibold text-blue-800 mb-2">Quick Setup Options:</p>
+              <p className="text-sm font-semibold text-blue-800 mb-2">Database Setup Options:</p>
               <div className="space-y-3 text-sm">
                 <div>
-                  <p className="font-medium text-blue-700">Option 1: Vercel Postgres (Recommended)</p>
+                  <p className="font-medium text-blue-700">Option 1: Vercel Postgres (via Marketplace)</p>
                   <ol className="list-decimal list-inside space-y-1 ml-2 text-blue-600 mt-1">
-                    <li>Go to your Vercel project</li>
-                    <li>Click "Storage" tab</li>
-                    <li>Create "Postgres" database</li>
-                    <li>It will auto-configure DATABASE_URL</li>
+                    <li>Go to your Vercel project dashboard</li>
+                    <li>Click "Marketplace" tab</li>
+                    <li>Search for "Vercel Postgres" and click "Add"</li>
+                    <li>Follow the setup wizard - it auto-configures DATABASE_URL</li>
                   </ol>
                 </div>
                 <div>
-                  <p className="font-medium text-blue-700">Option 2: External Database</p>
+                  <p className="font-medium text-blue-700">Option 2: Neon (Recommended - Free tier)</p>
                   <ol className="list-decimal list-inside space-y-1 ml-2 text-blue-600 mt-1">
-                    <li>Create PostgreSQL database (Neon, Supabase, etc.)</li>
-                    <li>Copy connection string</li>
-                    <li>Add to Vercel Environment Variables</li>
+                    <li>Visit <span className="font-mono">neon.tech</span> and create a free account</li>
+                    <li>Create a new project → Copy the connection string</li>
+                    <li>In Vercel: Settings → Environment Variables</li>
+                    <li>Add DATABASE_URL with your Neon connection string</li>
+                    <li>Redeploy the application</li>
+                  </ol>
+                </div>
+                <div>
+                  <p className="font-medium text-blue-700">Option 3: Supabase (Free tier available)</p>
+                  <ol className="list-decimal list-inside space-y-1 ml-2 text-blue-600 mt-1">
+                    <li>Visit <span className="font-mono">supabase.com</span> and create a project</li>
+                    <li>Go to Settings → Database → Connection String</li>
+                    <li>Copy the "Connection Pooling" string (better for serverless)</li>
+                    <li>Add to Vercel Environment Variables as DATABASE_URL</li>
                     <li>Redeploy the application</li>
                   </ol>
                 </div>
               </div>
+            </div>
+
+            <div className="bg-green-50 border border-green-200 rounded p-4">
+              <p className="text-sm font-semibold text-green-800 mb-2">💡 Recommendations:</p>
+              <ul className="list-disc list-inside space-y-1 text-sm text-green-700 ml-2">
+                <li><strong>Neon</strong> - Best for hobby/dev projects (generous free tier, serverless-friendly)</li>
+                <li><strong>Supabase</strong> - Best if you need auth/storage/realtime features built-in</li>
+                <li><strong>Vercel Postgres</strong> - Best for production apps already on Vercel</li>
+              </ul>
             </div>
 
             <div className="bg-white border rounded p-4">
