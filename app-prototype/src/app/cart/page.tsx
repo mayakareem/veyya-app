@@ -6,10 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useCart } from "@/contexts/CartContext";
 import { getServiceImage } from "@/lib/utils/serviceImages";
 import DateTimeSelector from "@/components/booking/DateTimeSelector";
-import { Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Calendar, Clock } from "lucide-react";
+import { Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Calendar, Clock, Home, MapPin } from "lucide-react";
 import { toast } from "sonner";
 
 export default function CartPage() {
@@ -28,6 +30,12 @@ export default function CartPage() {
   } = useCart();
 
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
+  const [address, setAddress] = useState({
+    street: "",
+    district: "",
+    city: "Bangkok",
+    postalCode: "",
+  });
 
   const primaryService = getPrimaryService();
   const secondaryServices = getSecondaryServices();
@@ -182,6 +190,85 @@ export default function CartPage() {
               </div>
             )}
 
+            {/* Address Selection - shown after time is selected */}
+            {primaryService && primaryService.bookingDate && primaryService.bookingTime && (
+              <div className="border-2 border-primary/20 rounded-lg bg-card shadow-sm">
+                <div className="p-4 bg-primary/5 border-b">
+                  <div className="flex items-center gap-2 text-sm font-medium text-primary">
+                    <Home className="w-4 h-4" />
+                    <span>Service Address</span>
+                  </div>
+                </div>
+
+                <div className="p-4 space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="street" className="text-sm font-medium">
+                      Street Address <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="street"
+                      placeholder="123 Sukhumvit Road, Apartment 45"
+                      value={address.street}
+                      onChange={(e) => setAddress({ ...address, street: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="district" className="text-sm font-medium">
+                        District <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="district"
+                        placeholder="Watthana"
+                        value={address.district}
+                        onChange={(e) => setAddress({ ...address, district: e.target.value })}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="postalCode" className="text-sm font-medium">
+                        Postal Code <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="postalCode"
+                        placeholder="10110"
+                        value={address.postalCode}
+                        onChange={(e) => setAddress({ ...address, postalCode: e.target.value })}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="city" className="text-sm font-medium">
+                      City <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="city"
+                      value={address.city}
+                      onChange={(e) => setAddress({ ...address, city: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  {address.street && address.district && address.postalCode && (
+                    <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <div className="flex items-center gap-2 text-sm font-medium text-green-700">
+                        <MapPin className="w-4 h-4" />
+                        <span>Address Confirmed</span>
+                      </div>
+                      <p className="text-xs text-green-600 mt-1">
+                        {address.street}, {address.district}, {address.city} {address.postalCode}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Secondary Services - line items only */}
             {secondaryServices.length > 0 && (
               <div className="border rounded-lg bg-card">
@@ -293,11 +380,17 @@ export default function CartPage() {
                 </div>
               )}
 
+              {primaryService && primaryService.bookingDate && !address.street && (
+                <div className="bg-orange-50 border border-orange-200 rounded p-3 text-xs text-orange-700">
+                  Please enter your service address
+                </div>
+              )}
+
               <Button
                 size="lg"
                 className="w-full"
                 onClick={() => router.push("/checkout")}
-                disabled={!primaryService?.bookingDate}
+                disabled={!primaryService?.bookingDate || !address.street || !address.district || !address.postalCode}
               >
                 Proceed to Checkout
               </Button>

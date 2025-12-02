@@ -134,9 +134,9 @@ export default function DateTimeSelector({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-background rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-background border-b p-6 flex items-start justify-between">
+        <div className="sticky top-0 bg-white border-b p-6 flex items-start justify-between">
           <div>
             <h2 className="text-2xl font-bold mb-2">Select Date & Time</h2>
             <p className="text-sm text-muted-foreground">{service.name}</p>
@@ -284,7 +284,7 @@ export default function DateTimeSelector({
         </div>
 
         {/* Footer */}
-        <div ref={footerRef} className="sticky bottom-0 bg-background border-t p-6 flex justify-end gap-3">
+        <div ref={footerRef} className="sticky bottom-0 bg-white border-t p-6 flex justify-end gap-3">
           <Button variant="outline" onClick={onCancel}>
             Cancel
           </Button>
