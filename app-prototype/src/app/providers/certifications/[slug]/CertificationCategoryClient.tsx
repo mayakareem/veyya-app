@@ -21,6 +21,14 @@ import {
   DollarSign,
   Target,
   AlertCircle,
+  Sparkles,
+  Hand,
+  Scissors,
+  Palette,
+  HeartPulse,
+  Dumbbell,
+  PawPrint,
+  SprayCan,
 } from "lucide-react";
 
 interface Module {
@@ -49,7 +57,7 @@ interface FAQ {
 
 interface CategoryData {
   name: string;
-  icon: any;
+  iconName: string;
   slug: string;
   description: string;
   heroDescription: string;
@@ -63,11 +71,23 @@ interface Props {
   category: CategoryData;
 }
 
+// Icon mapping
+const iconMap: Record<string, any> = {
+  Sparkles,
+  Hand,
+  Scissors,
+  Palette,
+  HeartPulse,
+  Dumbbell,
+  PawPrint,
+  SprayCan,
+};
+
 export default function CertificationCategoryClient({ category }: Props) {
   const [expandedModules, setExpandedModules] = useState<number[]>([]);
   const [expandedFaqs, setExpandedFaqs] = useState<number[]>([]);
 
-  const Icon = category.icon;
+  const Icon = iconMap[category.iconName] || Sparkles;
 
   const toggleModule = (index: number) => {
     setExpandedModules((prev) =>

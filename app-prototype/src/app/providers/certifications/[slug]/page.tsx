@@ -1,15 +1,5 @@
 import { notFound } from "next/navigation";
 import CertificationCategoryClient from "./CertificationCategoryClient";
-import {
-  Sparkles,
-  Hand,
-  Scissors,
-  Palette,
-  HeartPulse,
-  Dumbbell,
-  PawPrint,
-  SprayCan,
-} from "lucide-react";
 
 interface Module {
   name: string;
@@ -37,7 +27,7 @@ interface FAQ {
 
 interface CategoryData {
   name: string;
-  icon: any;
+  iconName: string;
   slug: string;
   description: string;
   heroDescription: string;
@@ -50,7 +40,7 @@ interface CategoryData {
 const categoryData: Record<string, CategoryData> = {
   beauty: {
     name: "Beauty Services",
-    icon: Sparkles,
+    iconName: "Sparkles",
     slug: "beauty",
     description: "Professional beauty service certifications for facial treatments, waxing, threading, and advanced skincare techniques.",
     heroDescription: "Master the art of beauty services with our comprehensive certification programs. Learn advanced techniques in facial treatments, waxing, threading, and skincare that will set you apart as a premium beauty professional.",
@@ -205,7 +195,7 @@ const categoryData: Record<string, CategoryData> = {
   },
   nails: {
     name: "Nails",
-    icon: Hand,
+    iconName: "Hand",
     slug: "nails",
     description: "Professional nail care certifications covering manicures, pedicures, gel nails, nail art, extensions, and hygiene protocols.",
     heroDescription: "Transform your passion for nails into professional expertise. Our comprehensive nail certifications cover everything from fundamental manicure techniques to advanced 3D nail art, ensuring you can offer premium services that clients love.",
@@ -361,7 +351,7 @@ const categoryData: Record<string, CategoryData> = {
   },
   hair: {
     name: "Hair Styling",
-    icon: Scissors,
+    iconName: "Scissors",
     slug: "hair",
     description: "Comprehensive hair styling certifications including cutting, coloring, balayage, treatments, and specialized techniques.",
     heroDescription: "Elevate your hair styling career with professional certifications that cover cutting-edge techniques, color theory, and specialized treatments. From foundational cuts to advanced balayage, become the hair expert clients trust.",
@@ -533,7 +523,7 @@ const categoryData: Record<string, CategoryData> = {
   },
   makeup: {
     name: "Makeup Artistry",
-    icon: Palette,
+    iconName: "Palette",
     slug: "makeup",
     description: "Professional makeup artistry certifications covering bridal, event, airbrush, photography makeup, and color theory.",
     heroDescription: "Transform faces and build a thriving makeup artistry career with our comprehensive certifications. Master techniques from bridal beauty to special effects, color theory to airbrush application, and establish yourself as a trusted makeup professional.",
@@ -689,7 +679,7 @@ const categoryData: Record<string, CategoryData> = {
   },
   wellness: {
     name: "Wellness & Massage",
-    icon: HeartPulse,
+    iconName: "HeartPulse",
     slug: "wellness",
     description: "Professional massage and wellness certifications including Thai massage, deep tissue, Swedish, aromatherapy, and specialized techniques.",
     heroDescription: "Build a rewarding wellness career with certifications in professional massage and therapy techniques. From traditional Thai massage to specialized modalities, learn to provide healing, relaxing services that clients seek out regularly.",
@@ -861,7 +851,7 @@ const categoryData: Record<string, CategoryData> = {
   },
   fitness: {
     name: "Fitness Training",
-    icon: Dumbbell,
+    iconName: "Dumbbell",
     slug: "fitness",
     description: "Professional fitness certifications including personal training, yoga, Pilates, nutrition, HIIT, and specialized fitness instruction.",
     heroDescription: "Launch or elevate your fitness career with comprehensive certifications in personal training, group fitness, and specialized instruction. Gain the knowledge and credentials to help clients achieve their goals while building a thriving fitness business.",
@@ -1017,7 +1007,7 @@ const categoryData: Record<string, CategoryData> = {
   },
   "pet-care": {
     name: "Pet Care Services",
-    icon: PawPrint,
+    iconName: "PawPrint",
     slug: "pet-care",
     description: "Professional pet grooming and care certifications covering dog grooming, cat grooming, pet first aid, and behavior handling.",
     heroDescription: "Turn your love for animals into a professional pet care career with comprehensive certifications in grooming, safety, and animal handling. Learn industry-standard techniques that keep pets safe, comfortable, and looking their best.",
@@ -1156,7 +1146,7 @@ const categoryData: Record<string, CategoryData> = {
   },
   cleaning: {
     name: "Cleaning Services",
-    icon: SprayCan,
+    iconName: "SprayCan",
     slug: "cleaning",
     description: "Professional cleaning certifications covering standards, deep cleaning, eco-friendly methods, and specialized commercial cleaning.",
     heroDescription: "Build a professional cleaning business with certifications that demonstrate your expertise in efficient, thorough, and eco-friendly cleaning methods. Stand out in the growing cleaning services market with verified professional skills.",
