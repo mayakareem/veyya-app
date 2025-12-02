@@ -93,6 +93,8 @@ export default async function AdminDashboard() {
       totalBookings,
       activeBookingsToday,
       completedBookingsToday,
+      clientOnlyUsers,
+      dualRoleUsers,
     ] = await Promise.all([
       prisma.user.count(),
       prisma.providerProfile.count(),
@@ -109,6 +111,20 @@ export default async function AdminDashboard() {
           status: "COMPLETED",
           createdAt: {
             gte: new Date(new Date().setHours(0, 0, 0, 0)),
+          },
+        },
+      }),
+      // Count users who are NOT providers
+      prisma.user.count({
+        where: {
+          provider: null,
+        },
+      }),
+      // Count users who are BOTH clients and providers
+      prisma.user.count({
+        where: {
+          provider: {
+            isNot: null,
           },
         },
       }),
@@ -230,10 +246,16 @@ export default async function AdminDashboard() {
               <div>
                 <p className="text-sm text-muted-foreground mb-1">Total Users</p>
                 <p className="text-3xl font-bold">{totalUsers}</p>
-                <p className="text-xs text-green-600 mt-1 flex items-center gap-1">
-                  <TrendingUp className="w-3 h-3" />
-                  +12% from last month
-                </p>
+                <div className="flex flex-col gap-0.5 mt-2">
+                  <p className="text-xs text-blue-600 flex items-center gap-1">
+                    <Users className="w-3 h-3" />
+                    {clientOnlyUsers} clients only
+                  </p>
+                  <p className="text-xs text-purple-600 flex items-center gap-1">
+                    <Briefcase className="w-3 h-3" />
+                    {dualRoleUsers} client + provider
+                  </p>
+                </div>
               </div>
               <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
                 <Users className="w-6 h-6 text-blue-600" />

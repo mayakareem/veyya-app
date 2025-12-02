@@ -33,9 +33,10 @@ export default function NavigationHub() {
       title: "Admin Portals",
       description: "Administrative and management pages",
       links: [
-        { href: "/admin", icon: Shield, label: "Admin Dashboard", description: "Main admin panel with analytics" },
+        { href: "/admin", icon: Shield, label: "Admin Dashboard", description: "Main admin panel with user/provider stats" },
         { href: "/admin/providers", icon: Shield, label: "Provider Management", description: "Approve and manage providers" },
         { href: "/admin/bookings", icon: Shield, label: "Booking Management", description: "Monitor all bookings" },
+        { href: "/admin-test", icon: Shield, label: "Admin Test Dashboard", description: "Alternative admin view" },
       ],
     },
     {
@@ -47,6 +48,8 @@ export default function NavigationHub() {
         { href: "/help", icon: Home, label: "Help Center", description: "FAQs and support" },
         { href: "/blog", icon: Home, label: "Blog", description: "Articles and guides" },
         { href: "/events/weddings", icon: Home, label: "Wedding Services", description: "Event-specific page" },
+        { href: "/checkout", icon: Calendar, label: "Checkout", description: "Checkout page (legacy)" },
+        { href: "/confirmation", icon: Calendar, label: "Confirmation", description: "Order confirmation page" },
       ],
     },
   ];
