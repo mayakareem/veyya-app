@@ -1,21 +1,37 @@
 "use client";
 
-import { use } from "react";
+import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MultiStepBooking, type BookingData } from "@/components/booking/MultiStepBooking";
 import { getServiceById } from "@/lib/constants/services";
+import { getHealthcareServiceDetail } from "@/lib/constants/healthcareDetails";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  ArrowLeft,
+  Clock,
+  Calendar,
+  CheckCircle,
+  FileText,
+  Heart,
+  Activity,
+  Shield,
+  ClipboardList
+} from "lucide-react";
 import { toast } from "sonner";
+import Image from "next/image";
 
 export default function ServiceDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const router = useRouter();
   const serviceId = decodeURIComponent(resolvedParams.id);
+  const [showBooking, setShowBooking] = useState(false);
 
   // Get service details
   const serviceData = getServiceById(serviceId);
+  const healthcareDetail = getHealthcareServiceDetail(serviceId);
 
   if (!serviceData) {
     return (
@@ -31,6 +47,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
   }
 
   const { service, subcategory, category } = serviceData;
+  const isHealthcare = category.id === "healthcare";
 
   // Parse price (take first value from range)
   const priceMatch = service.priceRange?.match(/฿([\d,]+)/);
@@ -55,6 +72,39 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
     }, 2000);
   };
 
+  // If booking mode is active, show booking flow
+  if (showBooking) {
+    return (
+      <main className="min-h-screen bg-muted/30 py-6">
+        <Container>
+          <Button
+            variant="ghost"
+            onClick={() => setShowBooking(false)}
+            className="mb-4 gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Details
+          </Button>
+
+          <div className="mb-6 text-center">
+            <h1 className="text-3xl font-bold mb-2">{service.name}</h1>
+            <p className="text-muted-foreground">
+              {category.name} • {subcategory.name}
+            </p>
+          </div>
+
+          <MultiStepBooking
+            serviceName={service.name}
+            basePrice={basePrice}
+            baseDuration={baseDuration}
+            onComplete={handleBookingComplete}
+          />
+        </Container>
+      </main>
+    );
+  }
+
+  // Default view: Show detailed information (especially for healthcare)
   return (
     <main className="min-h-screen bg-muted/30 py-6">
       <Container>
@@ -68,21 +118,287 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
           Back
         </Button>
 
-        {/* Service Header */}
-        <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold mb-2">{service.name}</h1>
-          <p className="text-muted-foreground">
-            {category.name} • {subcategory.name}
-          </p>
-        </div>
+        {/* Service Header with Image (Healthcare) */}
+        {isHealthcare && healthcareDetail ? (
+          <>
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              {/* Service Image */}
+              <div className="relative h-64 md:h-96 rounded-xl overflow-hidden bg-gradient-to-br from-blue-100 to-green-100">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Activity className="w-32 h-32 text-blue-600 opacity-20" />
+                </div>
+                {healthcareDetail.image && (
+                  <Image
+                    src={healthcareDetail.image}
+                    alt={healthcareDetail.name}
+                    fill
+                    className="object-cover"
+                    onError={(e) => {
+                      // Hide image on error, show gradient instead
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                )}
+              </div>
 
-        {/* Multi-Step Booking Component */}
-        <MultiStepBooking
-          serviceName={service.name}
-          basePrice={basePrice}
-          baseDuration={baseDuration}
-          onComplete={handleBookingComplete}
-        />
+              {/* Service Summary */}
+              <div className="space-y-4">
+                <div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                    <span>{category.name}</span>
+                    <span>•</span>
+                    <span>{subcategory.name}</span>
+                  </div>
+                  <h1 className="text-3xl md:text-4xl font-bold mb-3">{healthcareDetail.name}</h1>
+                  <p className="text-lg text-muted-foreground">{healthcareDetail.shortDescription}</p>
+                </div>
+
+                <div className="flex flex-wrap gap-4 py-4 border-y">
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-5 h-5 text-primary" />
+                    <div>
+                      <div className="text-sm text-muted-foreground">Duration</div>
+                      <div className="font-semibold">{healthcareDetail.duration} min</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-primary" />
+                    <div>
+                      <div className="text-sm text-muted-foreground">Price</div>
+                      <div className="font-semibold text-lg">฿{(healthcareDetail.price / 100).toFixed(2)}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-primary" />
+                    <div>
+                      <div className="text-sm text-muted-foreground">Results</div>
+                      <div className="font-semibold text-sm">{healthcareDetail.resultsTime.split(' ').slice(0, 3).join(' ')}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Partner Badge */}
+                <div className="flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <Shield className="w-6 h-6 text-blue-600" />
+                  <div>
+                    <div className="font-semibold text-blue-900">Patrangsit Hospital</div>
+                    <div className="text-sm text-blue-700">Certified Medical Partner</div>
+                  </div>
+                </div>
+
+                {/* Book Now Button */}
+                <Button
+                  size="lg"
+                  className="w-full"
+                  onClick={() => setShowBooking(true)}
+                >
+                  Book Appointment Now
+                </Button>
+              </div>
+            </div>
+
+            {/* Detailed Information Tabs */}
+            <Tabs defaultValue="overview" className="space-y-6">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 lg:grid-cols-7">
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="procedure">Procedure</TabsTrigger>
+                <TabsTrigger value="benefits">Benefits</TabsTrigger>
+                <TabsTrigger value="preparation">Preparation</TabsTrigger>
+                <TabsTrigger value="frequency">Frequency</TabsTrigger>
+                {healthcareDetail.parametersTested && (
+                  <TabsTrigger value="parameters">Parameters</TabsTrigger>
+                )}
+                <TabsTrigger value="results">Results</TabsTrigger>
+              </TabsList>
+
+              {/* Overview Tab */}
+              <TabsContent value="overview" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <FileText className="w-5 h-5 text-primary" />
+                      About This Service
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-muted-foreground leading-relaxed">
+                      {healthcareDetail.fullDescription}
+                    </p>
+
+                    <div>
+                      <h4 className="font-semibold mb-3">What is Done:</h4>
+                      <ul className="space-y-2">
+                        {healthcareDetail.whatIsDone.map((item, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                            <span className="text-muted-foreground">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Procedure Tab */}
+              <TabsContent value="procedure" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <ClipboardList className="w-5 h-5 text-primary" />
+                      How It Works
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {healthcareDetail.procedure.map((step, index) => (
+                        <div key={index} className="flex gap-4">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm">
+                            {index + 1}
+                          </div>
+                          <div className="flex-1 pt-1">
+                            <p className="text-muted-foreground">{step}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Benefits Tab */}
+              <TabsContent value="benefits" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Heart className="w-5 h-5 text-primary" />
+                      Health Benefits
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {healthcareDetail.benefits.map((benefit, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                          <span className="text-muted-foreground">{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Preparation Tab */}
+              <TabsContent value="preparation" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <ClipboardList className="w-5 h-5 text-primary" />
+                      How to Prepare
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {healthcareDetail.preparation.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <div className="w-2 h-2 rounded-full bg-primary flex-shrink-0 mt-2" />
+                          <span className="text-muted-foreground">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Frequency Tab */}
+              <TabsContent value="frequency" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Calendar className="w-5 h-5 text-primary" />
+                      Recommended Frequency
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground leading-relaxed">{healthcareDetail.frequency}</p>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Parameters Tab (for lab tests) */}
+              {healthcareDetail.parametersTested && (
+                <TabsContent value="parameters" className="space-y-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Activity className="w-5 h-5 text-primary" />
+                        Parameters Tested
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {healthcareDetail.parametersTested.map((parameter, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg"
+                          >
+                            <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                            <span className="text-sm">{parameter}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              )}
+
+              {/* Results Tab */}
+              <TabsContent value="results" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Clock className="w-5 h-5 text-primary" />
+                      Results Timeline
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground leading-relaxed">{healthcareDetail.resultsTime}</p>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+
+            {/* Bottom CTA */}
+            <Card className="mt-8 bg-gradient-to-r from-primary/10 to-blue-50 border-primary/20">
+              <CardContent className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-2">Ready to Book?</h3>
+                <p className="text-muted-foreground mb-4">
+                  Professional healthcare service at your doorstep by Patrangsit Hospital
+                </p>
+                <Button size="lg" onClick={() => setShowBooking(true)}>
+                  Book Appointment Now
+                </Button>
+              </CardContent>
+            </Card>
+          </>
+        ) : (
+          // Non-healthcare services: show simple layout
+          <>
+            <div className="mb-6 text-center">
+              <h1 className="text-3xl font-bold mb-2">{service.name}</h1>
+              <p className="text-muted-foreground">
+                {category.name} • {subcategory.name}
+              </p>
+            </div>
+
+            <MultiStepBooking
+              serviceName={service.name}
+              basePrice={basePrice}
+              baseDuration={baseDuration}
+              onComplete={handleBookingComplete}
+            />
+          </>
+        )}
       </Container>
     </main>
   );
