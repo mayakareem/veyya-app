@@ -1,4 +1,4 @@
-import { Sparkles, Scissors, Palette, PawPrint, SprayCan, HeartPulse, Dumbbell, Hand, LucideIcon } from "lucide-react";
+import { Sparkles, Scissors, Stethoscope, PawPrint, SprayCan, HeartPulse, Dumbbell, Hand, LucideIcon } from "lucide-react";
 
 export type Category = {
   name: string;
@@ -12,6 +12,7 @@ export type ServiceDetail = {
   price: number;
   duration: number;
   description: string;
+  partner?: string;
 };
 
 export type CategoryWithServices = Category & {
@@ -38,10 +39,10 @@ export const SERVICE_CATEGORIES: Category[] = [
     services: ["Haircut", "Hair Color", "Balayage", "Hair Treatment", "Hair Styling"]
   },
   {
-    name: "Makeup",
-    Icon: Palette,
-    description: "Bridal, editorial, lessons",
-    services: ["Bridal Makeup", "Event Makeup", "Makeup Lesson"]
+    name: "Healthcare",
+    Icon: Stethoscope,
+    description: "At-home medical services",
+    services: ["Lab Tests", "IV Therapy", "Doctor Consultation", "Flu Vaccine", "Nurse Care", "Physiotherapy", "Psychotherapy & Counselling"]
   },
   {
     name: "Pet Care",
@@ -122,18 +123,35 @@ export const DETAILED_SERVICES: Record<string, ServiceDetail[]> = {
     { name: "Updo Styling", price: 1500, duration: 90, description: "Special occasion updo" },
     { name: "Bridal Hair", price: 2500, duration: 120, description: "Wedding day hair styling" },
   ],
-  "Makeup": [
-    { name: "Bridal Makeup", price: 3500, duration: 120, description: "Complete bridal look with trial" },
-    { name: "Engagement Makeup", price: 2500, duration: 90, description: "Special occasion makeup" },
-    { name: "Party Makeup", price: 2000, duration: 75, description: "Glamorous evening look" },
-    { name: "Natural Day Makeup", price: 1500, duration: 60, description: "Fresh, natural makeup" },
-    { name: "Editorial Makeup", price: 3000, duration: 120, description: "High-fashion editorial look" },
-    { name: "HD Makeup", price: 2800, duration: 90, description: "Camera-ready HD makeup" },
-    { name: "Airbrush Makeup", price: 2500, duration: 90, description: "Flawless airbrush application" },
-    { name: "Makeup Lesson - Basic", price: 2000, duration: 120, description: "Learn everyday makeup skills" },
-    { name: "Makeup Lesson - Advanced", price: 3000, duration: 150, description: "Master advanced techniques" },
-    { name: "Brow Shaping & Tinting", price: 500, duration: 30, description: "Perfect brows with tint" },
-    { name: "Lash Tinting", price: 400, duration: 30, description: "Darken natural lashes" },
+  "Healthcare": [
+    { name: "Complete Blood Count (CBC)", price: 800, duration: 30, description: "Comprehensive blood analysis at home", partner: "Patrangsit Hospital" },
+    { name: "Lipid Profile Test", price: 1200, duration: 30, description: "Cholesterol and triglyceride screening", partner: "Patrangsit Hospital" },
+    { name: "Diabetes Panel (HbA1c + Glucose)", price: 1500, duration: 30, description: "Complete diabetes monitoring", partner: "Patrangsit Hospital" },
+    { name: "Thyroid Function Test", price: 1800, duration: 30, description: "TSH, T3, T4 analysis", partner: "Patrangsit Hospital" },
+    { name: "Liver Function Test", price: 1400, duration: 30, description: "Complete liver health screening", partner: "Patrangsit Hospital" },
+    { name: "Kidney Function Test", price: 1300, duration: 30, description: "Creatinine and urea analysis", partner: "Patrangsit Hospital" },
+    { name: "Vitamin D Test", price: 1600, duration: 30, description: "Vitamin D level assessment", partner: "Patrangsit Hospital" },
+    { name: "Hydration IV Therapy", price: 2500, duration: 60, description: "Rehydration with essential vitamins", partner: "Patrangsit Hospital" },
+    { name: "Immunity Boost IV Therapy", price: 3500, duration: 60, description: "High-dose Vitamin C and zinc infusion", partner: "Patrangsit Hospital" },
+    { name: "Energy Boost IV Therapy", price: 3000, duration: 60, description: "B-complex and amino acids", partner: "Patrangsit Hospital" },
+    { name: "Beauty IV Therapy", price: 4000, duration: 60, description: "Glutathione and collagen boost", partner: "Patrangsit Hospital" },
+    { name: "General Practitioner Home Visit", price: 3000, duration: 45, description: "Doctor consultation at home", partner: "Patrangsit Hospital" },
+    { name: "Pediatrician Home Visit", price: 3500, duration: 45, description: "Child health consultation", partner: "Patrangsit Hospital" },
+    { name: "Flu Vaccine", price: 800, duration: 20, description: "Seasonal influenza vaccination", partner: "Patrangsit Hospital" },
+    { name: "COVID-19 Vaccine", price: 1200, duration: 20, description: "COVID vaccination at home", partner: "Patrangsit Hospital" },
+    { name: "Hepatitis B Vaccine", price: 1000, duration: 20, description: "Hep B immunization", partner: "Patrangsit Hospital" },
+    { name: "Registered Nurse Visit - 2 hours", price: 1500, duration: 120, description: "Professional nursing care", partner: "Patrangsit Hospital" },
+    { name: "Registered Nurse Visit - 4 hours", price: 2800, duration: 240, description: "Extended nursing care", partner: "Patrangsit Hospital" },
+    { name: "Wound Care & Dressing", price: 1200, duration: 45, description: "Professional wound management", partner: "Patrangsit Hospital" },
+    { name: "Post-Surgery Care", price: 2000, duration: 90, description: "Post-operative home care", partner: "Patrangsit Hospital" },
+    { name: "Physiotherapy Session", price: 2500, duration: 60, description: "Physical therapy and rehabilitation", partner: "Patrangsit Hospital" },
+    { name: "Sports Injury Physiotherapy", price: 3000, duration: 75, description: "Specialized sports rehab", partner: "Patrangsit Hospital" },
+    { name: "Post-Stroke Physiotherapy", price: 3500, duration: 90, description: "Stroke rehabilitation therapy", partner: "Patrangsit Hospital" },
+    { name: "Individual Psychotherapy", price: 2500, duration: 60, description: "One-on-one counselling session", partner: "Patrangsit Hospital" },
+    { name: "Couples Therapy", price: 3500, duration: 90, description: "Relationship counselling", partner: "Patrangsit Hospital" },
+    { name: "Family Therapy", price: 4000, duration: 90, description: "Family counselling session", partner: "Patrangsit Hospital" },
+    { name: "CBT Session", price: 3000, duration: 60, description: "Cognitive Behavioral Therapy", partner: "Patrangsit Hospital" },
+    { name: "Anxiety & Depression Counselling", price: 2800, duration: 60, description: "Mental health support", partner: "Patrangsit Hospital" },
   ],
   "Pet Care": [
     { name: "Small Dog Bath & Brush", price: 500, duration: 60, description: "Bath and brushing for small dogs" },
