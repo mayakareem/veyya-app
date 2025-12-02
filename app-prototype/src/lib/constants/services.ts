@@ -205,7 +205,6 @@ export const SERVICE_CATALOG: ServiceCategory[] = [
           { id: "bath-blow-dry", name: "Bath + blow dry", duration: "60 min", priceRange: "฿500-1,000" },
           { id: "nail-trim", name: "Nail trim", duration: "15 min", priceRange: "฿150-300" },
           { id: "ear-cleaning", name: "Ear cleaning", duration: "15 min", priceRange: "฿150-300" },
-          { id: "anal-gland-expression", name: "Anal gland expression", duration: "15 min", priceRange: "฿200-400" },
         ],
       },
       {
