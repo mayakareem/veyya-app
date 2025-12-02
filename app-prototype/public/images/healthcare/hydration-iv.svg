@@ -1,0 +1,50 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-hydration-iv" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-hydration-iv" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#bfdbfe;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#bfdbfe;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background gradient -->
+  <rect width="1200" height="800" fill="url(#grad-hydration-iv)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="150" fill="#bfdbfe" opacity="0.3"/>
+  <circle cx="1100" cy="700" r="200" fill="#bfdbfe" opacity="0.2"/>
+  <circle cx="900" cy="150" r="100" fill="#bfdbfe" opacity="0.25"/>
+
+  <!-- Accent bar -->
+  <rect x="0" y="650" width="1200" height="150" fill="url(#accent-hydration-iv)"/>
+
+  <!-- Main icon -->
+  <g transform="translate(600, 400) scale(15)">
+    <g transform="translate(-12, -12)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/>
+    </g>
+  </g>
+
+  <!-- Medical cross pattern (subtle) -->
+  <g opacity="0.1">
+    <path d="M 200 50 L 200 150 M 150 100 L 250 100" stroke="white" stroke-width="4"/>
+    <path d="M 1000 600 L 1000 700 M 950 650 L 1050 650" stroke="white" stroke-width="4"/>
+  </g>
+
+  <!-- Service name -->
+  <text x="600" y="680" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle" opacity="0.9">
+    Hydration IV Drip
+  </text>
+
+  <!-- Partner badge -->
+  <g transform="translate(50, 720)">
+    <rect x="0" y="0" width="280" height="50" rx="25" fill="white" opacity="0.2"/>
+    <text x="140" y="33" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="white" text-anchor="middle">
+      Patrangsit Hospital
+    </text>
+  </g>
+</svg>

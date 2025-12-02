@@ -1,0 +1,50 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-vitamin-d" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-vitamin-d" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fde68a;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#fde68a;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#fde68a;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background gradient -->
+  <rect width="1200" height="800" fill="url(#grad-vitamin-d)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="150" fill="#fde68a" opacity="0.3"/>
+  <circle cx="1100" cy="700" r="200" fill="#fde68a" opacity="0.2"/>
+  <circle cx="900" cy="150" r="100" fill="#fde68a" opacity="0.25"/>
+
+  <!-- Accent bar -->
+  <rect x="0" y="650" width="1200" height="150" fill="url(#accent-vitamin-d)"/>
+
+  <!-- Main icon -->
+  <g transform="translate(600, 400) scale(15)">
+    <g transform="translate(-12, -12)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2v2 M12 20v2 M4.93 4.93l1.41 1.41 M17.66 17.66l1.41 1.41 M2 12h2 M20 12h2 M6.34 17.66l-1.41 1.41 M19.07 4.93l-1.41 1.41 M12 7a5 5 0 1 0 0 10 5 5 0 1 0 0-10z"/>
+    </g>
+  </g>
+
+  <!-- Medical cross pattern (subtle) -->
+  <g opacity="0.1">
+    <path d="M 200 50 L 200 150 M 150 100 L 250 100" stroke="white" stroke-width="4"/>
+    <path d="M 1000 600 L 1000 700 M 950 650 L 1050 650" stroke="white" stroke-width="4"/>
+  </g>
+
+  <!-- Service name -->
+  <text x="600" y="680" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle" opacity="0.9">
+    Vitamin D Test
+  </text>
+
+  <!-- Partner badge -->
+  <g transform="translate(50, 720)">
+    <rect x="0" y="0" width="280" height="50" rx="25" fill="white" opacity="0.2"/>
+    <text x="140" y="33" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="white" text-anchor="middle">
+      Patrangsit Hospital
+    </text>
+  </g>
+</svg>

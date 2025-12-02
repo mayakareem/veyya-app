@@ -26,7 +26,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Lab Tests",
     price: 800,
     duration: 30,
-    image: "/images/healthcare/cbc-test.jpg",
+    image: "/images/healthcare/cbc-test.svg",
     shortDescription: "Comprehensive blood analysis to evaluate overall health and detect disorders",
     fullDescription: "A Complete Blood Count (CBC) is one of the most common blood tests that measures several components of your blood, including red blood cells, white blood cells, hemoglobin, hematocrit, and platelets. This test provides valuable information about your overall health status.",
     whatIsDone: [
@@ -77,7 +77,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Lab Tests",
     price: 1200,
     duration: 30,
-    image: "/images/healthcare/lipid-profile.jpg",
+    image: "/images/healthcare/lipid-profile.svg",
     shortDescription: "Cholesterol and triglyceride screening for heart health assessment",
     fullDescription: "A Lipid Profile is a comprehensive cholesterol test that measures the amount of specific fat molecules (lipids) in your blood. This test is crucial for assessing your risk of developing cardiovascular disease and monitoring the effectiveness of cholesterol-lowering medications.",
     whatIsDone: [
@@ -128,7 +128,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Lab Tests",
     price: 1500,
     duration: 30,
-    image: "/images/healthcare/diabetes-panel.jpg",
+    image: "/images/healthcare/diabetes-panel.svg",
     shortDescription: "Comprehensive diabetes screening and blood sugar monitoring",
     fullDescription: "The Diabetes Panel combines HbA1c and glucose testing to provide a complete picture of your blood sugar control. HbA1c shows average blood sugar levels over the past 2-3 months, while glucose testing measures current blood sugar levels.",
     whatIsDone: [
@@ -175,7 +175,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Lab Tests",
     price: 1800,
     duration: 30,
-    image: "/images/healthcare/thyroid-test.jpg",
+    image: "/images/healthcare/thyroid-test.svg",
     shortDescription: "Comprehensive thyroid hormone evaluation",
     fullDescription: "Thyroid Function Tests measure hormone levels to assess how well your thyroid gland is working. The thyroid controls metabolism, energy, temperature regulation, and many other vital body functions.",
     whatIsDone: [
@@ -223,7 +223,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Lab Tests",
     price: 1400,
     duration: 30,
-    image: "/images/healthcare/liver-function.jpg",
+    image: "/images/healthcare/liver-function.svg",
     shortDescription: "Comprehensive liver health assessment and enzyme analysis",
     fullDescription: "Liver Function Tests (LFTs) are a group of blood tests that measure enzymes, proteins, and substances produced or processed by the liver to assess its health and function.",
     whatIsDone: [
@@ -274,7 +274,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Lab Tests",
     price: 1300,
     duration: 30,
-    image: "/images/healthcare/kidney-function.jpg",
+    image: "/images/healthcare/kidney-function.svg",
     shortDescription: "Comprehensive renal health and waste filtration assessment",
     fullDescription: "Kidney Function Tests evaluate how well your kidneys are filtering waste from your blood and maintaining electrolyte balance. These tests are essential for detecting kidney disease early.",
     whatIsDone: [
@@ -324,7 +324,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Lab Tests",
     price: 1600,
     duration: 30,
-    image: "/images/healthcare/vitamin-d.jpg",
+    image: "/images/healthcare/vitamin-d.svg",
     shortDescription: "Vitamin D level assessment for bone and immune health",
     fullDescription: "Vitamin D testing measures the level of 25-hydroxyvitamin D in your blood, which is essential for bone health, immune function, and overall wellness. Deficiency is common, especially in areas with limited sunlight.",
     whatIsDone: [
@@ -373,7 +373,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "IV Therapy",
     price: 2500,
     duration: 45,
-    image: "/images/healthcare/hydration-iv.jpg",
+    image: "/images/healthcare/hydration-iv.svg",
     shortDescription: "Rapid rehydration with electrolyte balance restoration",
     fullDescription: "Hydration IV Therapy delivers fluids, electrolytes, and essential minerals directly into your bloodstream for immediate absorption and rapid rehydration, bypassing the digestive system.",
     whatIsDone: [
@@ -417,7 +417,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "IV Therapy",
     price: 3500,
     duration: 60,
-    image: "/images/healthcare/immunity-iv.jpg",
+    image: "/images/healthcare/immunity-iv.svg",
     shortDescription: "High-dose vitamin C and immune-supporting nutrients",
     fullDescription: "Immunity Boost IV combines high-dose vitamin C, zinc, B-vitamins, and antioxidants to strengthen your immune system and help fight off infections. Perfect for cold/flu season or when feeling run down.",
     whatIsDone: [
@@ -461,7 +461,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "IV Therapy",
     price: 3000,
     duration: 60,
-    image: "/images/healthcare/energy-iv.jpg",
+    image: "/images/healthcare/energy-iv.svg",
     shortDescription: "B-vitamins and amino acids for sustained energy",
     fullDescription: "Energy Boost IV delivers a powerful combination of B-vitamins, amino acids, and energy-supporting nutrients directly to your cells for immediate and sustained energy enhancement.",
     whatIsDone: [
@@ -505,7 +505,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "IV Therapy",
     price: 4000,
     duration: 60,
-    image: "/images/healthcare/beauty-iv.jpg",
+    image: "/images/healthcare/beauty-iv.svg",
     shortDescription: "Glutathione and antioxidants for skin brightening",
     fullDescription: "Beauty Glow IV features high-dose glutathione, the master antioxidant, combined with vitamin C, biotin, and collagen-supporting nutrients for radiant, youthful-looking skin from within.",
     whatIsDone: [
@@ -552,7 +552,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Doctor Consultations",
     price: 3000,
     duration: 45,
-    image: "/images/healthcare/gp-consultation.jpg",
+    image: "/images/healthcare/gp-consultation.svg",
     shortDescription: "Comprehensive home visit by licensed GP for general health concerns",
     fullDescription: "A General Practitioner (GP) home visit provides convenient, comprehensive medical care in the comfort of your home. Our experienced doctors can diagnose and treat a wide range of acute and chronic conditions.",
     whatIsDone: [
@@ -598,7 +598,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Doctor Consultations",
     price: 3500,
     duration: 45,
-    image: "/images/healthcare/pediatrician.jpg",
+    image: "/images/healthcare/pediatrician.svg",
     shortDescription: "Specialized child healthcare at home by pediatric specialist",
     fullDescription: "Pediatric home visits provide expert medical care for infants, children, and adolescents in the comfort of home. Our board-certified pediatricians specialize in child health, growth, and development.",
     whatIsDone: [
@@ -646,7 +646,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Flu Vaccines",
     price: 800,
     duration: 30,
-    image: "/images/healthcare/flu-vaccine.jpg",
+    image: "/images/healthcare/flu-vaccine.svg",
     shortDescription: "Annual influenza vaccination at home",
     fullDescription: "Seasonal flu vaccination protects against the most common influenza virus strains each year. The vaccine is updated annually based on global flu surveillance and is the best defense against flu complications.",
     whatIsDone: [
@@ -692,7 +692,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Flu Vaccines",
     price: 1200,
     duration: 30,
-    image: "/images/healthcare/covid-vaccine.jpg",
+    image: "/images/healthcare/covid-vaccine.svg",
     shortDescription: "COVID-19 vaccination and booster doses at home",
     fullDescription: "COVID-19 vaccination provides protection against severe illness, hospitalization, and death from coronavirus infection. We offer primary series and booster doses of approved vaccines.",
     whatIsDone: [
@@ -738,7 +738,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Flu Vaccines",
     price: 1000,
     duration: 30,
-    image: "/images/healthcare/hepatitis-b.jpg",
+    image: "/images/healthcare/hepatitis-b.svg",
     shortDescription: "Hepatitis B vaccination series for liver protection",
     fullDescription: "Hepatitis B vaccine protects against hepatitis B virus, which can cause chronic liver infection, cirrhosis, and liver cancer. The vaccine is highly effective and recommended for all ages.",
     whatIsDone: [
@@ -786,7 +786,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Nurse Care",
     price: 1500,
     duration: 120,
-    image: "/images/healthcare/nurse-visit-2h.jpg",
+    image: "/images/healthcare/nurse-visit-2h.svg",
     shortDescription: "Professional nursing care and assistance at home",
     fullDescription: "Two-hour professional nursing visit provides comprehensive care including medication administration, vital signs monitoring, basic wound care, and health assessment in your home.",
     whatIsDone: [
@@ -832,7 +832,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Nurse Care",
     price: 2800,
     duration: 240,
-    image: "/images/healthcare/nurse-visit-4h.jpg",
+    image: "/images/healthcare/nurse-visit-4h.svg",
     shortDescription: "Extended nursing care for complex needs",
     fullDescription: "Four-hour professional nursing visit provides comprehensive care for patients with complex medical needs, including extensive wound care, IV therapy management, and continuous monitoring.",
     whatIsDone: [
@@ -881,7 +881,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Nurse Care",
     price: 1200,
     duration: 60,
-    image: "/images/healthcare/wound-care.jpg",
+    image: "/images/healthcare/wound-care.svg",
     shortDescription: "Specialized wound care and dressing changes at home",
     fullDescription: "Professional wound care service provides expert assessment, cleaning, and dressing of surgical wounds, pressure ulcers, diabetic foot ulcers, and other chronic wounds using advanced techniques.",
     whatIsDone: [
@@ -929,7 +929,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Nurse Care",
     price: 2000,
     duration: 90,
-    image: "/images/healthcare/post-surgery.jpg",
+    image: "/images/healthcare/post-surgery.svg",
     shortDescription: "Specialized post-operative care and recovery support",
     fullDescription: "Comprehensive post-surgical nursing care helps patients recover safely at home after surgery. Our specialized nurses provide wound care, pain management, and monitoring for complications.",
     whatIsDone: [
@@ -981,7 +981,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Physiotherapy",
     price: 2500,
     duration: 60,
-    image: "/images/healthcare/physiotherapy-general.jpg",
+    image: "/images/healthcare/physiotherapy-general.svg",
     shortDescription: "Comprehensive physical therapy for pain and mobility",
     fullDescription: "General physiotherapy provides treatment for musculoskeletal pain, movement disorders, and functional limitations through manual therapy, therapeutic exercises, and modalities.",
     whatIsDone: [
@@ -1030,7 +1030,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Physiotherapy",
     price: 3000,
     duration: 60,
-    image: "/images/healthcare/sports-rehab.jpg",
+    image: "/images/healthcare/sports-rehab.svg",
     shortDescription: "Specialized rehabilitation for athletic injuries",
     fullDescription: "Sports injury rehabilitation focuses on returning athletes to optimal performance after injury through sport-specific exercises, functional training, and progressive return-to-play protocols.",
     whatIsDone: [
@@ -1079,7 +1079,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Physiotherapy",
     price: 3500,
     duration: 90,
-    image: "/images/healthcare/stroke-rehab.jpg",
+    image: "/images/healthcare/stroke-rehab.svg",
     shortDescription: "Comprehensive rehabilitation for stroke recovery",
     fullDescription: "Post-stroke rehabilitation helps stroke survivors regain independence through intensive physical therapy, functional training, and neuroplasticity-based exercises to restore movement and function.",
     whatIsDone: [
@@ -1131,7 +1131,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Psychotherapy & Counselling",
     price: 2500,
     duration: 60,
-    image: "/images/healthcare/individual-therapy.jpg",
+    image: "/images/healthcare/individual-therapy.svg",
     shortDescription: "One-on-one counseling for mental health support",
     fullDescription: "Individual therapy provides a safe, confidential space to explore thoughts, feelings, and behaviors with a licensed therapist. Evidence-based approaches help address mental health concerns and improve wellbeing.",
     whatIsDone: [
@@ -1180,7 +1180,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Psychotherapy & Counselling",
     price: 3500,
     duration: 90,
-    image: "/images/healthcare/couples-therapy.jpg",
+    image: "/images/healthcare/couples-therapy.svg",
     shortDescription: "Relationship counseling for couples",
     fullDescription: "Couples therapy helps partners improve communication, resolve conflicts, and strengthen their relationship. Our therapists use evidence-based approaches like Gottman Method and Emotionally Focused Therapy.",
     whatIsDone: [
@@ -1229,7 +1229,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Psychotherapy & Counselling",
     price: 4000,
     duration: 90,
-    image: "/images/healthcare/family-therapy.jpg",
+    image: "/images/healthcare/family-therapy.svg",
     shortDescription: "Family counseling for relationship and communication issues",
     fullDescription: "Family therapy addresses family dynamics, improves communication, and resolves conflicts involving multiple family members. Suitable for families dealing with transitions, behavioral issues, or relationship challenges.",
     whatIsDone: [
@@ -1278,7 +1278,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Psychotherapy & Counselling",
     price: 3000,
     duration: 60,
-    image: "/images/healthcare/cbt-therapy.jpg",
+    image: "/images/healthcare/cbt-therapy.svg",
     shortDescription: "Evidence-based therapy for thought and behavior patterns",
     fullDescription: "CBT is a structured, goal-oriented therapy that helps identify and change negative thought patterns and behaviors. Highly effective for anxiety, depression, OCD, PTSD, and many other conditions.",
     whatIsDone: [
@@ -1327,7 +1327,7 @@ export const HEALTHCARE_SERVICES: HealthcareServiceDetail[] = [
     subcategory: "Psychotherapy & Counselling",
     price: 2800,
     duration: 60,
-    image: "/images/healthcare/anxiety-depression.jpg",
+    image: "/images/healthcare/anxiety-depression.svg",
     shortDescription: "Specialized counseling for anxiety and depression",
     fullDescription: "Specialized therapy targeting anxiety disorders and depression using integrative approaches including CBT, mindfulness, and supportive counseling to reduce symptoms and improve functioning.",
     whatIsDone: [

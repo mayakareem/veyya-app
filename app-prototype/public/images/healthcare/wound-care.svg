@@ -1,0 +1,50 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-wound-care" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#db2777;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-wound-care" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fbcfe8;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#fbcfe8;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#fbcfe8;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background gradient -->
+  <rect width="1200" height="800" fill="url(#grad-wound-care)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="150" fill="#fbcfe8" opacity="0.3"/>
+  <circle cx="1100" cy="700" r="200" fill="#fbcfe8" opacity="0.2"/>
+  <circle cx="900" cy="150" r="100" fill="#fbcfe8" opacity="0.25"/>
+
+  <!-- Accent bar -->
+  <rect x="0" y="650" width="1200" height="150" fill="url(#accent-wound-care)"/>
+
+  <!-- Main icon -->
+  <g transform="translate(600, 400) scale(15)">
+    <g transform="translate(-12, -12)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 10.5h.01 M14 13.5h.01 M10 16.5h.01 M14 10.5h.01 M10 13.5h.01 M14 16.5h.01 M18 11l-6-6a2 2 0 0 0-3 0l-6 6a2 2 0 0 0 0 3l6 6a2 2 0 0 0 3 0l6-6a2 2 0 0 0 0-3z"/>
+    </g>
+  </g>
+
+  <!-- Medical cross pattern (subtle) -->
+  <g opacity="0.1">
+    <path d="M 200 50 L 200 150 M 150 100 L 250 100" stroke="white" stroke-width="4"/>
+    <path d="M 1000 600 L 1000 700 M 950 650 L 1050 650" stroke="white" stroke-width="4"/>
+  </g>
+
+  <!-- Service name -->
+  <text x="600" y="680" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle" opacity="0.9">
+    Wound Care & Dressing
+  </text>
+
+  <!-- Partner badge -->
+  <g transform="translate(50, 720)">
+    <rect x="0" y="0" width="280" height="50" rx="25" fill="white" opacity="0.2"/>
+    <text x="140" y="33" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="white" text-anchor="middle">
+      Patrangsit Hospital
+    </text>
+  </g>
+</svg>
