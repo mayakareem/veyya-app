@@ -3,214 +3,214 @@ const path = require('path');
 
 // Healthcare service image configurations
 const serviceImages = [
-  // LAB TESTS - Red/Pink theme
+  // LAB TESTS - Lighter pastel red/pink theme
   {
     id: 'cbc-test',
     name: 'Complete Blood Count (CBC)',
     icon: 'droplet',
-    gradient: ['#ef4444', '#dc2626'],
-    accent: '#fecaca'
+    gradient: ['#fca5a5', '#f87171'],
+    accent: '#fee2e2'
   },
   {
     id: 'lipid-profile',
     name: 'Lipid Profile Test',
     icon: 'heart-pulse',
-    gradient: ['#ec4899', '#db2777'],
-    accent: '#fbcfe8'
+    gradient: ['#f9a8d4', '#f472b6'],
+    accent: '#fce7f3'
   },
   {
     id: 'diabetes-panel',
     name: 'Diabetes Panel',
     icon: 'activity',
-    gradient: ['#f97316', '#ea580c'],
-    accent: '#fed7aa'
+    gradient: ['#fdba74', '#fb923c'],
+    accent: '#ffedd5'
   },
   {
     id: 'thyroid-test',
     name: 'Thyroid Function Test',
     icon: 'scan',
-    gradient: ['#8b5cf6', '#7c3aed'],
-    accent: '#ddd6fe'
+    gradient: ['#c4b5fd', '#a78bfa'],
+    accent: '#ede9fe'
   },
   {
     id: 'liver-function',
     name: 'Liver Function Test',
     icon: 'clipboard-check',
-    gradient: ['#059669', '#047857'],
-    accent: '#a7f3d0'
+    gradient: ['#6ee7b7', '#34d399'],
+    accent: '#d1fae5'
   },
   {
     id: 'kidney-function',
     name: 'Kidney Function Test',
     icon: 'flask-conical',
-    gradient: ['#0891b2', '#0e7490'],
-    accent: '#a5f3fc'
+    gradient: ['#67e8f9', '#22d3ee'],
+    accent: '#cffafe'
   },
   {
     id: 'vitamin-d',
     name: 'Vitamin D Test',
     icon: 'sun',
-    gradient: ['#f59e0b', '#d97706'],
-    accent: '#fde68a'
+    gradient: ['#fcd34d', '#fbbf24'],
+    accent: '#fef3c7'
   },
 
-  // IV THERAPY - Blue/Purple theme
+  // IV THERAPY - Lighter pastel blue/purple theme
   {
     id: 'hydration-iv',
     name: 'Hydration IV Drip',
     icon: 'droplets',
-    gradient: ['#3b82f6', '#2563eb'],
-    accent: '#bfdbfe'
+    gradient: ['#93c5fd', '#60a5fa'],
+    accent: '#dbeafe'
   },
   {
     id: 'immunity-iv',
     name: 'Immunity Boost IV',
     icon: 'shield-plus',
-    gradient: ['#06b6d4', '#0891b2'],
-    accent: '#a5f3fc'
+    gradient: ['#67e8f9', '#22d3ee'],
+    accent: '#cffafe'
   },
   {
     id: 'energy-iv',
     name: 'Energy Boost IV',
     icon: 'zap',
-    gradient: ['#8b5cf6', '#7c3aed'],
-    accent: '#ddd6fe'
+    gradient: ['#c4b5fd', '#a78bfa'],
+    accent: '#ede9fe'
   },
   {
     id: 'beauty-iv',
     name: 'Beauty Glow IV',
     icon: 'sparkles',
-    gradient: ['#ec4899', '#d946ef'],
-    accent: '#f5d0fe'
+    gradient: ['#f9a8d4', '#f0abfc'],
+    accent: '#fae8ff'
   },
 
-  // DOCTOR CONSULTATIONS - Teal/Green theme
+  // DOCTOR CONSULTATIONS - Lighter pastel teal/green theme
   {
     id: 'gp-consultation',
     name: 'General Practitioner',
     icon: 'stethoscope',
-    gradient: ['#14b8a6', '#0d9488'],
-    accent: '#99f6e4'
+    gradient: ['#5eead4', '#2dd4bf'],
+    accent: '#ccfbf1'
   },
   {
     id: 'pediatrician',
     name: 'Pediatrician',
-    icon: 'baby',
-    gradient: ['#10b981', '#059669'],
-    accent: '#a7f3d0'
+    icon: 'heart',
+    gradient: ['#86efac', '#4ade80'],
+    accent: '#dcfce7'
   },
 
-  // VACCINES - Green theme
+  // VACCINES - Lighter pastel green theme
   {
     id: 'flu-vaccine',
     name: 'Flu Vaccine',
-    icon: 'syringe',
-    gradient: ['#22c55e', '#16a34a'],
-    accent: '#bbf7d0'
+    icon: 'shield-plus',
+    gradient: ['#86efac', '#4ade80'],
+    accent: '#dcfce7'
   },
   {
     id: 'covid-vaccine',
     name: 'COVID-19 Vaccine',
     icon: 'shield-check',
-    gradient: ['#06b6d4', '#0891b2'],
-    accent: '#a5f3fc'
+    gradient: ['#67e8f9', '#22d3ee'],
+    accent: '#cffafe'
   },
   {
     id: 'hepatitis-b',
     name: 'Hepatitis B Vaccine',
     icon: 'shield',
-    gradient: ['#14b8a6', '#0d9488'],
-    accent: '#5eead4'
+    gradient: ['#5eead4', '#2dd4bf'],
+    accent: '#ccfbf1'
   },
 
-  // NURSE CARE - Purple/Indigo theme
+  // NURSE CARE - Lighter pastel purple/indigo theme
   {
     id: 'nurse-visit-2h',
     name: 'Nurse Visit 2 Hours',
     icon: 'user-round-check',
-    gradient: ['#6366f1', '#4f46e5'],
-    accent: '#c7d2fe'
+    gradient: ['#a5b4fc', '#818cf8'],
+    accent: '#e0e7ff'
   },
   {
     id: 'nurse-visit-4h',
     name: 'Nurse Visit 4 Hours',
     icon: 'clock',
-    gradient: ['#8b5cf6', '#7c3aed'],
-    accent: '#ddd6fe'
+    gradient: ['#c4b5fd', '#a78bfa'],
+    accent: '#ede9fe'
   },
   {
     id: 'wound-care',
     name: 'Wound Care & Dressing',
-    icon: 'bandage',
-    gradient: ['#ec4899', '#db2777'],
-    accent: '#fbcfe8'
+    icon: 'heart-pulse',
+    gradient: ['#fda4af', '#fb7185'],
+    accent: '#ffe4e6'
   },
   {
     id: 'post-surgery',
     name: 'Post-Surgery Care',
     icon: 'cross',
-    gradient: ['#f43f5e', '#e11d48'],
-    accent: '#fecdd3'
+    gradient: ['#fda4af', '#fb7185'],
+    accent: '#ffe4e6'
   },
 
-  // PHYSIOTHERAPY - Orange/Yellow theme
+  // PHYSIOTHERAPY - Lighter pastel orange/yellow theme
   {
     id: 'physiotherapy-general',
     name: 'General Physiotherapy',
-    icon: 'dumbbell',
-    gradient: ['#f97316', '#ea580c'],
-    accent: '#fed7aa'
+    icon: 'activity',
+    gradient: ['#fdba74', '#fb923c'],
+    accent: '#ffedd5'
   },
   {
     id: 'sports-rehab',
     name: 'Sports Injury Rehab',
-    icon: 'run',
-    gradient: ['#f59e0b', '#d97706'],
-    accent: '#fde68a'
+    icon: 'flame',
+    gradient: ['#fcd34d', '#fbbf24'],
+    accent: '#fef3c7'
   },
   {
     id: 'stroke-rehab',
     name: 'Post-Stroke Rehab',
     icon: 'heart-handshake',
-    gradient: ['#06b6d4', '#0891b2'],
-    accent: '#a5f3fc'
+    gradient: ['#67e8f9', '#22d3ee'],
+    accent: '#cffafe'
   },
 
-  // PSYCHOTHERAPY - Calm Blue/Purple theme
+  // PSYCHOTHERAPY - Lighter calm pastel blue/purple theme
   {
     id: 'individual-therapy',
     name: 'Individual Therapy',
     icon: 'user',
-    gradient: ['#6366f1', '#4f46e5'],
-    accent: '#c7d2fe'
+    gradient: ['#a5b4fc', '#818cf8'],
+    accent: '#e0e7ff'
   },
   {
     id: 'couples-therapy',
     name: 'Couples Therapy',
-    icon: 'users',
-    gradient: ['#ec4899', '#db2777'],
-    accent: '#fbcfe8'
+    icon: 'heart',
+    gradient: ['#f9a8d4', '#f472b6'],
+    accent: '#fce7f3'
   },
   {
     id: 'family-therapy',
     name: 'Family Therapy',
     icon: 'home',
-    gradient: ['#14b8a6', '#0d9488'],
-    accent: '#99f6e4'
+    gradient: ['#5eead4', '#2dd4bf'],
+    accent: '#ccfbf1'
   },
   {
     id: 'cbt-therapy',
     name: 'CBT Therapy',
     icon: 'brain',
-    gradient: ['#8b5cf6', '#7c3aed'],
-    accent: '#ddd6fe'
+    gradient: ['#c4b5fd', '#a78bfa'],
+    accent: '#ede9fe'
   },
   {
     id: 'anxiety-depression',
     name: 'Anxiety & Depression',
-    icon: 'heart',
-    gradient: ['#3b82f6', '#2563eb'],
-    accent: '#bfdbfe'
+    icon: 'flower',
+    gradient: ['#93c5fd', '#60a5fa'],
+    accent: '#dbeafe'
   }
 ];
 
@@ -243,7 +243,9 @@ const iconPaths = {
   'users': 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75',
   'home': 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10',
   'brain': 'M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2z M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z',
-  'heart': 'M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z'
+  'heart': 'M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z',
+  'flame': 'M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z',
+  'flower': 'M12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 0 1-4.5-4.5z M8.5 12a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z M15.5 12a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z M12 16.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z'
 };
 
 function generateSVG(config) {

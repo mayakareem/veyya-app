@@ -1,13 +1,13 @@
 <svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="grad-beauty-iv" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#d946ef;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#f9a8d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0abfc;stop-opacity:1" />
     </linearGradient>
     <linearGradient id="accent-beauty-iv" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#f5d0fe;stop-opacity:0" />
-      <stop offset="50%" style="stop-color:#f5d0fe;stop-opacity:0.8" />
-      <stop offset="100%" style="stop-color:#f5d0fe;stop-opacity:0" />
+      <stop offset="0%" style="stop-color:#fae8ff;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#fae8ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#fae8ff;stop-opacity:0" />
     </linearGradient>
   </defs>
 
@@ -15,9 +15,9 @@
   <rect width="1200" height="800" fill="url(#grad-beauty-iv)"/>
 
   <!-- Decorative circles -->
-  <circle cx="100" cy="100" r="150" fill="#f5d0fe" opacity="0.3"/>
-  <circle cx="1100" cy="700" r="200" fill="#f5d0fe" opacity="0.2"/>
-  <circle cx="900" cy="150" r="100" fill="#f5d0fe" opacity="0.25"/>
+  <circle cx="100" cy="100" r="150" fill="#fae8ff" opacity="0.3"/>
+  <circle cx="1100" cy="700" r="200" fill="#fae8ff" opacity="0.2"/>
+  <circle cx="900" cy="150" r="100" fill="#fae8ff" opacity="0.25"/>
 
   <!-- Accent bar -->
   <rect x="0" y="650" width="1200" height="150" fill="url(#accent-beauty-iv)"/>

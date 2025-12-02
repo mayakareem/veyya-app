@@ -1,13 +1,13 @@
 <svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="grad-pediatrician" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#86efac;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4ade80;stop-opacity:1" />
     </linearGradient>
     <linearGradient id="accent-pediatrician" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#a7f3d0;stop-opacity:0" />
-      <stop offset="50%" style="stop-color:#a7f3d0;stop-opacity:0.8" />
-      <stop offset="100%" style="stop-color:#a7f3d0;stop-opacity:0" />
+      <stop offset="0%" style="stop-color:#dcfce7;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#dcfce7;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#dcfce7;stop-opacity:0" />
     </linearGradient>
   </defs>
 
@@ -15,9 +15,9 @@
   <rect width="1200" height="800" fill="url(#grad-pediatrician)"/>
 
   <!-- Decorative circles -->
-  <circle cx="100" cy="100" r="150" fill="#a7f3d0" opacity="0.3"/>
-  <circle cx="1100" cy="700" r="200" fill="#a7f3d0" opacity="0.2"/>
-  <circle cx="900" cy="150" r="100" fill="#a7f3d0" opacity="0.25"/>
+  <circle cx="100" cy="100" r="150" fill="#dcfce7" opacity="0.3"/>
+  <circle cx="1100" cy="700" r="200" fill="#dcfce7" opacity="0.2"/>
+  <circle cx="900" cy="150" r="100" fill="#dcfce7" opacity="0.25"/>
 
   <!-- Accent bar -->
   <rect x="0" y="650" width="1200" height="150" fill="url(#accent-pediatrician)"/>
@@ -25,7 +25,7 @@
   <!-- Main icon -->
   <g transform="translate(600, 400) scale(15)">
     <g transform="translate(-12, -12)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9 12h.01 M15 12h.01 M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5 M9 2L7 4 M15 2l2 2 M22 17v1c0 .5-.5 1-1 1H3c-.5 0-1-.5-1-1v-1h20z M2 8v.8A5 5 0 0 0 7 14a5 5 0 0 1 5 5 5 5 0 0 1 5-5 5 5 0 0 0 5-5.2V8"/>
+      <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/>
     </g>
   </g>
 

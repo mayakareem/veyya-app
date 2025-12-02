@@ -1,13 +1,13 @@
 <svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="grad-physiotherapy-general" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#fdba74;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fb923c;stop-opacity:1" />
     </linearGradient>
     <linearGradient id="accent-physiotherapy-general" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#fed7aa;stop-opacity:0" />
-      <stop offset="50%" style="stop-color:#fed7aa;stop-opacity:0.8" />
-      <stop offset="100%" style="stop-color:#fed7aa;stop-opacity:0" />
+      <stop offset="0%" style="stop-color:#ffedd5;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#ffedd5;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#ffedd5;stop-opacity:0" />
     </linearGradient>
   </defs>
 
@@ -15,9 +15,9 @@
   <rect width="1200" height="800" fill="url(#grad-physiotherapy-general)"/>
 
   <!-- Decorative circles -->
-  <circle cx="100" cy="100" r="150" fill="#fed7aa" opacity="0.3"/>
-  <circle cx="1100" cy="700" r="200" fill="#fed7aa" opacity="0.2"/>
-  <circle cx="900" cy="150" r="100" fill="#fed7aa" opacity="0.25"/>
+  <circle cx="100" cy="100" r="150" fill="#ffedd5" opacity="0.3"/>
+  <circle cx="1100" cy="700" r="200" fill="#ffedd5" opacity="0.2"/>
+  <circle cx="900" cy="150" r="100" fill="#ffedd5" opacity="0.25"/>
 
   <!-- Accent bar -->
   <rect x="0" y="650" width="1200" height="150" fill="url(#accent-physiotherapy-general)"/>
@@ -25,7 +25,7 @@
   <!-- Main icon -->
   <g transform="translate(600, 400) scale(15)">
     <g transform="translate(-12, -12)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M14.4 14.4L9.6 9.6 M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l-1.768 1.768a2 2 0 1 1-2.828-2.829l1.767-1.768a2 2 0 1 1 2.828-2.828l1.768-1.768a2 2 0 1 1 2.829 2.828l1.768-1.767a2 2 0 1 1 2.828 2.829z"/>
+      <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
     </g>
   </g>
 
