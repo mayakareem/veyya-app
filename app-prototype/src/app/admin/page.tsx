@@ -40,6 +40,7 @@ export const dynamic = "force-dynamic";
 export default async function AdminDashboard() {
   // Check if database URL is configured
   const isDatabaseConfigured = process.env.DATABASE_URL &&
+    process.env.DATABASE_URL !== "postgresql://user:password@localhost:5432/veyya?schema=public" &&
     !process.env.DATABASE_URL.includes("localhost:5432") &&
     !process.env.DATABASE_URL.includes("YOUR_DATABASE_URL");
 
@@ -133,6 +134,9 @@ export default async function AdminDashboard() {
   }
 
   try {
+    // Test database connection first
+    await prisma.$connect();
+
     const session = await auth();
 
     // Check if user is admin
