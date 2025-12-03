@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import AISearchBar from "@/components/search/AISearchBar";
 import PopularServices from "@/components/home/PopularServices";
+import NewServicesSection from "@/components/sections/NewServicesSection";
 import { SERVICE_CATEGORIES } from "@/lib/constants/categories";
 
 export default function MarketingHome() {
@@ -566,6 +567,9 @@ export default function MarketingHome() {
           </div>
         </Container>
       </section>
+
+      {/* New Services Section */}
+      <NewServicesSection />
     </main>
   );
 }
