@@ -29,11 +29,47 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
   const router = useRouter();
   const serviceId = decodeURIComponent(resolvedParams.id);
   const [showBooking, setShowBooking] = useState(false);
+  const [dogSize, setDogSize] = useState<"small" | "medium" | "large">("small");
+  const [catHairType, setCatHairType] = useState<"short" | "long">("short");
 
   // Get service details
   const serviceData = getServiceById(serviceId);
   const healthcareDetail = getHealthcareServiceDetail(serviceId);
   const petCareDetail = getPetCareServiceDetail(serviceId);
+
+  // Check if this is a grooming service that needs size/hair selection
+  const isDogGrooming = serviceId.includes("grooming-dog") || serviceId.includes("bath-blow-dry-dog");
+  const isCatGrooming = serviceId.includes("grooming-cat") || serviceId.includes("bath-blow-dry-cat");
+  const needsSizeSelection = isDogGrooming && (
+    serviceId === "basic-grooming-dog" ||
+    serviceId === "full-grooming-dog" ||
+    serviceId === "bath-blow-dry-dog"
+  );
+  const needsHairSelection = isCatGrooming && (
+    serviceId === "basic-grooming-cat" ||
+    serviceId === "full-grooming-cat" ||
+    serviceId === "bath-blow-dry-cat"
+  );
+
+  // Calculate dynamic price based on size/hair type
+  const getAdjustedPrice = () => {
+    if (!petCareDetail) return 0;
+    const basePrice = petCareDetail.price;
+
+    if (needsSizeSelection) {
+      // Dog size multipliers
+      const sizeMultipliers = { small: 1, medium: 1.5, large: 2 };
+      return Math.round(basePrice * sizeMultipliers[dogSize]);
+    }
+
+    if (needsHairSelection) {
+      // Cat hair type multipliers
+      const hairMultipliers = { short: 1, long: 1.6 };
+      return Math.round(basePrice * hairMultipliers[catHairType]);
+    }
+
+    return basePrice;
+  };
 
   if (!serviceData) {
     return (
@@ -253,7 +289,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
+                    <div className="space-y-0">
                       {healthcareDetail.procedure.map((step, index) => (
                         <div key={index} className="flex gap-4">
                           <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm">
@@ -418,6 +454,66 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
                   <p className="text-lg text-muted-foreground">{petCareDetail.shortDescription}</p>
                 </div>
 
+                {/* Size/Hair Selection for Grooming Services */}
+                {needsSizeSelection && (
+                  <div className="bg-muted/50 rounded-lg p-4 space-y-3">
+                    <h3 className="font-semibold text-sm">Select Dog Size</h3>
+                    <div className="grid grid-cols-3 gap-2">
+                      <Button
+                        variant={dogSize === "small" ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setDogSize("small")}
+                        className="w-full"
+                      >
+                        Small
+                      </Button>
+                      <Button
+                        variant={dogSize === "medium" ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setDogSize("medium")}
+                        className="w-full"
+                      >
+                        Medium
+                      </Button>
+                      <Button
+                        variant={dogSize === "large" ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setDogSize("large")}
+                        className="w-full"
+                      >
+                        Large
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Small: &lt;10kg • Medium: 10-25kg • Large: &gt;25kg
+                    </p>
+                  </div>
+                )}
+
+                {needsHairSelection && (
+                  <div className="bg-muted/50 rounded-lg p-4 space-y-3">
+                    <h3 className="font-semibold text-sm">Select Hair Type</h3>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button
+                        variant={catHairType === "short" ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setCatHairType("short")}
+                        className="w-full"
+                      >
+                        Short Hair
+                      </Button>
+                      <Button
+                        variant={catHairType === "long" ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setCatHairType("long")}
+                        className="w-full"
+                      >
+                        Long Hair
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex flex-wrap gap-4 py-4 border-y">
                   <div className="flex items-center gap-2">
                     <Clock className="w-5 h-5 text-primary" />
@@ -430,7 +526,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
                     <FileText className="w-5 h-5 text-primary" />
                     <div>
                       <div className="text-sm text-muted-foreground">Price</div>
-                      <div className="font-semibold text-lg">฿{(petCareDetail.price / 100).toFixed(2)}</div>
+                      <div className="font-semibold text-lg">฿{(getAdjustedPrice() / 100).toFixed(2)}</div>
                     </div>
                   </div>
                 </div>
@@ -507,7 +603,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
+                    <div className="space-y-0">
                       {petCareDetail.steps.map((step, index) => (
                         <div key={index} className="flex gap-4">
                           <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm">

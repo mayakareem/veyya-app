@@ -21,6 +21,7 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
   const { cart, addToCart, removeFromCart, getItemQuantity, getTotalItems, getTotalPrice } = useCart();
   const [viewMode, setViewMode] = useState<"tile" | "list">("tile");
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("all");
+  const [petTypeFilter, setPetTypeFilter] = useState<"all" | "dog" | "cat">("all");
   const [expandedService, setExpandedService] = useState<string | null>(null);
 
   // Get category from main categories
@@ -79,10 +80,18 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
     }))
   );
 
-  // Filter services by selected subcategory
-  const filteredServices = selectedSubcategory === "all"
+  // Filter services by selected subcategory and pet type
+  let filteredServices = selectedSubcategory === "all"
     ? allServices
     : allServices.filter(s => s.subcategoryId === selectedSubcategory);
+
+  // Apply pet type filter for Pet Care category
+  if (categoryName === "Pet Care" && petTypeFilter !== "all") {
+    filteredServices = filteredServices.filter(service => {
+      const lowerName = service.name.toLowerCase();
+      return lowerName.includes(petTypeFilter);
+    });
+  }
 
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
@@ -216,6 +225,38 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
               ))}
             </div>
           </div>
+
+          {/* Pet Type Filter - Only for Pet Care */}
+          {categoryName === "Pet Care" && (
+            <div className="mt-4 overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
+              <div className="flex gap-2 min-w-max sm:min-w-0">
+                <Button
+                  variant={petTypeFilter === "all" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setPetTypeFilter("all")}
+                  className="flex-shrink-0"
+                >
+                  All Pets
+                </Button>
+                <Button
+                  variant={petTypeFilter === "dog" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setPetTypeFilter("dog")}
+                  className="flex-shrink-0"
+                >
+                  Dogs
+                </Button>
+                <Button
+                  variant={petTypeFilter === "cat" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setPetTypeFilter("cat")}
+                  className="flex-shrink-0"
+                >
+                  Cats
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
