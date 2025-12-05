@@ -89,7 +89,31 @@ export default function CategoryPage({ params }: { params: Promise<{ name: strin
   if (categoryName === "Pet Care" && petTypeFilter !== "all") {
     filteredServices = filteredServices.filter(service => {
       const lowerName = service.name.toLowerCase();
-      return lowerName.includes(petTypeFilter);
+      const subcategoryId = service.subcategoryId;
+
+      if (petTypeFilter === "dog") {
+        // Show for dogs: grooming with "dog", walking (all), training (all), sitting & home visits (all)
+        if (subcategoryId === "grooming") {
+          return lowerName.includes("dog");
+        }
+        if (subcategoryId === "walking" || subcategoryId === "training" || subcategoryId === "sitting-visits") {
+          return true;
+        }
+        return false;
+      }
+
+      if (petTypeFilter === "cat") {
+        // Show for cats: grooming with "cat", sitting & home visits (all)
+        if (subcategoryId === "grooming") {
+          return lowerName.includes("cat");
+        }
+        if (subcategoryId === "sitting-visits") {
+          return true;
+        }
+        return false;
+      }
+
+      return true;
     });
   }
 
