@@ -1,0 +1,59 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-nail-ear-cat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fda4af;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fb7185;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-nail-ear-cat" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffe4e6;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#ffe4e6;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#ffe4e6;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background gradient -->
+  <rect width="1200" height="800" fill="url(#grad-nail-ear-cat)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="150" fill="#ffe4e6" opacity="0.3"/>
+  <circle cx="1100" cy="700" r="200" fill="#ffe4e6" opacity="0.2"/>
+  <circle cx="900" cy="150" r="100" fill="#ffe4e6" opacity="0.25"/>
+
+  <!-- Accent bar -->
+  <rect x="0" y="650" width="1200" height="150" fill="url(#accent-nail-ear-cat)"/>
+
+  <!-- Main icon -->
+  <g transform="translate(600, 400) scale(15)">
+    <g transform="translate(-12, -12)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/>
+    </g>
+  </g>
+
+  <!-- Decorative paw prints (subtle) -->
+  <g opacity="0.15" fill="white">
+    <circle cx="200" cy="250" r="15"/>
+    <circle cx="185" cy="230" r="10"/>
+    <circle cx="215" cy="230" r="10"/>
+    <circle cx="190" cy="270" r="8"/>
+    <circle cx="210" cy="270" r="8"/>
+    
+    <circle cx="950" cy="550" r="15"/>
+    <circle cx="935" cy="530" r="10"/>
+    <circle cx="965" cy="530" r="10"/>
+    <circle cx="940" cy="570" r="8"/>
+    <circle cx="960" cy="570" r="8"/>
+  </g>
+
+  <!-- Service name -->
+  <text x="600" y="680" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle" opacity="0.9">
+    Nail & Ear Care (Cat)
+  </text>
+
+  <!-- Partner badge -->
+  <g transform="translate(50, 720)">
+    <rect x="0" y="0" width="250" height="50" rx="25" fill="white" opacity="0.2"/>
+    <text x="125" y="33" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="white" text-anchor="middle">
+      Professional Pet Care
+    </text>
+  </g>
+</svg>

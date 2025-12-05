@@ -1,0 +1,59 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-puppy-training" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c4b5fd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-puppy-training" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ede9fe;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#ede9fe;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#ede9fe;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background gradient -->
+  <rect width="1200" height="800" fill="url(#grad-puppy-training)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="150" fill="#ede9fe" opacity="0.3"/>
+  <circle cx="1100" cy="700" r="200" fill="#ede9fe" opacity="0.2"/>
+  <circle cx="900" cy="150" r="100" fill="#ede9fe" opacity="0.25"/>
+
+  <!-- Accent bar -->
+  <rect x="0" y="650" width="1200" height="150" fill="url(#accent-puppy-training)"/>
+
+  <!-- Main icon -->
+  <g transform="translate(600, 400) scale(15)">
+    <g transform="translate(-12, -12)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2a5 5 0 1 0 0 10 5 5 0 1 0 0-10z M8.21 13.89L7 23l5-3 5 3-1.21-9.11"/>
+    </g>
+  </g>
+
+  <!-- Decorative paw prints (subtle) -->
+  <g opacity="0.15" fill="white">
+    <circle cx="200" cy="250" r="15"/>
+    <circle cx="185" cy="230" r="10"/>
+    <circle cx="215" cy="230" r="10"/>
+    <circle cx="190" cy="270" r="8"/>
+    <circle cx="210" cy="270" r="8"/>
+    
+    <circle cx="950" cy="550" r="15"/>
+    <circle cx="935" cy="530" r="10"/>
+    <circle cx="965" cy="530" r="10"/>
+    <circle cx="940" cy="570" r="8"/>
+    <circle cx="960" cy="570" r="8"/>
+  </g>
+
+  <!-- Service name -->
+  <text x="600" y="680" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle" opacity="0.9">
+    Puppy Training
+  </text>
+
+  <!-- Partner badge -->
+  <g transform="translate(50, 720)">
+    <rect x="0" y="0" width="250" height="50" rx="25" fill="white" opacity="0.2"/>
+    <text x="125" y="33" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="white" text-anchor="middle">
+      Professional Pet Care
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,59 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-full-grooming-cat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f9a8d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f472b6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-full-grooming-cat" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fce7f3;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#fce7f3;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#fce7f3;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background gradient -->
+  <rect width="1200" height="800" fill="url(#grad-full-grooming-cat)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="150" fill="#fce7f3" opacity="0.3"/>
+  <circle cx="1100" cy="700" r="200" fill="#fce7f3" opacity="0.2"/>
+  <circle cx="900" cy="150" r="100" fill="#fce7f3" opacity="0.25"/>
+
+  <!-- Accent bar -->
+  <rect x="0" y="650" width="1200" height="150" fill="url(#accent-full-grooming-cat)"/>
+
+  <!-- Main icon -->
+  <g transform="translate(600, 400) scale(15)">
+    <g transform="translate(-12, -12)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z M20 3v4 M22 5h-4"/>
+    </g>
+  </g>
+
+  <!-- Decorative paw prints (subtle) -->
+  <g opacity="0.15" fill="white">
+    <circle cx="200" cy="250" r="15"/>
+    <circle cx="185" cy="230" r="10"/>
+    <circle cx="215" cy="230" r="10"/>
+    <circle cx="190" cy="270" r="8"/>
+    <circle cx="210" cy="270" r="8"/>
+    
+    <circle cx="950" cy="550" r="15"/>
+    <circle cx="935" cy="530" r="10"/>
+    <circle cx="965" cy="530" r="10"/>
+    <circle cx="940" cy="570" r="8"/>
+    <circle cx="960" cy="570" r="8"/>
+  </g>
+
+  <!-- Service name -->
+  <text x="600" y="680" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle" opacity="0.9">
+    Full Grooming (Cat)
+  </text>
+
+  <!-- Partner badge -->
+  <g transform="translate(50, 720)">
+    <rect x="0" y="0" width="250" height="50" rx="25" fill="white" opacity="0.2"/>
+    <text x="125" y="33" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="white" text-anchor="middle">
+      Professional Pet Care
+    </text>
+  </g>
+</svg>

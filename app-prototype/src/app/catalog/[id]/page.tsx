@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { MultiStepBooking, type BookingData } from "@/components/booking/MultiStepBooking";
 import { getServiceById } from "@/lib/constants/services";
 import { getHealthcareServiceDetail } from "@/lib/constants/healthcareDetails";
+import { getPetCareServiceDetail } from "@/lib/constants/petCareDetails";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,6 +33,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
   // Get service details
   const serviceData = getServiceById(serviceId);
   const healthcareDetail = getHealthcareServiceDetail(serviceId);
+  const petCareDetail = getPetCareServiceDetail(serviceId);
 
   if (!serviceData) {
     return (
@@ -48,6 +50,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
 
   const { service, subcategory, category } = serviceData;
   const isHealthcare = category.id === "healthcare";
+  const isPetCare = category.id === "pet-care";
 
   // Parse price (take first value from range)
   const priceMatch = service.priceRange?.match(/฿([\d,]+)/);
@@ -381,8 +384,205 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
               </CardContent>
             </Card>
           </>
+        ) : isPetCare && petCareDetail ? (
+          // Pet Care services: show detailed information
+          <>
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              {/* Service Image */}
+              <div className="relative h-64 md:h-96 rounded-xl overflow-hidden bg-gradient-to-br from-orange-100 to-purple-100">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Heart className="w-32 h-32 text-orange-600 opacity-20" />
+                </div>
+                {petCareDetail.image && (
+                  <Image
+                    src={petCareDetail.image}
+                    alt={petCareDetail.name}
+                    fill
+                    className="object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                )}
+              </div>
+
+              {/* Service Summary */}
+              <div className="space-y-4">
+                <div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                    <span>{category.name}</span>
+                    <span>•</span>
+                    <span>{subcategory.name}</span>
+                  </div>
+                  <h1 className="text-3xl md:text-4xl font-bold mb-3">{petCareDetail.name}</h1>
+                  <p className="text-lg text-muted-foreground">{petCareDetail.shortDescription}</p>
+                </div>
+
+                <div className="flex flex-wrap gap-4 py-4 border-y">
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-5 h-5 text-primary" />
+                    <div>
+                      <div className="text-sm text-muted-foreground">Duration</div>
+                      <div className="font-semibold">{petCareDetail.duration} min</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-primary" />
+                    <div>
+                      <div className="text-sm text-muted-foreground">Price</div>
+                      <div className="font-semibold text-lg">฿{(petCareDetail.price / 100).toFixed(2)}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <Button
+                  size="lg"
+                  className="w-full"
+                  onClick={() => setShowBooking(true)}
+                >
+                  Book Service Now
+                </Button>
+              </div>
+            </div>
+
+            {/* Detailed Information Tabs */}
+            <Tabs defaultValue="overview" className="space-y-6">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="steps">Steps</TabsTrigger>
+                <TabsTrigger value="products">Products</TabsTrigger>
+                <TabsTrigger value="benefits">Benefits</TabsTrigger>
+              </TabsList>
+
+              {/* Overview Tab */}
+              <TabsContent value="overview" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <FileText className="w-5 h-5 text-primary" />
+                      About This Service
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-muted-foreground leading-relaxed">
+                      {petCareDetail.fullDescription}
+                    </p>
+
+                    <div>
+                      <h4 className="font-semibold mb-3">What's Included:</h4>
+                      <ul className="space-y-2">
+                        {petCareDetail.whatIsIncluded.map((item, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                            <span className="text-muted-foreground">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-blue-900 mb-2">Suitable For:</h4>
+                      <ul className="space-y-1">
+                        {petCareDetail.suitableFor.map((item, index) => (
+                          <li key={index} className="text-sm text-blue-700">• {item}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-green-900 mb-2">Recommended Frequency:</h4>
+                      <p className="text-sm text-green-700">{petCareDetail.frequency}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Steps Tab */}
+              <TabsContent value="steps" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <ClipboardList className="w-5 h-5 text-primary" />
+                      Service Steps
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {petCareDetail.steps.map((step, index) => (
+                        <div key={index} className="flex gap-4">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm">
+                            {index + 1}
+                          </div>
+                          <div className="flex-1 pt-1">
+                            <p className="text-muted-foreground">{step}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Products Tab */}
+              <TabsContent value="products" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Activity className="w-5 h-5 text-primary" />
+                      Products Used
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {petCareDetail.productsUsed.map((product, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                          <span className="text-muted-foreground">{product}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Benefits Tab */}
+              <TabsContent value="benefits" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Heart className="w-5 h-5 text-primary" />
+                      Benefits
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {petCareDetail.benefits.map((benefit, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                          <span className="text-muted-foreground">{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+
+            {/* Bottom CTA */}
+            <Card className="mt-8 bg-gradient-to-r from-primary/10 to-purple-50 border-primary/20">
+              <CardContent className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-2">Ready to Book?</h3>
+                <p className="text-muted-foreground mb-4">
+                  Professional pet care service at your doorstep
+                </p>
+                <Button size="lg" onClick={() => setShowBooking(true)}>
+                  Book Service Now
+                </Button>
+              </CardContent>
+            </Card>
+          </>
         ) : (
-          // Non-healthcare services: show simple layout
+          // Other services: show simple layout
           <>
             <div className="mb-6 text-center">
               <h1 className="text-3xl font-bold mb-2">{service.name}</h1>

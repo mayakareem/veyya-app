@@ -183,6 +183,30 @@ export const getServiceImage = (serviceName: string, categoryName: string): stri
   if (lowerName.includes("cognitive behavioral therapy") || lowerName.includes("cbt")) return "/images/healthcare/cbt-therapy.svg";
   if (lowerName.includes("anxiety") && lowerName.includes("depression")) return "/images/healthcare/anxiety-depression.svg";
 
+  // Pet Care services - Grooming
+  if (lowerName.includes("basic grooming") && lowerName.includes("dog")) return "/images/petcare/basic-grooming-dog.svg";
+  if (lowerName.includes("full grooming") && lowerName.includes("dog")) return "/images/petcare/full-grooming-dog.svg";
+  if (lowerName.includes("bath") && lowerName.includes("dog")) return "/images/petcare/bath-dry-dog.svg";
+  if (lowerName.includes("nail") && lowerName.includes("dog")) return "/images/petcare/nail-ear-dog.svg";
+  if (lowerName.includes("basic grooming") && lowerName.includes("cat")) return "/images/petcare/basic-grooming-cat.svg";
+  if (lowerName.includes("full grooming") && lowerName.includes("cat")) return "/images/petcare/full-grooming-cat.svg";
+  if (lowerName.includes("bath") && lowerName.includes("cat")) return "/images/petcare/bath-dry-cat.svg";
+  if (lowerName.includes("nail") && lowerName.includes("cat")) return "/images/petcare/nail-ear-cat.svg";
+
+  // Pet Care services - Walking
+  if (lowerName.includes("15") && lowerName.includes("walk")) return "/images/petcare/walk-15min.svg";
+  if (lowerName.includes("30") && lowerName.includes("walk")) return "/images/petcare/walk-30min.svg";
+  if (lowerName.includes("60") && lowerName.includes("walk")) return "/images/petcare/walk-60min.svg";
+
+  // Pet Care services - Sitting
+  if (lowerName.includes("pet sitting")) return "/images/petcare/pet-sitting.svg";
+  if (lowerName.includes("day care")) return "/images/petcare/day-care.svg";
+  if (lowerName.includes("home check")) return "/images/petcare/home-checkin.svg";
+
+  // Pet Care services - Training
+  if (lowerName.includes("puppy training")) return "/images/petcare/puppy-training.svg";
+  if (lowerName.includes("behavior consultation")) return "/images/petcare/behavior-consultation.svg";
+
   // Default fallback images by category
   if (lowerCategory === "beauty") return "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80";
   if (lowerCategory === "nails") return "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=600&q=80";
