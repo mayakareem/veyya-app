@@ -183,29 +183,31 @@ export const getServiceImage = (serviceName: string, categoryName: string): stri
   if (lowerName.includes("cognitive behavioral therapy") || lowerName.includes("cbt")) return "/images/healthcare/cbt-therapy.svg";
   if (lowerName.includes("anxiety") && lowerName.includes("depression")) return "/images/healthcare/anxiety-depression.svg";
 
-  // Pet Care services - Grooming
-  if (lowerName.includes("basic grooming") && lowerName.includes("dog")) return "/images/petcare/basic-grooming-dog.svg";
-  if (lowerName.includes("full grooming") && lowerName.includes("dog")) return "/images/petcare/full-grooming-dog.svg";
-  if (lowerName.includes("bath") && lowerName.includes("dog")) return "/images/petcare/bath-dry-dog.svg";
-  if (lowerName.includes("nail") && lowerName.includes("dog")) return "/images/petcare/nail-ear-dog.svg";
-  if (lowerName.includes("basic grooming") && lowerName.includes("cat")) return "/images/petcare/basic-grooming-cat.svg";
-  if (lowerName.includes("full grooming") && lowerName.includes("cat")) return "/images/petcare/full-grooming-cat.svg";
-  if (lowerName.includes("bath") && lowerName.includes("cat")) return "/images/petcare/bath-dry-cat.svg";
-  if (lowerName.includes("nail") && lowerName.includes("cat")) return "/images/petcare/nail-ear-cat.svg";
+  // Pet Care services - Grooming (Dogs)
+  if (lowerName.includes("basic grooming") && lowerName.includes("dog")) return "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=80";
+  if (lowerName.includes("full grooming") && lowerName.includes("dog")) return "https://images.unsplash.com/photo-1616013476506-12be68c3179f?w=800&q=80";
+  if (lowerName.includes("bath") && lowerName.includes("dog")) return "https://images.unsplash.com/photo-1585559700398-1385b3a8aeb6?w=800&q=80";
+  if (lowerName.includes("nail") && lowerName.includes("dog")) return "https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?w=800&q=80";
+
+  // Pet Care services - Grooming (Cats)
+  if (lowerName.includes("basic grooming") && lowerName.includes("cat")) return "https://images.unsplash.com/photo-1529257414772-1960b7bea4eb?w=800&q=80";
+  if (lowerName.includes("full grooming") && lowerName.includes("cat")) return "https://images.unsplash.com/photo-1573865526739-10c1d3a1f0cc?w=800&q=80";
+  if (lowerName.includes("bath") && lowerName.includes("cat")) return "https://images.unsplash.com/photo-1611003228941-98852ba62227?w=800&q=80";
+  if (lowerName.includes("nail") && lowerName.includes("cat")) return "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=800&q=80";
 
   // Pet Care services - Walking
-  if (lowerName.includes("15") && lowerName.includes("walk")) return "/images/petcare/walk-15min.svg";
-  if (lowerName.includes("30") && lowerName.includes("walk")) return "/images/petcare/walk-30min.svg";
-  if (lowerName.includes("60") && lowerName.includes("walk")) return "/images/petcare/walk-60min.svg";
+  if (lowerName.includes("15") && lowerName.includes("walk")) return "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80";
+  if (lowerName.includes("30") && lowerName.includes("walk")) return "https://images.unsplash.com/photo-1568572933382-74d440642117?w=800&q=80";
+  if (lowerName.includes("60") && lowerName.includes("walk")) return "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&q=80";
 
   // Pet Care services - Sitting
-  if (lowerName.includes("pet sitting")) return "/images/petcare/pet-sitting.svg";
-  if (lowerName.includes("day care")) return "/images/petcare/day-care.svg";
-  if (lowerName.includes("home check")) return "/images/petcare/home-checkin.svg";
+  if (lowerName.includes("pet sitting")) return "https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800&q=80";
+  if (lowerName.includes("day care")) return "https://images.unsplash.com/photo-1415369629372-26f2fe60c467?w=800&q=80";
+  if (lowerName.includes("home check")) return "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=80";
 
   // Pet Care services - Training
-  if (lowerName.includes("puppy training")) return "/images/petcare/puppy-training.svg";
-  if (lowerName.includes("behavior consultation")) return "/images/petcare/behavior-consultation.svg";
+  if (lowerName.includes("puppy training")) return "https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=800&q=80";
+  if (lowerName.includes("behavior consultation")) return "https://images.unsplash.com/photo-1558788353-f76d92427f16?w=800&q=80";
 
   // Default fallback images by category
   if (lowerCategory === "beauty") return "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80";

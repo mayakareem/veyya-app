@@ -23,7 +23,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Grooming",
     price: 90000,
     duration: 60,
-    image: "/images/petcare/basic-grooming-dog.svg",
+    image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=80",
     shortDescription: "Essential grooming service for dogs including bath, brush, nail trim, and ear cleaning",
     fullDescription: "Our basic grooming package provides comprehensive care for your dog's hygiene and appearance. Perfect for maintaining your pet's coat health and cleanliness between full grooming sessions. Our professional groomers use premium, pet-safe products tailored to your dog's coat type and skin sensitivity.",
     whatIsIncluded: [
@@ -75,7 +75,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Grooming",
     price: 185000,
     duration: 120,
-    image: "/images/petcare/full-grooming-dog.svg",
+    image: "https://images.unsplash.com/photo-1616013476506-12be68c3179f?w=800&q=80",
     shortDescription: "Complete grooming service including bath, haircut, styling, nail trim, and ear cleaning",
     fullDescription: "Our premium full grooming service provides everything your dog needs to look and feel their best. This comprehensive package includes professional styling tailored to your dog's breed standards or your personal preferences, along with complete hygiene care.",
     whatIsIncluded: [
@@ -137,7 +137,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Grooming",
     price: 75000,
     duration: 60,
-    image: "/images/petcare/bath-dry-dog.svg",
+    image: "https://images.unsplash.com/photo-1585559700398-1385b3a8aeb6?w=800&q=80",
     shortDescription: "Refreshing bath and professional blow dry to keep your dog clean and fresh",
     fullDescription: "A thorough cleaning service perfect for dogs who don't need a full haircut but require regular bathing. Our bath and blow dry service uses premium products and professional drying techniques to leave your dog's coat clean, fluffy, and smelling great.",
     whatIsIncluded: [
@@ -190,7 +190,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Grooming",
     price: 25000,
     duration: 20,
-    image: "/images/petcare/nail-ear-dog.svg",
+    image: "https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?w=800&q=80",
     shortDescription: "Essential maintenance for your dog's nails and ears to prevent health issues",
     fullDescription: "Regular nail and ear care is crucial for your dog's comfort and health. Our professional service ensures proper nail length and clean, healthy ears, preventing painful overgrowth and potential infections.",
     whatIsIncluded: [
@@ -243,7 +243,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Grooming",
     price: 70000,
     duration: 45,
-    image: "/images/petcare/basic-grooming-cat.svg",
+    image: "https://images.unsplash.com/photo-1529257414772-1960b7bea4eb?w=800&q=80",
     shortDescription: "Gentle grooming service for cats including bath, brush, nail trim, and ear cleaning",
     fullDescription: "Our cat-specific basic grooming service is designed with feline comfort in mind. We use gentle techniques and cat-safe products to ensure a stress-free experience while maintaining your cat's hygiene and coat health.",
     whatIsIncluded: [
@@ -296,7 +296,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Grooming",
     price: 150000,
     duration: 90,
-    image: "/images/petcare/full-grooming-cat.svg",
+    image: "https://images.unsplash.com/photo-1573865526739-10c1d3a1f0cc?w=800&q=80",
     shortDescription: "Complete grooming service for cats including bath, haircut (if needed), nail trim, and full hygiene care",
     fullDescription: "Our comprehensive cat grooming service provides everything your feline friend needs for optimal health and appearance. Especially beneficial for long-haired breeds or cats with matting issues, this service includes gentle de-matting, optional haircut, and complete hygiene care.",
     whatIsIncluded: [
@@ -359,7 +359,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Grooming",
     price: 60000,
     duration: 45,
-    image: "/images/petcare/bath-dry-cat.svg",
+    image: "https://images.unsplash.com/photo-1611003228941-98852ba62227?w=800&q=80",
     shortDescription: "Gentle bath and drying service to keep your cat clean and reduce shedding",
     fullDescription: "A specialized bathing service designed specifically for cats who need cleaning but don't require a full haircut. We use low-stress techniques and cat-safe products to ensure your feline stays calm throughout the process.",
     whatIsIncluded: [
@@ -411,7 +411,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Grooming",
     price: 20000,
     duration: 15,
-    image: "/images/petcare/nail-ear-cat.svg",
+    image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=800&q=80",
     shortDescription: "Quick and gentle nail trimming and ear cleaning for cats",
     fullDescription: "Essential maintenance service for indoor cats who don't naturally wear down their claws, and for all cats to maintain ear health. Our gentle approach ensures minimal stress for your feline friend.",
     whatIsIncluded: [
@@ -463,7 +463,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Walking",
     price: 22500,
     duration: 15,
-    image: "/images/petcare/walk-15min.svg",
+    image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80",
     shortDescription: "Quick neighborhood walk perfect for puppies or senior dogs",
     fullDescription: "A brief but beneficial walk designed for dogs who need light exercise, bathroom breaks, or gentle activity. Perfect for puppies, senior dogs, or as a midday bathroom break.",
     whatIsIncluded: [
@@ -510,7 +510,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Walking",
     price: 35000,
     duration: 30,
-    image: "/images/petcare/walk-30min.svg",
+    image: "https://images.unsplash.com/photo-1568572933382-74d440642117?w=800&q=80",
     shortDescription: "Standard walk providing good exercise and bathroom breaks",
     fullDescription: "Our most popular walking service offering the ideal balance of exercise, exploration, and bathroom breaks. Perfect for most adult dogs' daily exercise needs.",
     whatIsIncluded: [
@@ -563,7 +563,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Walking",
     price: 55000,
     duration: 60,
-    image: "/images/petcare/walk-60min.svg",
+    image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&q=80",
     shortDescription: "Extended walk for high-energy dogs needing substantial exercise",
     fullDescription: "An extended walking session perfect for high-energy breeds, active dogs, or those requiring significant daily exercise. This walk includes varied terrain, play breaks, and comprehensive exercise to tire out even the most energetic pups.",
     whatIsIncluded: [
@@ -625,7 +625,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Sitting & Home Visits",
     price: 45000,
     duration: 60,
-    image: "/images/petcare/pet-sitting.svg",
+    image: "https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800&q=80",
     shortDescription: "Personalized in-home pet care and companionship by the hour",
     fullDescription: "Professional in-home pet sitting providing companionship, care, and peace of mind while you're away. Our sitters follow your pet's normal routine, administer medications if needed, and provide plenty of love and attention.",
     whatIsIncluded: [
@@ -684,7 +684,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Sitting & Home Visits",
     price: 225000,
     duration: 480,
-    image: "/images/petcare/day-care.svg",
+    image: "https://images.unsplash.com/photo-1415369629372-26f2fe60c467?w=800&q=80",
     shortDescription: "Full 8-hour day care service keeping your pet happy, safe, and entertained",
     fullDescription: "Comprehensive full-day pet care in your home, perfect for long work days or travel. Your pet receives constant supervision, multiple meals, exercise, playtime, and all the care they need for a full day, all in the comfort of their own home.",
     whatIsIncluded: [
@@ -749,7 +749,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Sitting & Home Visits",
     price: 30000,
     duration: 30,
-    image: "/images/petcare/home-checkin.svg",
+    image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=80",
     shortDescription: "Quick visit to provide food, fresh water, and basic care",
     fullDescription: "A brief but thorough check-in visit perfect for independent cats or pets who don't require extended companionship. Ensures your pet has fresh food and water, clean litter, and a quick wellness check.",
     whatIsIncluded: [
@@ -808,7 +808,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Training",
     price: 115000,
     duration: 60,
-    image: "/images/petcare/puppy-training.svg",
+    image: "https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=800&q=80",
     shortDescription: "Foundation training for puppies including basic commands and socialization",
     fullDescription: "Professional puppy training focusing on essential obedience, socialization, and positive behavior development. Our force-free, reward-based methods set your puppy up for a lifetime of good behavior and strong bonding with you.",
     whatIsIncluded: [
@@ -866,7 +866,7 @@ export const PET_CARE_SERVICES: PetCareServiceDetail[] = [
     subcategory: "Training",
     price: 160000,
     duration: 90,
-    image: "/images/petcare/behavior-consultation.svg",
+    image: "https://images.unsplash.com/photo-1558788353-f76d92427f16?w=800&q=80",
     shortDescription: "Professional assessment and training plan for behavior issues",
     fullDescription: "Comprehensive behavior consultation for dogs exhibiting problematic behaviors. Our certified trainers assess the root cause, develop a customized behavior modification plan, and provide hands-on training to address issues like aggression, anxiety, excessive barking, and more.",
     whatIsIncluded: [
