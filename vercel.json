@@ -1,6 +1,3 @@
 {
-  "version": 2,
-  "buildCommand": "cd app-mobile && pnpm install && pnpm build",
-  "outputDirectory": "app-mobile/.next",
-  "framework": "nextjs"
+  "version": 2
 }
